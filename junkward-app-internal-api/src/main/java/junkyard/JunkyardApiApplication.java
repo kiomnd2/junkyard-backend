@@ -1,11 +1,13 @@
 package junkyard;
 
-import junkyard.config.SecurityConfig;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Import;
+import org.springframework.context.annotation.PropertySource;
 
-@Import(SecurityConfig.class)
+@PropertySource(encoding = "UTF-8", ignoreResourceNotFound = true,
+value = {
+        "classpath:application-junkyard-api.properties"
+})
 @SpringBootApplication
 public class JunkyardApiApplication {
 
