@@ -1,6 +1,7 @@
-package junkyard.member.domain;
+package junkyard.domain.member;
 
 import jakarta.persistence.*;
+import junkyard.domain.BaseEntity;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
 
@@ -9,7 +10,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Entity
 @Table(name = "member_users")
-public class MemberUser {
+public class MemberUser extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

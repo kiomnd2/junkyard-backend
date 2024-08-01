@@ -1,7 +1,8 @@
-package junkyard.reservation.domain.estimate;
+package junkyard.domain.reservation.estimate;
 
 import jakarta.persistence.*;
-import junkyard.reservation.domain.Reservation;
+import junkyard.domain.BaseEntity;
+import junkyard.domain.reservation.Reservation;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
 
@@ -10,7 +11,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Entity
 @Table(name = "estimates")
-public class Estimate {
+public class Estimate extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

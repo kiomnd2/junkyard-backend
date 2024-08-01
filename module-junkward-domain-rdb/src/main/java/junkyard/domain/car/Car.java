@@ -1,13 +1,14 @@
-package junkyard.car.domain;
+package junkyard.domain.car;
 
 import jakarta.persistence.*;
+import junkyard.domain.BaseEntity;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
 @Entity
 @Table(name = "cars")
-public class Car {
+public class Car extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

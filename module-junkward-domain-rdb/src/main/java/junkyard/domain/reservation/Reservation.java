@@ -1,10 +1,11 @@
-package junkyard.reservation.domain;
+package junkyard.domain.reservation;
 
 
 import jakarta.persistence.*;
-import junkyard.car.domain.Car;
-import junkyard.member.domain.MemberUser;
-import junkyard.reservation.domain.estimate.Estimate;
+import junkyard.domain.BaseEntity;
+import junkyard.domain.car.Car;
+import junkyard.domain.member.MemberUser;
+import junkyard.domain.reservation.estimate.Estimate;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
 
@@ -15,7 +16,7 @@ import java.util.Set;
 @NoArgsConstructor
 @Entity
 @Table(name = "reservations")
-public class Reservation {
+public class Reservation extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -1,7 +1,8 @@
-package junkyard.member.domain;
+package junkyard.domain.member;
 
 
 import jakarta.persistence.*;
+import junkyard.domain.BaseEntity;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
 
@@ -10,7 +11,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Entity
 @Table(name = "member_admins")
-public class MemberAdmin {
+public class MemberAdmin extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,20 +29,11 @@ public class MemberAdmin {
     @Column(name = "password", nullable = false, length = 255)
     private String password;
 
-    @Column(name = "created_at", nullable = false)
-    private LocalDateTime createdAt;
-
-    @Column(name = "last_visit_at", nullable = false)
-    private LocalDateTime lastVisitAt;
-
     @Builder
-    public MemberAdmin(String name, String phoneNo, String email, String password
-            , LocalDateTime createdAt, LocalDateTime lastVisitAt) {
+    public MemberAdmin(String name, String phoneNo, String email, String password) {
         this.name = name;
         this.phoneNo = phoneNo;
         this.email = email;
         this.password = password;
-        this.createdAt = createdAt;
-        this.lastVisitAt = lastVisitAt;
     }
 }
