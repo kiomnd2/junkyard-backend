@@ -12,6 +12,7 @@
             <option value="$PROJECT_DIR$/core-api" />
             <option value="$PROJECT_DIR$/core-web" />
             <option value="$PROJECT_DIR$/junkward-app-internal-api" />
+            <option value="$PROJECT_DIR$/junkyard-kakao-client" />
             <option value="$PROJECT_DIR$/module-junkward-domain-rdb" />
           </set>
         </option>
