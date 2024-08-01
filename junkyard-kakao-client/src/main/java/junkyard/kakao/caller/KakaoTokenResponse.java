@@ -1,6 +1,7 @@
 package junkyard.kakao.caller;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import junkyard.member.infrastructure.caller.AccessTokenResponse;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -25,4 +26,11 @@ public class KakaoTokenResponse {
     public Integer refreshTokenExpiresIn;
     @JsonProperty("scope")
     public String scope;
+
+    public AccessTokenResponse toResponse() {
+        return AccessTokenResponse.builder()
+                .accessToken(accessToken)
+                .refreshToken(refreshToken)
+                .build();
+    }
 }

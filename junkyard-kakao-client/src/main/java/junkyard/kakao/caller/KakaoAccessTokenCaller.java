@@ -1,5 +1,7 @@
 package junkyard.kakao.caller;
 
+import junkyard.member.infrastructure.caller.AccessTokenCaller;
+import junkyard.member.infrastructure.caller.AccessTokenResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
@@ -8,18 +10,24 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 
+import java.util.Objects;
+
 @RequiredArgsConstructor
 @Component
-public class KakaoAccessTokenCaller implements KakaoCaller<String, KakaoTokenResponse> {
+public class KakaoAccessTokenCaller implements AccessTokenCaller {
     @Value("${kakao.api.client_id}")
     private String clientId;
 
     private static final String KAKAO_TOKEN_REQUEST_URL = "https://kauth.kakao.com";
 
+    @Override
+    public boolean supports(String method) {
+        return "kakao".equals(method);
+    }
 
     @Override
-    public KakaoTokenResponse call(String code) {
-        return WebClient.create(KAKAO_TOKEN_REQUEST_URL).post()
+    public AccessTokenResponse trigger(String code) {
+        KakaoTokenResponse tokenResponse = WebClient.create(KAKAO_TOKEN_REQUEST_URL).post()
                 .uri(uriBuilder -> uriBuilder
                         .scheme("https")
                         .path("/oauth/token")
@@ -33,5 +41,6 @@ public class KakaoAccessTokenCaller implements KakaoCaller<String, KakaoTokenRes
                 .onStatus(HttpStatusCode::is4xxClientError, clientResponse -> Mono.error(new RuntimeException("4xx error")))
                 .bodyToMono(KakaoTokenResponse.class)
                 .block();
+        return Objects.requireNonNull(tokenResponse).toResponse();
     }
 }
