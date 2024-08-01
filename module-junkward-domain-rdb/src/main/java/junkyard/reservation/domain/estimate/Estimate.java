@@ -1,8 +1,8 @@
-package junkyard.domain.reservation.estimate;
+package junkyard.reservation.domain.estimate;
 
 import jakarta.persistence.*;
-import junkyard.domain.BaseEntity;
-import junkyard.domain.reservation.Reservation;
+import junkyard.BaseEntity;
+import junkyard.reservation.domain.Reservation;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
 

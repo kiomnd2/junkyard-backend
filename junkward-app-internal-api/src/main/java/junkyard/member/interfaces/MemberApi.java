@@ -16,7 +16,9 @@ public class MemberApi {
 
     @PostMapping("/join")
     public CommonResponse<MemberDto.ResponseJoin> join(@RequestBody MemberDto.RequestJoin requestJoin) {
-        memberFacade.joinMember(requestJoin);
-        return CommonResponse.success(MemberDto.ResponseJoin.builder().build());
+        String token = memberFacade.joinMember(requestJoin);
+        return CommonResponse.success(MemberDto.ResponseJoin.builder()
+                        .token(token)
+                .build());
     }
 }

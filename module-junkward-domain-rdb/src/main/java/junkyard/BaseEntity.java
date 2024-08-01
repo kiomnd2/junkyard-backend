@@ -1,4 +1,4 @@
-package junkyard.domain;
+package junkyard;
 
 import jakarta.persistence.EntityListeners;
 import jakarta.persistence.MappedSuperclass;
@@ -19,9 +19,9 @@ public abstract class BaseEntity {
 
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     @CreatedDate
-    private LocalDateTime createdAt;
+    private LocalDateTime regDt;
 
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     @LastModifiedDate
-    private LocalDateTime updateAt;
+    private LocalDateTime updDt;
 }

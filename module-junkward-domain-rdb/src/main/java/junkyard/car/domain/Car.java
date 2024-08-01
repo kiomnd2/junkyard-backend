@@ -1,7 +1,7 @@
-package junkyard.domain.car;
+package junkyard.car.domain;
 
 import jakarta.persistence.*;
-import junkyard.domain.BaseEntity;
+import junkyard.BaseEntity;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
 

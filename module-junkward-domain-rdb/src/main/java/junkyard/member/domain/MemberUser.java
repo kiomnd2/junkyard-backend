@@ -1,12 +1,15 @@
-package junkyard.domain.member;
+package junkyard.member.domain;
 
 import jakarta.persistence.*;
-import junkyard.domain.BaseEntity;
+import junkyard.BaseEntity;
+import junkyard.common.response.exception.InvalidTypeException;
 import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
+@Getter
 @NoArgsConstructor
 @Entity
 @Table(name = "member_users")
@@ -39,7 +42,17 @@ public class MemberUser extends BaseEntity {
     private LocalDateTime lastVisitAt;
 
     public enum JoinMethod {
-        KAKAO, TOSS
+        KAKAO, TOSS;
+
+        public static JoinMethod get(String method) {
+            JoinMethod[] values = values();
+            for (JoinMethod value : values) {
+                if (method.equals(value.name())) {
+                    return value;
+                }
+            }
+            throw new InvalidTypeException(method);
+        }
     }
 
     @Builder

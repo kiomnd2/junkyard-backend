@@ -1,12 +1,10 @@
-package junkyard.domain.member;
+package junkyard.member.domain;
 
 
 import jakarta.persistence.*;
-import junkyard.domain.BaseEntity;
+import junkyard.BaseEntity;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
-
-import java.time.LocalDateTime;
 
 @NoArgsConstructor
 @Entity

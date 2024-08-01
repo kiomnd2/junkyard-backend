@@ -1,5 +1,6 @@
 package junkyard.member.interfaces;
 
+import junkyard.member.domain.MemberRegisterCommand;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -12,9 +13,20 @@ public class MemberDto {
     @AllArgsConstructor
     public static class RequestJoin {
         private Long id;
+        private String method;
         private String name;
         private String phoneNo;
         private String email;
+
+        public MemberRegisterCommand toCommand() {
+            return MemberRegisterCommand.builder()
+                    .id(id)
+                    .method(method)
+                    .name(name)
+                    .phoneNo(phoneNo)
+                    .email(email)
+                    .build();
+        }
     }
 
     @Builder

@@ -1,11 +1,11 @@
-package junkyard.domain.reservation;
+package junkyard.reservation.domain;
 
 
 import jakarta.persistence.*;
-import junkyard.domain.BaseEntity;
-import junkyard.domain.car.Car;
-import junkyard.domain.member.MemberUser;
-import junkyard.domain.reservation.estimate.Estimate;
+import junkyard.BaseEntity;
+import junkyard.car.domain.Car;
+import junkyard.member.domain.MemberUser;
+import junkyard.reservation.domain.estimate.Estimate;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
 
