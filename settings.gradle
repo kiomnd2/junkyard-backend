@@ -1,5 +1,5 @@
 rootProject.name = 'junkyard'
-include 'module-junkward-domain-rdb'
+include 'module-junkward-domain'
 include 'junkward-app-internal-api'
 include 'core-web'
 include 'core-api'

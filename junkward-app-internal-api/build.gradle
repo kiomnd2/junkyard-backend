@@ -11,6 +11,6 @@ dependencies {
     implementation project(":core-web")
     implementation project(":core-api")
     implementation project(":junkyard-kakao-client")
-    implementation project(":module-junkward-domain-rdb")
+    implementation project(":module-junkward-domain")
 }
 

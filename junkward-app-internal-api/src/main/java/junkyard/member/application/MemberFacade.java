@@ -20,9 +20,8 @@ public class MemberFacade {
         return jwtTokenProvider.createToken(authId);
     }
 
-    public String getAccessToken(String code) {
+    public String getAccessToken(String code, String method) {
         return accessTokenCaller.call(code).accessToken;
     }
-
 
 }

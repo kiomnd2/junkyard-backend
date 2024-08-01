@@ -25,7 +25,7 @@ public class KakaoMemberApi {
 
         return CommonResponse.success(KakaoMemberDto.AccessTokenResponse
                 .builder()
-                .accessToken(memberFacade.getAccessToken(code))
+                .accessToken(memberFacade.getAccessToken(code, "kakao"))
                 .build());
     }
 
