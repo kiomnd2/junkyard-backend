@@ -1,19 +1,14 @@
-plugins {
-    id 'java'
+bootJar {
+    enabled = false
 }
 
-group = 'com.subprj'
-version = '1.0-SNAPSHOT'
-
-repositories {
-    mavenCentral()
+jar {
+    enabled = true
 }
+
 
 dependencies {
-    testImplementation platform('org.junit:junit-bom:5.9.1')
-    testImplementation 'org.junit.jupiter:junit-jupiter'
+    implementation project(":core-web")
+    implementation project(":module-member-domain-rdb")
 }
 
-test {
-    useJUnitPlatform()
-}
