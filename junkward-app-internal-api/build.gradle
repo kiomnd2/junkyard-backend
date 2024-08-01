@@ -9,6 +9,6 @@ jar {
 
 dependencies {
     implementation project(":core-web")
-    implementation project(":module-member-domain-rdb")
+    implementation project(":module-junkward-domain-rdb")
 }
 

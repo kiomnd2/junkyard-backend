@@ -10,8 +10,8 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/core-web" />
-            <option value="$PROJECT_DIR$/member-app-internal-api" />
-            <option value="$PROJECT_DIR$/module-member-domain-rdb" />
+            <option value="$PROJECT_DIR$/junkward-app-internal-api" />
+            <option value="$PROJECT_DIR$/module-junkward-domain-rdb" />
           </set>
         </option>
       </GradleProjectSettings>
