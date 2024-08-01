@@ -29,7 +29,7 @@ public class KakaoMemberApi {
 
     @PostMapping("/auth-check")
     public CommonResponse<KakaoMemberDto.LoginResponse> authCheck(@RequestHeader String accessToken) {
-        CheckUserResult checkMember = memberFacade.checkMember(accessToken);
+        CheckUserResult checkMember = memberFacade.checkMember(accessToken, "kakao");
         return CommonResponse.success(KakaoMemberDto.LoginResponse.builder()
                 .kakaoId(checkMember.kakaoId())
                 .token(checkMember.token())

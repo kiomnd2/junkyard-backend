@@ -1,6 +1,6 @@
 package junkyard.member.infrastructure.caller;
 
-public interface AccessTokenCaller {
+public interface UserInfoCaller {
     boolean supports(String method);
-    AccessTokenResponse call(String code);
+    UserInfoResponse call(String accessToken);
 }
