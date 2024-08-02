@@ -45,7 +45,9 @@ pipeline {
         }
 
         stage('Deploy') {
-            agent any
+            agent {
+                 label 'main'
+            }
             steps {
                 script {
                     dir('compose') {
