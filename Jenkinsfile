@@ -2,6 +2,10 @@ pipeline {
     agent {
         label 'docker'
     }
+
+    triggers {
+        githubPush()
+    }
     
     environment {
         DOCKER_IMAGE = 'junkyard-backend'
