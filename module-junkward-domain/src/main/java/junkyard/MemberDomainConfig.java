@@ -5,7 +5,7 @@ import org.springframework.context.annotation.PropertySource;
 
 @PropertySource(encoding = "UTF-8", ignoreResourceNotFound = true,
         value = {
-                "classpath:application-member-domain-rdb-local.properties"
+                "classpath:application-member-domain-rdb-${spring.profiles.active}.properties"
         }
 )
 @Configuration

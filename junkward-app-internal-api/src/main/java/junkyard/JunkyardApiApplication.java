@@ -6,7 +6,7 @@ import org.springframework.context.annotation.PropertySource;
 
 @PropertySource(encoding = "UTF-8", ignoreResourceNotFound = true,
 value = {
-        "classpath:application-junkyard-api.properties"
+        "classpath:application-junkyard-api-${spring.profiles.active}.properties"
 })
 @SpringBootApplication
 public class JunkyardApiApplication {
