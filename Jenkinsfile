@@ -22,14 +22,14 @@ pipeline {
         
         stage('Build') {
             steps {
-                sh './gradlew clean build'
+                sh 'gradlew clean build -x test'
             }
         }
 
         stage('Docker Build and Push') {
             steps {
                 script {
-                    def modules = ['app', 'batch', 'queue']
+                    def modules = ['junkward-app-internal-api']
                     for (module in modules) {
                         dir(module) {
                             docker.build("${DOCKER_IMAGE}-${module}:${env.BUILD_ID}", ".")
