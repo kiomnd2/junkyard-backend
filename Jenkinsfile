@@ -34,7 +34,7 @@ pipeline {
                     def modules = ['junkward-app-internal-api']
                     for (module in modules) {
                         dir(module) {
-                            sh 'docker build ${REGISTRY}/${module}:latest .'
+                            sh 'docker build -t ${REGISTRY}/${module}:latest .'
                             sh 'docker push ${REGISTRY}/${module}:latest'
                         }
                     }
