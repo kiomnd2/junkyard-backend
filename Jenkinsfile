@@ -34,10 +34,8 @@ pipeline {
                     def modules = ['junkward-app-internal-api']
                     for (module in modules) {
                         dir(module) {
-                            docker.build("${DOCKER_IMAGE}-${module}:${env.BUILD_ID}", ".")
-                            docker.withRegistry("${REGISTRY}") {
-                                docker.image("${DOCKER_IMAGE}-${module}:${env.BUILD_ID}").push()
-                            }
+                            sh 'docker build ${REGISTRY}/${module}:latest .'
+                            sh 'docker push ${REGISTRY}/${module}:latest'
                         }
                     }
                 }

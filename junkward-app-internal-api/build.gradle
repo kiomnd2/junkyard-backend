@@ -1,15 +1,7 @@
-String jarname ='app.jar'
+String jarname ='junkward-app-internal-api.jar'
 
 tasks.named("bootJar") {
     bootJar.getArchiveFileName().set(jarname)
-
-    bootJar.doLast(task -> {
-        copy(copySpec -> {
-            copySpec.from("build/libs/" + jarname)
-            copySpec.into("../build/libs")
-        })
-    })
-
 }
 
 
