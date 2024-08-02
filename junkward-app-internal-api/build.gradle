@@ -9,6 +9,7 @@ tasks.named("bootJar") {
             copySpec.into("../build/libs")
         })
     })
+
 }
 
 
