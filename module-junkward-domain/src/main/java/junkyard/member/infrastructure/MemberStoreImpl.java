@@ -14,6 +14,7 @@ public class MemberStoreImpl implements MemberStore {
 
     @Override
     public MemberUser storeMember(MemberUser member) {
+        //test
         return memberRepository.save(member);
     }
 }
