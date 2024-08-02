@@ -1,3 +1,17 @@
+String jarname ='app.jar'
+
+tasks.named("bootJar") {
+    bootJar.getArchiveFileName().set(jarname)
+
+    bootJar.doLast(task -> {
+        copy(copySpec -> {
+            copySpec.from("build/libs/" + jarname)
+            copySpec.into("../build/libs")
+        })
+    })
+}
+
+
 dependencies {
     implementation project(":core-web")
     implementation project(":core-api")
