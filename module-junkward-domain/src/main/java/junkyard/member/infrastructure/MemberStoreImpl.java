@@ -5,8 +5,6 @@ import junkyard.member.domain.MemberUser;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
-import java.lang.reflect.Member;
-
 @RequiredArgsConstructor
 @Component
 public class MemberStoreImpl implements MemberStore {
