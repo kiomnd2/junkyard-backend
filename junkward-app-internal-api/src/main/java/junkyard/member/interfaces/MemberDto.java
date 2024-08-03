@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 
 public class MemberDto {
 
+    @Builder
     @Getter
     @NoArgsConstructor
     @AllArgsConstructor

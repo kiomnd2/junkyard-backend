@@ -10,5 +10,6 @@ dependencies {
     implementation project(":core-api")
     implementation project(":junkyard-kakao-client")
     implementation project(":module-junkward-domain")
+    testImplementation 'org.springframework.security:spring-security-test'
 }
 

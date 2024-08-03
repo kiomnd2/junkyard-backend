@@ -1,0 +1,28 @@
+ifndef::snippets[]
+:snippets: ./build/generated-snippets
+endif::[]
+
+= API Docs
+:doctype: book
+:icons: font
+:source-highlighter: highlightjs
+:toc: left
+:toclevels: 1
+:toc-title: 그룹
+
+== 사용자 가입
+=== REQUEST
+
+include::{snippets}/join/http-request.adoc[]
+
+=== REQEUST FIELD
+
+include::{snippets}/join/request-fields.adoc[]
+
+=== RESPONSE
+
+include::{snippets}/join/http-response.adoc[]
+
+=== RESPONSE FIELD
+
+include::{snippets}/join/response-fields.adoc[]
