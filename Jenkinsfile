@@ -4,7 +4,7 @@ pipeline {
     triggers {
         githubPush()
     }
-    
+
     environment {
         DOCKER_IMAGE = 'junkyard-backend'
         REGISTRY = '3.35.254.168:5000'
@@ -19,12 +19,12 @@ pipeline {
                 git branch: 'main', url: 'https://github.com/kiomnd2/junkyard-backend.git'
             }
         }
-        
+
         stage('Build') {
             agent { label 'docker' }
             steps {
                 sh '''chmod +x gradlew
-                ./gradlew clean build -x test
+                ./gradlew clean build
                 '''
             }
         }
