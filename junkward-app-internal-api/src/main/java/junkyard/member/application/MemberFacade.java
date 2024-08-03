@@ -5,6 +5,7 @@ import junkyard.member.domain.CheckUserResult;
 import junkyard.member.domain.MemberService;
 import junkyard.member.infrastructure.caller.AccessTokenCaller;
 import junkyard.member.infrastructure.caller.UserInfoCaller;
+import junkyard.member.infrastructure.caller.UserInfoResponse;
 import junkyard.member.interfaces.MemberDto;
 import junkyard.security.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
@@ -38,7 +39,19 @@ public class MemberFacade {
     public CheckUserResult checkMember(String accessToken, String method) {
         for (UserInfoCaller caller: userInfoCallers ) {
             if (caller.supports(method)) {
-                caller.call(accessToken);
+                UserInfoResponse call = caller.call(accessToken);
+                if (memberService.checkMember(call.id())) {
+                    return CheckUserResult.builder()
+                            .isJoined(true)
+                            .authId(call.id())
+                            .token(accessToken)
+                            .nickname(call.nickname())
+                            .build();
+                }
+                return CheckUserResult.builder()
+                        .isJoined(false)
+                        .authId(call.id())
+                        .build();
             }
         }
         throw new InvalidTypeException(method);
