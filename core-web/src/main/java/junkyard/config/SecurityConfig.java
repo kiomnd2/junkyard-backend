@@ -30,6 +30,7 @@ public class SecurityConfig {
                         httpSecurityHeadersConfigurer.frameOptions(HeadersConfigurer.FrameOptionsConfig::disable))
                 .authorizeHttpRequests(auth -> auth.requestMatchers("/"
                         ,"/kakao/callback"
+                        ,"/docs/**"
                         ,"/v1/api/member/join"
                         ,"/api/v1/kakao/**"
                         ,"/h2-console/**").permitAll())
