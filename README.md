@@ -24,6 +24,9 @@ https://github.com/leey0818/junkyard-reservation-app
  * 이후 Redis Pub/sub 활용한 실시간 채팅
  * 토스/카카오페이 결제 모듈을 추가 예정
 
+### 카카오 로그인
+https://github.com/kiomnd2/kakao-login-sample
+
 ## API 가이드
 [REST API Docs](http://3.35.254.168:38080/docs/index.html)
 
