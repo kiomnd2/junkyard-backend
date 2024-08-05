@@ -29,10 +29,10 @@ public class SecurityConfig {
                 .headers(httpSecurityHeadersConfigurer ->
                         httpSecurityHeadersConfigurer.frameOptions(HeadersConfigurer.FrameOptionsConfig::disable))
                 .authorizeHttpRequests(auth -> auth.requestMatchers("/"
+                        ,"/v1/api/member/kakao/auth-check"
                         ,"/kakao/callback"
                         ,"/docs/**"
                         ,"/v1/api/member/join"
-                        ,"/api/v1/kakao/**"
                         ,"/h2-console/**").permitAll())
                 .formLogin(AbstractHttpConfigurer::disable)
                 .httpBasic(AbstractHttpConfigurer::disable)

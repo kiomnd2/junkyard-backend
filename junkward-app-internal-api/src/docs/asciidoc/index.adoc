@@ -15,7 +15,7 @@ endif::[]
 
 include::{snippets}/join/http-request.adoc[]
 
-=== REQEUST FIELD
+=== REQUEST FIELD
 
 include::{snippets}/join/request-fields.adoc[]
 
@@ -26,3 +26,21 @@ include::{snippets}/join/http-response.adoc[]
 === RESPONSE FIELD
 
 include::{snippets}/join/response-fields.adoc[]
+
+
+== 사용자 체크
+=== REQUEST
+
+include::{snippets}/authCheck/http-request.adoc[]
+
+=== REQUEST FIELD
+
+include::{snippets}/authCheck/request-fields.adoc[]
+
+=== RESPONSE
+
+include::{snippets}/authCheck/http-response.adoc[]
+
+=== RESPONSE FIELD
+
+include::{snippets}/authCheck/response-fields.adoc[]

@@ -81,11 +81,13 @@ public class MemberApiTest {
                                 fieldWithPath("method").description("가입 매치 (kakao,toss ...)").type("String")
                         ),
                         responseFields(
-                                fieldWithPath("code").type("String").description("응답토큰"),
+                                fieldWithPath("code").type("String").description("응답 결과 코드"),
                                 fieldWithPath("message").type("String").description("응답 메시지"),
                                 fieldWithPath("data.token").description("JWT 토큰 값")
                         )
                         ))
         ;
     }
+
+
 }

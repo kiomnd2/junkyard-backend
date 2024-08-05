@@ -66,6 +66,7 @@ dependencies {
     implementation project(":junkyard-kakao-client")
     implementation project(":module-junkward-domain")
     asciidoctorExt 'org.springframework.restdocs:spring-restdocs-asciidoctor'
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
     testImplementation 'org.springframework.security:spring-security-test'
 }
 
