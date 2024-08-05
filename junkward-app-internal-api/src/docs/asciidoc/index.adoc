@@ -15,6 +15,10 @@ endif::[]
 
 include::{snippets}/join/http-request.adoc[]
 
+=== REQUEST HEADER
+
+include::{snippets}/join/request-headers.adoc[]
+
 === REQUEST FIELD
 
 include::{snippets}/join/request-fields.adoc[]
