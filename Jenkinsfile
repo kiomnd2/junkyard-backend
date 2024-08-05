@@ -53,7 +53,7 @@ pipeline {
                     dir('compose') {
                         git branch: 'main', url: "${env.COMPOSE_REPO}"
                     }
-                    sh 'docker-compose pull'
+                    sh 'docker-compose -f compose/docker-compose.yml pull'
                     sh 'docker-compose -f compose/docker-compose.yml up --force-recreate --no-deps -d'
                 }
             }
