@@ -9,6 +9,7 @@ jar {
 
 
 dependencies {
+    implementation project(":core-api")
     api 'org.springframework.boot:spring-boot-starter-web'
     api 'org.springframework.boot:spring-boot-starter-security'
     api 'io.jsonwebtoken:jjwt-api:0.11.5'

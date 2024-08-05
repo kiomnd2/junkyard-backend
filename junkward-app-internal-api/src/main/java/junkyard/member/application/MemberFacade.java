@@ -1,6 +1,6 @@
 package junkyard.member.application;
 
-import junkyard.response.exception.InvalidTypeException;
+import junkyard.common.response.exception.InvalidTypeException;
 import junkyard.member.domain.CheckUserResult;
 import junkyard.member.domain.MemberService;
 import junkyard.member.infrastructure.caller.AccessTokenCaller;

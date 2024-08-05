@@ -1,7 +1,7 @@
 package junkyard.member.interfaces;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import junkyard.response.codes.Codes;
+import junkyard.common.response.codes.Codes;
 import junkyard.member.application.MemberFacade;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

@@ -1,6 +1,6 @@
 package junkyard.response;
 
-import junkyard.response.codes.Codes;
+import junkyard.common.response.codes.Codes;
 
 public record CommonResponse<T>(String code, String message, T data) {
 
