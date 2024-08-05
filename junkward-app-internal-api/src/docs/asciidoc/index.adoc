@@ -15,10 +15,6 @@ endif::[]
 
 include::{snippets}/join/http-request.adoc[]
 
-=== REQUEST HEADER
-
-include::{snippets}/join/request-headers.adoc[]
-
 === REQUEST FIELD
 
 include::{snippets}/join/request-fields.adoc[]
@@ -37,9 +33,9 @@ include::{snippets}/join/response-fields.adoc[]
 
 include::{snippets}/authCheck/http-request.adoc[]
 
-=== REQUEST FIELD
+=== REQUEST HEADER
 
-include::{snippets}/authCheck/request-fields.adoc[]
+include::{snippets}/authCheck/request-headers.adoc[]
 
 === RESPONSE
 
