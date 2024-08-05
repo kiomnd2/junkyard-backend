@@ -1,6 +1,6 @@
-package junkyard.common.response.exception;
+package junkyard.response.exception;
 
-import junkyard.common.response.codes.Codes;
+import junkyard.response.codes.Codes;
 
 public class InvalidTypeException extends BaseException {
 

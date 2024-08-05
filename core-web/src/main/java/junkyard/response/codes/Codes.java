@@ -1,4 +1,4 @@
-package junkyard.common.response.codes;
+package junkyard.response.codes;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

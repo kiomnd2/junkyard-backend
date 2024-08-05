@@ -1,6 +1,6 @@
 package junkyard.member.interfaces;
 
-import junkyard.common.response.CommonResponse;
+import junkyard.response.CommonResponse;
 import junkyard.member.application.MemberFacade;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;

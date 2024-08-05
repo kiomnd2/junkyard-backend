@@ -1,13 +1,10 @@
 package junkyard.member.interfaces;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import junkyard.common.response.codes.Codes;
+import junkyard.response.codes.Codes;
 import junkyard.member.application.MemberFacade;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
@@ -15,15 +12,9 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
-import org.springframework.restdocs.RestDocumentationContextProvider;
 import org.springframework.restdocs.mockmvc.MockMvcRestDocumentation;
-import org.springframework.restdocs.payload.PayloadDocumentation;
-import org.springframework.restdocs.request.RequestDocumentation;
-import org.springframework.security.test.context.support.WithAnonymousUser;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import org.springframework.web.context.WebApplicationContext;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;

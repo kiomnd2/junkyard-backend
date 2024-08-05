@@ -2,7 +2,7 @@ package junkyard.member.domain;
 
 import jakarta.persistence.*;
 import junkyard.BaseEntity;
-import junkyard.common.response.exception.InvalidTypeException;
+import junkyard.response.exception.InvalidTypeException;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

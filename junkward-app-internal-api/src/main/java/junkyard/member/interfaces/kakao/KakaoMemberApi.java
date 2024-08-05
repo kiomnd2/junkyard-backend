@@ -1,13 +1,11 @@
 package junkyard.member.interfaces.kakao;
 
 import jakarta.validation.constraints.NotNull;
-import junkyard.common.response.CommonResponse;
+import junkyard.response.CommonResponse;
 import junkyard.member.application.MemberFacade;
 import junkyard.member.domain.CheckUserResult;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Objects;
 
 @RestController
 @RequiredArgsConstructor
