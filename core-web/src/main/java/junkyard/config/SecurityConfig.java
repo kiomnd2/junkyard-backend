@@ -1,8 +1,12 @@
 package junkyard.config;
 
+import junkyard.filter.JwtFilter;
+import junkyard.security.JwtTokenProvider;
+import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.web.servlet.DispatcherServletAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -10,16 +14,14 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
+@RequiredArgsConstructor
 @EnableWebSecurity
 @Configuration
 public class SecurityConfig {
-
-    private final DispatcherServletAutoConfiguration dispatcherServletAutoConfiguration;
-
-    public SecurityConfig(DispatcherServletAutoConfiguration dispatcherServletAutoConfiguration) {
-        this.dispatcherServletAutoConfiguration = dispatcherServletAutoConfiguration;
-    }
+    private final JwtTokenProvider jwtTokenProvider;
 
     @Bean
     public SecurityFilterChain SecurityFilterChain(HttpSecurity http, AuthenticationConfiguration authenticationConfiguration) throws Exception{
@@ -36,7 +38,8 @@ public class SecurityConfig {
                         ,"/h2-console/**").permitAll())
                 .formLogin(AbstractHttpConfigurer::disable)
                 .httpBasic(AbstractHttpConfigurer::disable)
-                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .addFilterBefore(new JwtFilter(jwtTokenProvider), BasicAuthenticationFilter.class);
         return security.build();
 
     }
