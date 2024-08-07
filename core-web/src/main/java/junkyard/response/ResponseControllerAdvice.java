@@ -2,6 +2,7 @@ package junkyard.response;
 
 import junkyard.common.response.codes.Codes;
 import junkyard.common.response.exception.BaseException;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
+@Slf4j
 @ControllerAdvice
 public class ResponseControllerAdvice {
 
@@ -21,6 +23,7 @@ public class ResponseControllerAdvice {
     @ResponseStatus(HttpStatus.OK)
     @ExceptionHandler(BaseException.class)
     public CommonResponse<Void> onBaseException(BaseException e) {
+        log.error(e.getMessage());
         return CommonResponse.failed(e.getCode().name(), e.getCode().getDescription(e.getArgs()));
     }
 
@@ -32,6 +35,7 @@ public class ResponseControllerAdvice {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public CommonResponse<String> onArgumentNotValidException(MethodArgumentNotValidException e) {
+        log.error(e.getMessage());
         BindingResult bindingResult = e.getBindingResult();
         FieldError fieldError = bindingResult.getFieldError();
         if (fieldError != null) {
@@ -50,6 +54,7 @@ public class ResponseControllerAdvice {
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler(value = Exception.class)
     public CommonResponse<String> onException(Exception e) {
+        log.error(e.getMessage());
         return CommonResponse.failed(Codes.COMMON_SYSTEM_ERROR.name(), Codes.COMMON_SYSTEM_ERROR.getDescription());
     }
 }

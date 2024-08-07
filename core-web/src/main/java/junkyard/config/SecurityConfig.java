@@ -1,6 +1,9 @@
 package junkyard.config;
 
-import org.springframework.boot.autoconfigure.web.servlet.DispatcherServletAutoConfiguration;
+import junkyard.filter.ErrorHandlerFilter;
+import junkyard.filter.JwtFilter;
+import junkyard.security.JwtTokenProvider;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
@@ -9,17 +12,16 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+@RequiredArgsConstructor
 @EnableWebSecurity
 @Configuration
 public class SecurityConfig {
-
-    private final DispatcherServletAutoConfiguration dispatcherServletAutoConfiguration;
-
-    public SecurityConfig(DispatcherServletAutoConfiguration dispatcherServletAutoConfiguration) {
-        this.dispatcherServletAutoConfiguration = dispatcherServletAutoConfiguration;
-    }
+    private final JwtTokenProvider jwtTokenProvider;
+    private final UserDetailsService userDetailsService;
 
     @Bean
     public SecurityFilterChain SecurityFilterChain(HttpSecurity http, AuthenticationConfiguration authenticationConfiguration) throws Exception{
@@ -33,10 +35,14 @@ public class SecurityConfig {
                         ,"/kakao/callback"
                         ,"/docs/**"
                         ,"/v1/api/member/join"
-                        ,"/h2-console/**").permitAll())
+                        ,"/h2-console/**").permitAll()
+                        .anyRequest().authenticated()
+                )
                 .formLogin(AbstractHttpConfigurer::disable)
                 .httpBasic(AbstractHttpConfigurer::disable)
-                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .addFilterBefore(new JwtFilter(jwtTokenProvider, userDetailsService), UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(new ErrorHandlerFilter(), JwtFilter.class);
         return security.build();
 
     }

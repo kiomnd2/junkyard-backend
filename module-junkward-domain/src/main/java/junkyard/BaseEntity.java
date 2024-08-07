@@ -19,9 +19,9 @@ public abstract class BaseEntity {
 
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     @CreatedDate
-    private LocalDateTime regDt;
+    private LocalDateTime createdAt;
 
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     @LastModifiedDate
-    private LocalDateTime updDt;
+    private LocalDateTime updatedAt;
 }

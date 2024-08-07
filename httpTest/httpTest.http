@@ -1,0 +1,37 @@
+POST http://localhost:38080/v1/api/reservation/checkout
+Content-Type: application/json
+
+{
+
+
+}
+
+###
+
+POST http://localhost:38080/v1/api/member/kakao/auth-check
+Content-Type: application/json
+kakaoAccessToken: AZ3NUC5coxQKgw1Obrt6EjY37TY_xvjcAAAAAQo8JFoAAAGRKwRqTOAsyCcGfplL
+
+
+###
+
+POST http://localhost:38080/v1/api/member/join
+Content-Type: application/json
+
+{
+  "id": 3643857378,
+  "method": "kakao",
+  "name": "김디용",
+  "phoneNo": "01000010001",
+  "email": "test@email.com"
+}
+
+###
+
+POST http://localhost:38080/v1/api/reservation/checkout
+Content-Type: application/json
+Authorization: Bearer eyJhbGciiJIUzUxMiJ9.eyJpYXQiOjE3MjMwMTQ0NzUsInN1YiI6IjM2NDM4NTczNzgiLCJleHAiOjE3MjMwMTYyNzV9.2mwHds75v9xbCHuxjEFvUlmtB8b1pxC0F_rjxTreV3TksFAvkTjxqVxfG96P8EIbJOJ8wxH4Qh546ysrGdOt5Q
+
+{
+  "seed": "seed"
+}

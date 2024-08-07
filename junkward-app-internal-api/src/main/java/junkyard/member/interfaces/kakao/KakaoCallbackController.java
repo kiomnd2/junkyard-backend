@@ -29,9 +29,6 @@ public class KakaoCallbackController {
         }
 
         String accessToken = memberFacade.getAccessToken(code, "kakao");
-        System.out.println(accessToken);
-        System.out.println(redirctUrl);
-
         return "redirect:" + redirctUrl + "?accessToken=" + accessToken;
     }
 }

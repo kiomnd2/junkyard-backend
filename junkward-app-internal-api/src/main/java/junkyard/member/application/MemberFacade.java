@@ -44,7 +44,7 @@ public class MemberFacade {
                     return CheckUserResult.builder()
                             .isJoined(true)
                             .authId(call.id())
-                            .token(accessToken)
+                            .token(jwtTokenProvider.createToken(call.id()))
                             .nickname(call.nickname())
                             .build();
                 }

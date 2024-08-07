@@ -15,7 +15,12 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Component;
 
+import javax.crypto.spec.SecretKeySpec;
 import java.security.Key;
+import java.sql.Timestamp;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.Date;
 
 @RequiredArgsConstructor
@@ -32,20 +37,25 @@ public class JwtTokenProvider {
         key = Keys.hmacShaKeyFor(secretKey.getBytes());
     }
 
+
     public String createToken(Long id) {
-        Claims claims = Jwts.claims().setSubject(String.valueOf(id));
         Date now = new Date();
         return Jwts.builder()
-                .setClaims(claims)
-                .setIssuedAt(now)
+                .signWith(new SecretKeySpec(secretKey.getBytes(),
+                        SignatureAlgorithm.HS512.getJcaName()))
+                .setIssuedAt(Timestamp.valueOf(LocalDateTime.now()))
+                .setSubject(String.valueOf(id))
                 .setExpiration(new Date(now.getTime() + 30 * 60 * 1000L))
-                .signWith(key, SignatureAlgorithm.ES256)
                 .compact();
     }
 
-    public Authentication getAuthentication(String token) {
-        UserDetails userDetails = userDetailsService.loadUserByUsername(getUserId(token));
-        return new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+    public String validToken(String token) {
+        return Jwts.parserBuilder()
+                .setSigningKey(secretKey.getBytes())
+                .build()
+                .parseClaimsJws(token)
+                .getBody()
+                .getSubject();
     }
 
     public String getUserId(String token) {
