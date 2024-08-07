@@ -23,7 +23,7 @@ public class MemberFacade {
 
     public String joinMember(MemberDto.RequestJoin requestJoin) {
         Long authId = memberService.registerMember(requestJoin.toCommand());
-        return jwtTokenProvider.createToken(authId, "USER");
+        return jwtTokenProvider.createToken(authId);
 
     }
 
@@ -44,7 +44,7 @@ public class MemberFacade {
                     return CheckUserResult.builder()
                             .isJoined(true)
                             .authId(call.id())
-                            .token(accessToken)
+                            .token(jwtTokenProvider.createToken(call.id()))
                             .nickname(call.nickname())
                             .build();
                 }

@@ -38,13 +38,13 @@ public class JwtTokenProvider {
     }
 
 
-    public String createToken(Long id, String role) {
+    public String createToken(Long id) {
         Date now = new Date();
         return Jwts.builder()
                 .signWith(new SecretKeySpec(secretKey.getBytes(),
                         SignatureAlgorithm.HS512.getJcaName()))
                 .setIssuedAt(Timestamp.valueOf(LocalDateTime.now()))
-                .setSubject(String.format("%d:%s", id, role))
+                .setSubject(String.valueOf(id))
                 .setExpiration(new Date(now.getTime() + 30 * 60 * 1000L))
                 .compact();
     }

@@ -11,12 +11,26 @@ public class ReservationDto {
     @AllArgsConstructor
     @Builder
     @Getter
+    public static class RequestReservationCheckout {
+        private String seed;
+    }
+
+    @NoArgsConstructor
+    @AllArgsConstructor
+    @Builder
+    @Getter
+    public static class ResponseReservationCheckout {
+        private String idempotencyKey;
+    }
+
+    @NoArgsConstructor
+    @Builder
+    @Getter
     public static class RequestReservation {
 
     }
 
     @NoArgsConstructor
-    @AllArgsConstructor
     @Builder
     @Getter
     public static class ResponseReservation {

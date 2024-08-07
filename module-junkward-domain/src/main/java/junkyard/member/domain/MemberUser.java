@@ -6,8 +6,7 @@ import junkyard.common.response.exception.InvalidTypeException;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
-import java.time.LocalDateTime;
+import lombok.RequiredArgsConstructor;
 
 @Getter
 @NoArgsConstructor
@@ -35,19 +34,16 @@ public class MemberUser extends BaseEntity {
     @Column(name = "join_method" ,length=20, nullable = false)
     private JoinMethod joinMethod;
 
-    @Column(name = "created_at", nullable = false)
-    private LocalDateTime createdAt;
-
-    @Column(name = "last_visit_at", nullable = false)
-    private LocalDateTime lastVisitAt;
-
+    @RequiredArgsConstructor
+    @Getter
     public enum JoinMethod {
-        KAKAO, TOSS;
+        KAKAO("kakao"), TOSS("toss");
 
+        private final String description;
         public static JoinMethod get(String method) {
             JoinMethod[] values = values();
             for (JoinMethod value : values) {
-                if (method.equals(value.name())) {
+                if (method.equals(value.getDescription())) {
                     return value;
                 }
             }
@@ -56,14 +52,11 @@ public class MemberUser extends BaseEntity {
     }
 
     @Builder
-    public MemberUser(Long authId, String name, String phoneNo, String email, JoinMethod joinMethod,
-                      LocalDateTime createdAt, LocalDateTime lastVisitAt) {
+    public MemberUser(Long authId, String name, String phoneNo, String email, JoinMethod joinMethod) {
         this.authId = authId;
         this.name = name;
         this.phoneNo = phoneNo;
         this.email = email;
         this.joinMethod = joinMethod;
-        this.createdAt = createdAt;
-        this.lastVisitAt = lastVisitAt;
     }
 }
