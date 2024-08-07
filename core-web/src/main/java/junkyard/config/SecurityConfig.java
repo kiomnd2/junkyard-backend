@@ -1,5 +1,6 @@
 package junkyard.config;
 
+import junkyard.filter.ErrorHandlerFilter;
 import junkyard.filter.JwtFilter;
 import junkyard.security.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
@@ -40,7 +41,8 @@ public class SecurityConfig {
                 .formLogin(AbstractHttpConfigurer::disable)
                 .httpBasic(AbstractHttpConfigurer::disable)
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .addFilterBefore(new JwtFilter(jwtTokenProvider, userDetailsService), UsernamePasswordAuthenticationFilter.class);
+                .addFilterBefore(new JwtFilter(jwtTokenProvider, userDetailsService), UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(new ErrorHandlerFilter(), JwtFilter.class);
         return security.build();
 
     }

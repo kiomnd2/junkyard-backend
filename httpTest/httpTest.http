@@ -30,7 +30,7 @@ Content-Type: application/json
 
 POST http://localhost:38080/v1/api/reservation/checkout
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE3MjMwMTI2MDIsInN1YiI6IjM2NDM4NTczNzgiLCJleHAiOjE3MjMwMTQ0MDJ9.PfGVsZbIaLcjE3VqCCHT5p7paH3MMMwCCo9Du7v8G5PtFZOmPxM2-CXA37FbY3pgtg3asGO5HdBbMvgGjd6oJg
+Authorization: Bearer eyJhbGciiJIUzUxMiJ9.eyJpYXQiOjE3MjMwMTQ0NzUsInN1YiI6IjM2NDM4NTczNzgiLCJleHAiOjE3MjMwMTYyNzV9.2mwHds75v9xbCHuxjEFvUlmtB8b1pxC0F_rjxTreV3TksFAvkTjxqVxfG96P8EIbJOJ8wxH4Qh546ysrGdOt5Q
 
 {
   "seed": "seed"
