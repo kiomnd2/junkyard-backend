@@ -5,6 +5,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 public class ReservationDto {
 
     @NoArgsConstructor
@@ -23,11 +25,23 @@ public class ReservationDto {
         private String idempotencyKey;
     }
 
+    @AllArgsConstructor
     @NoArgsConstructor
     @Builder
     @Getter
     public static class RequestReservation {
+        private String contents;
+        private List<RequestCars> carList;
+    }
 
+    @AllArgsConstructor
+    @NoArgsConstructor
+    @Builder
+    @Getter
+    public static class RequestCars {
+        private String make;
+        private String model;
+        private String licensePlate;
     }
 
     @NoArgsConstructor
