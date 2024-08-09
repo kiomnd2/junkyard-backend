@@ -10,6 +10,21 @@ endif::[]
 :toclevels: 1
 :toc-title: 그룹
 
+= 사용자
+== 로그인 checkout
+=== REQUEST
+
+include::{snippets}/checkout/http-request.adoc[]
+
+=== RESPONSE
+
+include::{snippets}/checkout/http-response.adoc[]
+
+=== RESPONSE FIELD
+
+include::{snippets}/checkout/response-fields.adoc[]
+
+
 == 사용자 가입
 === REQUEST
 
