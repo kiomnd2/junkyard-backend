@@ -24,7 +24,7 @@ pipeline {
             agent { label 'docker' }
             steps {
                 sh '''chmod +x gradlew
-                ./gradlew clean build
+                ./gradlew clean bootJar
                 '''
             }
         }
