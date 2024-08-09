@@ -1,10 +1,14 @@
 package junkyard.reservation.inferfaces;
 
+import junkyard.member.domain.MemberUser;
 import junkyard.reservation.application.ReservationFacade;
 import junkyard.response.CommonResponse;
 import junkyard.security.annotataion.UserAuthorize;
+import junkyard.security.userdetails.MyUserDetails;
 import junkyard.utils.IdempotencyCreator;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,16 +24,17 @@ public class ReservationApi {
 
     @UserAuthorize
     @PostMapping("/checkout")
-    public CommonResponse<ReservationDto.ResponseReservationCheckout> issueIdempotencyKey() {
+    public CommonResponse<ReservationDto.ResponseReservationCheckout> issueIdempotencyKey(@AuthenticationPrincipal MyUserDetails userDetails) {
         return CommonResponse.success(ReservationDto.ResponseReservationCheckout.builder()
-                .idempotencyKey(IdempotencyCreator.create("seed"))
+                .idempotencyKey(IdempotencyCreator.create(userDetails.getUsername()))
                 .build());
     }
 
     @UserAuthorize
     @PostMapping
-    public CommonResponse<ReservationDto.ResponseReservation> reservation(@RequestBody ReservationDto.RequestReservation requestReservation) {
-        reservationFacade.reserve(requestReservation);
+    public CommonResponse<ReservationDto.ResponseReservation> reservation(@AuthenticationPrincipal MyUserDetails userDetails,
+                                                                          @RequestBody ReservationDto.RequestReservation requestReservation) {
+        reservationFacade.reserve(userDetails.getUsername(), requestReservation);
         return CommonResponse.success(ReservationDto.ResponseReservation.builder().build());
     }
 

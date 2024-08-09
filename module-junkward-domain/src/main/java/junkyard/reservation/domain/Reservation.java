@@ -39,8 +39,9 @@ public class Reservation extends BaseEntity {
     @Column(name = "end_time", nullable = false)
     private LocalDateTime endTime;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "status", nullable = false, length = 20)
-    private String status;
+    private State status;
 
     @Column(name = "content", nullable = false, length = 500)
     private String content;
@@ -52,15 +53,14 @@ public class Reservation extends BaseEntity {
     private Set<Estimate> estimates = new HashSet<>();
 
     @Builder
-    public Reservation(MemberUser memberUser, Car car, LocalDateTime startTime, LocalDateTime endTime, String status,
-                       String content, String cancellationReason, Set<Estimate> estimates) {
+    public Reservation(MemberUser memberUser, Car car, String content) {
         this.memberUser = memberUser;
         this.car = car;
-        this.startTime = startTime;
-        this.endTime = endTime;
-        this.status = status;
+        this.status = State.PENDING;
         this.content = content;
-        this.cancellationReason = cancellationReason;
-        this.estimates = estimates;
+    }
+
+    public enum State {
+        PENDING, CONFIRMED, CANCELED, REJECTED, COMPLETED, EXPIRED, ON_HOLD
     }
 }
