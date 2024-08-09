@@ -24,6 +24,10 @@ public class KakaoCallbackController {
                                 @RequestParam(required = false) String state,
                                 @RequestParam(required = false) String error,
                                 @RequestParam(required = false) String error_description) {
+        System.out.println(code);
+        System.out.println(code);
+        System.out.println(code);
+        System.out.println(code);
         if (!Objects.isNull(error)) {
             // TODO Exception
         }
