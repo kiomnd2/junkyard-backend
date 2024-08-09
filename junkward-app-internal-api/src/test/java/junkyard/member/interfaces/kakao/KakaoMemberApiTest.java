@@ -1,6 +1,7 @@
 package junkyard.member.interfaces.kakao;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import junkyard.common.response.codes.Codes;
 import junkyard.member.application.MemberFacade;
 import junkyard.member.domain.CheckUserResult;
 import org.junit.jupiter.api.Test;
@@ -13,6 +14,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
@@ -23,23 +25,48 @@ import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.docu
 import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
 import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+@TestPropertySource("classpath:application-junkyard-api.properties")
 @AutoConfigureRestDocs
 @AutoConfigureMockMvc
 @ExtendWith(MockitoExtension.class)
 @WebMvcTest(KakaoMemberApi.class)
 class KakaoMemberApiTest {
 
-
     @Autowired
     protected MockMvc mockMvc;
 
-
     @MockBean
     private MemberFacade memberFacade;
+
+    @WithMockUser
+    @Test
+    public void checkout_shouldReturnSuccess() throws Exception {
+        String kakaoClientId = "test-client-id";
+        String callbackUrl = "http://example.com/callback";
+
+
+        mockMvc.perform(post("/v1/api/member/kakao/checkout")
+                        .with(csrf()))
+                .andExpect(status().isOk())
+                .andDo(print())
+                .andExpect(jsonPath("code").value(Codes.NORMAL.name()))
+                .andExpect(jsonPath("message").value(Codes.NORMAL.getDescription()))
+                .andExpect(jsonPath("data.clientId").value(kakaoClientId))
+                .andExpect(jsonPath("data.callbackUrl").value(callbackUrl))
+                .andDo(document("checkout",
+                        responseFields(
+                                fieldWithPath("code").type("String").description("응답 결과 코드"),
+                                fieldWithPath("message").type("String").description("응답 메시지"),
+                                fieldWithPath("data.clientId").description("The Kakao client ID."),
+                                fieldWithPath("data.callbackUrl").description("The kakao callback URL.")
+                        )
+                ));
+    }
 
     @WithMockUser
     @Test
@@ -55,7 +82,7 @@ class KakaoMemberApiTest {
 
         when(memberFacade.checkMember(accessToken, "kakao")).thenReturn(result);
 
-        mockMvc.perform(MockMvcRequestBuilders.post("/v1/api/member/kakao/auth-check")
+        mockMvc.perform(post("/v1/api/member/kakao/auth-check")
                 .header("kakaoAccessToken", accessToken)
                         .with(csrf())
                 .contentType(MediaType.APPLICATION_JSON))

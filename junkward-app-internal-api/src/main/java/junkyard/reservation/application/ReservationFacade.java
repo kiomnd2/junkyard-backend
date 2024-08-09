@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 @Service
 public class ReservationFacade {
-    public Long reserve(ReservationDto.RequestReservation requestReservation) {
+    public Long reserve(String userName, ReservationDto.RequestReservation requestReservation) {
         return 0L;
     }
 }

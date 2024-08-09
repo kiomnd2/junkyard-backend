@@ -6,6 +6,15 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 public class KakaoMemberDto {
+    @Getter
+    @AllArgsConstructor
+    @NoArgsConstructor
+    @Builder
+    public static class CheckoutResponse {
+        private String callbackUrl;
+        private String clientId;
+    }
+
 
     @Getter
     @AllArgsConstructor
