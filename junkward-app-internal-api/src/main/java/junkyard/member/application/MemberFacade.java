@@ -1,5 +1,6 @@
 package junkyard.member.application;
 
+import io.jsonwebtoken.security.InvalidKeyException;
 import junkyard.common.response.exception.InvalidTypeException;
 import junkyard.member.domain.CheckUserResult;
 import junkyard.member.domain.MemberService;
@@ -61,5 +62,17 @@ public class MemberFacade {
             }
         }
         throw new InvalidTypeException(method);
+    }
+
+    public TokenInfo refresh(String refreshToken) {
+        if (jwtTokenProvider.validateRefreshToken(refreshToken)) {
+            String userId = jwtTokenProvider.getRefreshSubject(refreshToken);
+            String accessToken = jwtTokenProvider.createToken(Long.parseLong(userId));
+            return TokenInfo.builder()
+                    .accessToken(accessToken)
+                    .refreshToken(refreshToken)
+                    .build();
+        }
+        throw new InvalidKeyException("유효하지 않은 refresh Token 입니다. " + refreshToken);
     }
 }

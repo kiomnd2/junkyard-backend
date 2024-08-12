@@ -52,4 +52,14 @@ public class MemberDto {
     public static class ResponseJoin {
         private TokenInfo token;
     }
+
+
+
+    @Builder
+    @Getter
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class ResponseRefresh {
+        private TokenInfo token;
+    }
 }

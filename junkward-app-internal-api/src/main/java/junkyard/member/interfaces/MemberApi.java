@@ -4,10 +4,7 @@ import junkyard.member.application.TokenInfo;
 import junkyard.response.CommonResponse;
 import junkyard.member.application.MemberFacade;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
 @RestController
@@ -20,6 +17,14 @@ public class MemberApi {
         TokenInfo token = memberFacade.joinMember(requestJoin);
         return CommonResponse.success(MemberDto.ResponseJoin.builder()
                         .token(token)
+                .build());
+    }
+
+    @PostMapping("/refresh-token")
+    public CommonResponse<MemberDto.ResponseRefresh> refreshToken(@RequestHeader String refreshToken) {
+        TokenInfo tokenInfo = memberFacade.refresh(refreshToken);
+        return CommonResponse.success(MemberDto.ResponseRefresh.builder()
+                        .token(tokenInfo)
                 .build());
     }
 }

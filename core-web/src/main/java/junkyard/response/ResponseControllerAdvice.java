@@ -1,5 +1,6 @@
 package junkyard.response;
 
+import io.jsonwebtoken.security.InvalidKeyException;
 import junkyard.common.response.codes.Codes;
 import junkyard.common.response.exception.BaseException;
 import lombok.extern.slf4j.Slf4j;
@@ -45,6 +46,15 @@ public class ResponseControllerAdvice {
             return CommonResponse.failed(Codes.COMMON_REQUIRED_VALUE.name(), "UNKNOWN");
         }
     }
+
+    @ResponseBody
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    @ExceptionHandler(InvalidKeyException.class)
+    public CommonResponse<String> onInvalidKeyException(InvalidKeyException e) {
+        log.error(e.getMessage());
+        return CommonResponse.failed(Codes.COMMON_REQUIRED_VALUE.name(), Codes.COMMON_INVALID_TOKEN_ERROR.getDescription());
+    }
+
 
     /**
      * http status 500 and result fail
