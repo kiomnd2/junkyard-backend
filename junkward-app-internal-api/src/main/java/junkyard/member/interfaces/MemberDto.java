@@ -1,6 +1,7 @@
 package junkyard.member.interfaces;
 
 import jakarta.validation.constraints.*;
+import junkyard.member.application.TokenInfo;
 import junkyard.member.domain.MemberRegisterCommand;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -49,6 +50,6 @@ public class MemberDto {
     @NoArgsConstructor
     @AllArgsConstructor
     public static class ResponseJoin {
-        private String token;
+        private TokenInfo token;
     }
 }

@@ -1,6 +1,7 @@
 package junkyard.member.interfaces.kakao;
 
 import jakarta.validation.constraints.NotNull;
+import junkyard.member.application.TokenInfo;
 import junkyard.response.CommonResponse;
 import junkyard.member.application.MemberFacade;
 import junkyard.member.domain.CheckUserResult;
@@ -33,7 +34,10 @@ public class KakaoMemberApi {
         CheckUserResult checkMember = memberFacade.checkMember(kakaoAccessToken, "kakao");
         return CommonResponse.success(KakaoMemberDto.LoginResponse.builder()
                 .kakaoId(checkMember.authId())
-                .token(checkMember.token())
+                .token(TokenInfo.builder()
+                        .accessToken(checkMember.accessToken())
+                        .refreshToken(checkMember.refreshToken())
+                        .build())
                 .isJoined(checkMember.isJoined())
                 .nickname(checkMember.nickname())
                 .build());

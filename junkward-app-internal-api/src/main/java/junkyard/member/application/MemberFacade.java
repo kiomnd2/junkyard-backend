@@ -21,9 +21,14 @@ public class MemberFacade {
     private final Set<AccessTokenCaller> accessTokenCaller;
     private final Set<UserInfoCaller> userInfoCallers;
 
-    public String joinMember(MemberDto.RequestJoin requestJoin) {
+    public TokenInfo joinMember(MemberDto.RequestJoin requestJoin) {
         Long authId = memberService.registerMember(requestJoin.toCommand());
-        return jwtTokenProvider.createToken(authId);
+        String token = jwtTokenProvider.createToken(authId);
+        String refreshToken = jwtTokenProvider.createRefreshToken(authId);
+        return TokenInfo.builder()
+                .accessToken(token)
+                .refreshToken(refreshToken)
+                .build();
 
     }
 
@@ -44,7 +49,8 @@ public class MemberFacade {
                     return CheckUserResult.builder()
                             .isJoined(true)
                             .authId(call.id())
-                            .token(jwtTokenProvider.createToken(call.id()))
+                            .accessToken(jwtTokenProvider.createToken(call.id()))
+                            .refreshToken(jwtTokenProvider.createRefreshToken(call.id()))
                             .nickname(call.nickname())
                             .build();
                 }

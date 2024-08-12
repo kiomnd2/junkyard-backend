@@ -30,6 +30,10 @@ public class JwtTokenProvider {
 
     @Value("${jwt.secret}")
     private String secretKey;
+
+    @Value("${jwt.refresh.secret}")
+    private String refreshKey;
+
     private Key key;
 
     @PostConstruct
@@ -46,6 +50,17 @@ public class JwtTokenProvider {
                 .setIssuedAt(Timestamp.valueOf(LocalDateTime.now()))
                 .setSubject(String.valueOf(id))
                 .setExpiration(new Date(now.getTime() + 30 * 60 * 1000L))
+                .compact();
+    }
+
+    public String createRefreshToken(Long id) {
+        Date now = new Date();
+        return Jwts.builder()
+                .signWith(new SecretKeySpec(refreshKey.getBytes(),
+                        SignatureAlgorithm.HS512.getJcaName()))
+                .setIssuedAt(Timestamp.valueOf(LocalDateTime.now()))
+                .setExpiration(new Date(now.getTime() + 1000L * 60L * 60L * 24L * 30L)) // 31일 유효
+                .setSubject(String.valueOf(id))
                 .compact();
     }
 

@@ -1,5 +1,6 @@
 package junkyard.member.interfaces;
 
+import junkyard.member.application.TokenInfo;
 import junkyard.response.CommonResponse;
 import junkyard.member.application.MemberFacade;
 import lombok.RequiredArgsConstructor;
@@ -16,7 +17,7 @@ public class MemberApi {
 
     @PostMapping("/join")
     public CommonResponse<MemberDto.ResponseJoin> join(@RequestBody MemberDto.RequestJoin requestJoin) {
-        String token = memberFacade.joinMember(requestJoin);
+        TokenInfo token = memberFacade.joinMember(requestJoin);
         return CommonResponse.success(MemberDto.ResponseJoin.builder()
                         .token(token)
                 .build());

@@ -1,5 +1,6 @@
 package junkyard.member.interfaces.kakao;
 
+import junkyard.member.application.TokenInfo;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -31,7 +32,7 @@ public class KakaoMemberDto {
     public static class LoginResponse {
         private boolean isJoined; // 가입 여부
         private Long kakaoId;
-        private String token;
+        private TokenInfo token;
         private String nickname;
     }
 }
