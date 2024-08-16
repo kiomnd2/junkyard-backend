@@ -76,7 +76,7 @@ class KakaoMemberApiTest {
         CheckUserResult result = CheckUserResult.builder()
                 .nickname("김띠용")
                 .isJoined(false)
-                .token("token")
+                .accessToken("token")
                 .authId(12345L)
                 .build();
 
@@ -90,7 +90,7 @@ class KakaoMemberApiTest {
                 .andExpect(jsonPath("data.kakaoId").value(result.authId()))
                 .andExpect(jsonPath("data.nickname").value(result.nickname()))
                 .andExpect(jsonPath("data.joined").value(result.isJoined()))
-                .andExpect(jsonPath("data.token").value(result.token()))
+                .andExpect(jsonPath("data.token.accessToken").value(result.accessToken()))
                 .andDo(print())
                 .andDo(document("authCheck",
                         requestHeaders(
@@ -100,7 +100,8 @@ class KakaoMemberApiTest {
                                 fieldWithPath("code").type("String").description("응답 결과 코드"),
                                 fieldWithPath("message").type("String").description("응답 메시지"),
                                 fieldWithPath("data.kakaoId").description("카카오에서 사용자 정보 조회시 반환받은 사용자 고유 ID 값"),
-                                fieldWithPath("data.token").optional().description("사용자 가입 조회 성공 시 생성된 JWT 토큰"),
+                                fieldWithPath("data.token.accessToken").optional().description("사용자 가입 조회 성공 시 생성된 JWT 토큰"),
+                                fieldWithPath("data.token.refreshToken").optional().description("사용자 가입 조회 성공 시 생성된 JWT refresh 토큰"),
                                 fieldWithPath("data.joined").description("사용자 가입 여부"),
                                 fieldWithPath("data.nickname").description("카카오에서 사용자 정보 조회시 반환반은 사용지 닉네입")
                         ))

@@ -38,10 +38,6 @@ public class JwtFilter extends OncePerRequestFilter {
 
 
         if (token != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-            if (tokenProvider.validateToken(token)) {
-                
-            }
-
             String userId = tokenProvider.getUserId(token);
             UserDetails userDetails = userDetailsService.loadUserByUsername(userId);
 

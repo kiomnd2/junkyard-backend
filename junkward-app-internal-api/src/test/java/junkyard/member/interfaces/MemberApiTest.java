@@ -3,6 +3,7 @@ package junkyard.member.interfaces;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import junkyard.common.response.codes.Codes;
 import junkyard.member.application.MemberFacade;
+import junkyard.member.application.TokenInfo;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -52,8 +53,12 @@ public class MemberApiTest {
                 .build();
 
         String testToken = "test-token";
-
-        when(memberFacade.joinMember(any())).thenReturn(testToken);
+        String refreshToken = "refresh-token";
+        TokenInfo tokenInf = TokenInfo.builder()
+                .accessToken(testToken)
+                .refreshToken(refreshToken)
+                .build();
+        when(memberFacade.joinMember(any())).thenReturn(tokenInf);
 
         mockMvc.perform(post("/v1/api/member/join").with(csrf())
                 .contentType(MediaType.APPLICATION_JSON)
@@ -62,7 +67,8 @@ public class MemberApiTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("code").value(Codes.NORMAL.name()))
                 .andExpect(jsonPath("message").value(Codes.NORMAL.getDescription()))
-                .andExpect(jsonPath("data.token").value(testToken))
+                .andExpect(jsonPath("data.token.accessToken").value(testToken))
+                .andExpect(jsonPath("data.token.refreshToken").value(refreshToken))
                 .andDo(MockMvcRestDocumentation.document("join",
                         requestFields(
                                 fieldWithPath("id").description("사용자 체크 시, 리턴받은 고유 Id").type("Numeric"),
@@ -74,7 +80,8 @@ public class MemberApiTest {
                         responseFields(
                                 fieldWithPath("code").type("String").description("응답 결과 코드"),
                                 fieldWithPath("message").type("String").description("응답 메시지"),
-                                fieldWithPath("data.token").description("JWT 토큰 값")
+                                fieldWithPath("data.token.accessToken").description("JWT access 토큰 값"),
+                                fieldWithPath("data.token.refreshToken").description("JWT refresh 토큰 값")
                         )
                         ))
         ;
