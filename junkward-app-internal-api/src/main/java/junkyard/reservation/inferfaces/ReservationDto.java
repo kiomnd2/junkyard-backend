@@ -57,6 +57,14 @@ public class ReservationDto {
     @NoArgsConstructor
     @Builder
     @Getter
+    public static class RequestConfirmReservation {
+        private String idempotencyKey;
+    }
+
+    @AllArgsConstructor
+    @NoArgsConstructor
+    @Builder
+    @Getter
     public static class RequestCars {
         private String make;
         private String model;

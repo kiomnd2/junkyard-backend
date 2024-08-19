@@ -17,4 +17,8 @@ public class ReservationFacade {
     public void cancelReservation(String username, String idempotencyKey, String cancelReason) {
         reservationService.cancelReservation(username, idempotencyKey, cancelReason);
     }
+
+    public void confirm(String username, String idempotencyKey) {
+        reservationService.confirm(username, idempotencyKey);
+    }
 }

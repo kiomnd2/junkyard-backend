@@ -3,6 +3,7 @@ package junkyard.reservation.inferfaces;
 import junkyard.member.domain.MemberUser;
 import junkyard.reservation.application.ReservationFacade;
 import junkyard.response.CommonResponse;
+import junkyard.security.annotataion.AdminAuthorize;
 import junkyard.security.annotataion.UserAuthorize;
 import junkyard.security.userdetails.MyUserDetails;
 import junkyard.utils.IdempotencyCreator;
@@ -47,4 +48,13 @@ public class ReservationApi {
                 cancelReservation.getCancelReason());
         return CommonResponse.success(null);
     }
+
+    @AdminAuthorize
+    @PostMapping("/confirm")
+    public CommonResponse<Void> confirmReservation(@AuthenticationPrincipal MyUserDetails userDetails,
+                                                   @RequestBody ReservationDto.RequestConfirmReservation confirmReservation) {
+        reservationFacade.confirm(userDetails.getUsername(), confirmReservation.getIdempotencyKey());
+        return CommonResponse.success(null);
+    }
+
 }

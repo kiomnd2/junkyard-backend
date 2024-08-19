@@ -73,6 +73,15 @@ public class Reservation extends BaseEntity {
                 , this.status.name());
     }
 
+    public void confirm() {
+        if (status == State.PENDING) {
+            this.status = State.CONFIRMED;
+        }
+        throw new InvalidCancelRequestException(Codes.INVALID_RESERVATION_CANCEL,
+                "현재상태는 확인할 수 없는 상태"
+                , this.status.name());
+    }
+
     public enum State {
         PENDING, CONFIRMED, CANCELED, REJECTED, COMPLETED, EXPIRED, ON_HOLD
     }

@@ -32,5 +32,13 @@ public class ReservationServiceImpl implements ReservationService {
         reservation.cancel(cancelReason);
     }
 
+    @Transactional
+    @Override
+    public void confirm(String username, String idempotencyKey) {
+        MemberUser memberUser = memberReader.checkMember(Long.parseLong(username));
+        Reservation reservation = reservationReader.read(memberUser, idempotencyKey);
+        reservation.confirm();
+    }
+
 
 }
