@@ -9,7 +9,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Collection;
 import java.util.Collections;
 
-@Getter
 public record MyUserDetails(MemberUser memberUser) implements UserDetails {
 
     @Override

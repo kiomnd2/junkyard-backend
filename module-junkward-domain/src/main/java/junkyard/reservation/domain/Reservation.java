@@ -4,6 +4,8 @@ package junkyard.reservation.domain;
 import jakarta.persistence.*;
 import junkyard.BaseEntity;
 import junkyard.car.domain.Car;
+import junkyard.common.response.codes.Codes;
+import junkyard.common.response.exception.reservation.InvalidCancelRequestException;
 import junkyard.member.domain.MemberUser;
 import junkyard.reservation.domain.estimate.Estimate;
 import lombok.Builder;
@@ -59,6 +61,16 @@ public class Reservation extends BaseEntity {
         this.car = car;
         this.status = State.PENDING;
         this.content = content;
+    }
+
+    public void cancel(String cancelReason) {
+        if (status == State.PENDING) {
+            this.status = State.CANCELED;
+            this.cancellationReason = cancelReason;
+        }
+        throw new InvalidCancelRequestException(Codes.INVALID_RESERVATION_CANCEL,
+                "현재상태는 취소할 수 없는 상태"
+                , this.status.name());
     }
 
     public enum State {

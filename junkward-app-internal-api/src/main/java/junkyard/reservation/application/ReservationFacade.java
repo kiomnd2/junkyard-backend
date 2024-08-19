@@ -13,4 +13,8 @@ public class ReservationFacade {
     public void reserve(String userName, ReservationDto.RequestReservation requestReservation) {
         reservationService.reserve(userName, requestReservation.toCommand());
     }
+
+    public void cancelReservation(String username, String idempotencyKey, String cancelReason) {
+        reservationService.cancelReservation(username, idempotencyKey, cancelReason);
+    }
 }

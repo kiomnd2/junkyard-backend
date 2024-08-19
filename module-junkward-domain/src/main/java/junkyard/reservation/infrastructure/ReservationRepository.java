@@ -1,8 +1,11 @@
 package junkyard.reservation.infrastructure;
 
+import junkyard.member.domain.MemberUser;
 import junkyard.reservation.domain.Reservation;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface ReservationRepository extends JpaRepository<Reservation, Long> {
+import java.util.Optional;
 
+public interface ReservationRepository extends JpaRepository<Reservation, Long> {
+    Optional<Reservation> findByReservationIdAndMemberUser(String reservationId, MemberUser memberUser);
 }

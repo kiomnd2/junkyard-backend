@@ -13,6 +13,7 @@ import java.util.Optional;
 public class ReservationServiceImpl implements ReservationService {
     private final MemberReader memberReader;
     private final ReservationStore reservationStore;
+    private final ReservationReader reservationReader;
 
     @Transactional
     @Override
@@ -22,4 +23,14 @@ public class ReservationServiceImpl implements ReservationService {
         Reservation reservation = reservationCommand.toEntity(memberUser);
         reservationStore.storeReservation(reservation);
     }
+
+    @Transactional
+    @Override
+    public void cancelReservation(String username, String idempotencyKey, String cancelReason) {
+        MemberUser memberUser = memberReader.checkMember(Long.parseLong(username));
+        Reservation reservation = reservationReader.read(memberUser, idempotencyKey);
+        reservation.cancel(cancelReason);
+    }
+
+
 }

@@ -48,6 +48,15 @@ public class ReservationDto {
     @NoArgsConstructor
     @Builder
     @Getter
+    public static class RequestCancelReservation {
+        private String idempotencyKey;
+        private String cancelReason;
+    }
+
+    @AllArgsConstructor
+    @NoArgsConstructor
+    @Builder
+    @Getter
     public static class RequestCars {
         private String make;
         private String model;

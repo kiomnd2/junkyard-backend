@@ -32,10 +32,19 @@ public class ReservationApi {
 
     @UserAuthorize
     @PostMapping
-    public CommonResponse<ReservationDto.ResponseReservation> reservation(@AuthenticationPrincipal MyUserDetails userDetails,
+    public CommonResponse<Void> reservation(@AuthenticationPrincipal MyUserDetails userDetails,
                                                                           @RequestBody ReservationDto.RequestReservation requestReservation) {
         reservationFacade.reserve(userDetails.getUsername(), requestReservation);
-        return CommonResponse.success(ReservationDto.ResponseReservation.builder().build());
+        return CommonResponse.success(null);
     }
 
+    @UserAuthorize
+    @PostMapping("/cancel")
+    public CommonResponse<Void> cancelReservation(@AuthenticationPrincipal MyUserDetails userDetails,
+                                  @RequestBody ReservationDto.RequestCancelReservation cancelReservation) {
+        reservationFacade.cancelReservation(userDetails.getUsername(),
+                cancelReservation.getIdempotencyKey(),
+                cancelReservation.getCancelReason());
+        return CommonResponse.success(null);
+    }
 }
