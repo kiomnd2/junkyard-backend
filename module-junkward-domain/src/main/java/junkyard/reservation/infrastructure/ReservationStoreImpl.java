@@ -8,8 +8,10 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 @Component
 public class ReservationStoreImpl implements ReservationStore {
+    private final ReservationRepository reservationRepository;
+
     @Override
     public Reservation storeReservation(Reservation reservation) {
-        return null;
+        return reservationRepository.save(reservation);
     }
 }

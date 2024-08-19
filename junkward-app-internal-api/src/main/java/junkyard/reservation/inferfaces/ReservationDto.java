@@ -1,5 +1,6 @@
 package junkyard.reservation.inferfaces;
 
+import junkyard.reservation.domain.ReservationCommand;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -30,8 +31,17 @@ public class ReservationDto {
     @Builder
     @Getter
     public static class RequestReservation {
+        private String idempotencyKey;
         private String contents;
-        private List<RequestCars> carList;
+        private RequestCars car;
+
+        public ReservationCommand toCommand() {
+            return ReservationCommand.builder()
+                    .idempotencyKey(idempotencyKey)
+                    .content(contents)
+                    .car(car.toCommand())
+                    .build();
+        }
     }
 
     @AllArgsConstructor
@@ -42,6 +52,14 @@ public class ReservationDto {
         private String make;
         private String model;
         private String licensePlate;
+
+        public ReservationCommand.CarCommand toCommand() {
+            return ReservationCommand.CarCommand.builder()
+                    .make(make)
+                    .model(model)
+                    .licensePlate(licensePlate)
+                    .build();
+        }
     }
 
     @NoArgsConstructor

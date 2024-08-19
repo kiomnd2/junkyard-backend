@@ -16,13 +16,10 @@ public class ReservationServiceImpl implements ReservationService {
 
     @Transactional
     @Override
-    public ReservationResult reserve(String authId, ReservationCommand reservationCommand) {
-        Optional<MemberUser> memberUser = memberReader.readByAuthId(Long.parseLong(authId));
-        MemberUser member = memberUser.orElseThrow(() -> new RuntimeException("사용자를 찾을 수 없습니다."));
+    public void reserve(String authId, ReservationCommand reservationCommand) {
+        MemberUser memberUser = memberReader.checkMember(Long.parseLong(authId));
 
-        Reservation reservation = reservationCommand.toEntity(member);
-
-
-        return null;
+        Reservation reservation = reservationCommand.toEntity(memberUser);
+        reservationStore.storeReservation(reservation);
     }
 }

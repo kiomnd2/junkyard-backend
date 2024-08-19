@@ -1,6 +1,7 @@
 package junkyard.security.userdetails;
 
 import junkyard.member.domain.MemberUser;
+import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -8,12 +9,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Collection;
 import java.util.Collections;
 
-public class MyUserDetails implements UserDetails {
-    private final MemberUser memberUser;
-
-    public MyUserDetails(MemberUser memberUser) {
-        this.memberUser = memberUser;
-    }
+@Getter
+public record MyUserDetails(MemberUser memberUser) implements UserDetails {
 
     @Override
     public String getPassword() {

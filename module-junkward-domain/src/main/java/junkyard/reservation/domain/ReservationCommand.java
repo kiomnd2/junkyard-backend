@@ -6,12 +6,15 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+@Builder
 public class ReservationCommand {
+    private String idempotencyKey;
     private String content;
-    private Car car;
+    private CarCommand car;
 
     public Reservation toEntity(MemberUser member) {
         return Reservation.builder()
+                .reservationId(idempotencyKey)
                 .memberUser(member)
                 .car(car.toEntity())
                 .content(content)
@@ -22,7 +25,7 @@ public class ReservationCommand {
     @Builder
     @NoArgsConstructor
     @AllArgsConstructor
-    public static class Car {
+    public static class CarCommand {
         private String make;
         private String model;
         private String licensePlate;

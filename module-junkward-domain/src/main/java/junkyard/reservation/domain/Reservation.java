@@ -53,7 +53,8 @@ public class Reservation extends BaseEntity {
     private Set<Estimate> estimates = new HashSet<>();
 
     @Builder
-    public Reservation(MemberUser memberUser, Car car, String content) {
+    public Reservation(String reservationId, MemberUser memberUser, Car car, String content) {
+        this.reservationId = reservationId;
         this.memberUser = memberUser;
         this.car = car;
         this.status = State.PENDING;
