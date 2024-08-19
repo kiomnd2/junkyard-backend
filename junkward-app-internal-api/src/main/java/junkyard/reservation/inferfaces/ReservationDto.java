@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 public class ReservationDto {
@@ -84,5 +85,22 @@ public class ReservationDto {
     @Getter
     public static class ResponseReservation {
 
+    }
+
+    @AllArgsConstructor
+    @NoArgsConstructor
+    @Builder
+    @Getter
+    public static class ResponseInquireReservationList {
+        private String idempotencyKey;
+        private String startTime;
+        private String endTime;
+        private String status;
+        private String make;
+        private String model;
+        private String licensePlate;
+        private BigDecimal estimateAmount;
+        private String createdAt;
+        private String updatedAt;
     }
 }

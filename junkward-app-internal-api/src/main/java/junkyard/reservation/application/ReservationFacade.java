@@ -21,4 +21,8 @@ public class ReservationFacade {
     public void confirm(String username, String idempotencyKey) {
         reservationService.confirm(username, idempotencyKey);
     }
+
+    public void inquireList(String username) {
+        reservationService.inquireList(username);
+    }
 }

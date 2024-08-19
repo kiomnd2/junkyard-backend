@@ -40,5 +40,8 @@ public class ReservationServiceImpl implements ReservationService {
         reservation.confirm();
     }
 
-
+    @Override
+    public ReservationInquireList inquireList(String username) {
+        return null;
+    }
 }

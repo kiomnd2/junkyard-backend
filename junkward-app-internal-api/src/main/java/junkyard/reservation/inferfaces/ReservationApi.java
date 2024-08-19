@@ -2,6 +2,7 @@ package junkyard.reservation.inferfaces;
 
 import junkyard.member.domain.MemberUser;
 import junkyard.reservation.application.ReservationFacade;
+import junkyard.reservation.domain.Reservation;
 import junkyard.response.CommonResponse;
 import junkyard.security.annotataion.AdminAuthorize;
 import junkyard.security.annotataion.UserAuthorize;
@@ -39,6 +40,7 @@ public class ReservationApi {
         return CommonResponse.success(null);
     }
 
+    @AdminAuthorize
     @UserAuthorize
     @PostMapping("/cancel")
     public CommonResponse<Void> cancelReservation(@AuthenticationPrincipal MyUserDetails userDetails,
@@ -49,6 +51,11 @@ public class ReservationApi {
         return CommonResponse.success(null);
     }
 
+    public CommonResponse<ReservationDto.ResponseInquireReservationList> inquireReservationList(@AuthenticationPrincipal MyUserDetails userDetails) {
+        reservationFacade.inquireList(userDetails.getUsername());
+        return CommonResponse.success(ReservationDto.ResponseInquireReservationList.builder().build());
+    }
+
     @AdminAuthorize
     @PostMapping("/confirm")
     public CommonResponse<Void> confirmReservation(@AuthenticationPrincipal MyUserDetails userDetails,
@@ -56,5 +63,4 @@ public class ReservationApi {
         reservationFacade.confirm(userDetails.getUsername(), confirmReservation.getIdempotencyKey());
         return CommonResponse.success(null);
     }
-
 }
