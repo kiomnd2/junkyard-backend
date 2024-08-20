@@ -60,7 +60,7 @@ public class JwtTokenProvider {
                 .setIssuedAt(Timestamp.valueOf(LocalDateTime.now()))
                 .setExpiration(new Date(now.getTime() + 1000L * 60L * 60L * 24L * 30L)) // 31일 유효
                 .setSubject(String.valueOf(id))
-                .claim("nickname", nickname)
+                .claim("name", nickname)
                 .claim("profileUrl", profileUrl)
                 .compact();
     }
@@ -83,7 +83,7 @@ public class JwtTokenProvider {
 
     public TokenClaim getRefreshSubject(String refreshToken) {
         Jws<Claims> claims = Jwts.parserBuilder().setSigningKey(refreshKey).build().parseClaimsJws(refreshToken);
-        String nickName = (String) claims.getBody().get("nickname");
+        String nickName = (String) claims.getBody().get("name");
         String profileUrl = (String) claims.getBody().get("profileUrl");
         String authId = claims.getBody().getSubject();
         return TokenClaim.builder()
