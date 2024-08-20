@@ -39,18 +39,20 @@ public class JwtTokenProvider {
     }
 
 
-    public String createToken(Long id) {
+    public String createToken(Long id, String nickname, String profileUrl) {
         Date now = new Date();
         return Jwts.builder()
                 .signWith(new SecretKeySpec(secretKey.getBytes(),
                         SignatureAlgorithm.HS512.getJcaName()))
                 .setIssuedAt(Timestamp.valueOf(LocalDateTime.now()))
                 .setSubject(String.valueOf(id))
+                .claim("nickname", nickname)
+                .claim("profileUrl", profileUrl)
                 .setExpiration(new Date(now.getTime() + 30 * 60 * 1000L))
                 .compact();
     }
 
-    public String createRefreshToken(Long id) {
+    public String createRefreshToken(Long id, String nickname, String profileUrl) {
         Date now = new Date();
         return Jwts.builder()
                 .signWith(new SecretKeySpec(refreshSecretKey.getBytes(),
@@ -58,6 +60,8 @@ public class JwtTokenProvider {
                 .setIssuedAt(Timestamp.valueOf(LocalDateTime.now()))
                 .setExpiration(new Date(now.getTime() + 1000L * 60L * 60L * 24L * 30L)) // 31일 유효
                 .setSubject(String.valueOf(id))
+                .claim("nickname", nickname)
+                .claim("profileUrl", profileUrl)
                 .compact();
     }
 
@@ -77,9 +81,16 @@ public class JwtTokenProvider {
                 .getSubject();
     }
 
-    public String getRefreshSubject(String refreshToken) {
+    public TokenClaim getRefreshSubject(String refreshToken) {
         Jws<Claims> claims = Jwts.parserBuilder().setSigningKey(refreshKey).build().parseClaimsJws(refreshToken);
-        return claims.getBody().getSubject();
+        String nickName = (String) claims.getBody().get("nickname");
+        String profileUrl = (String) claims.getBody().get("profileUrl");
+        String authId = claims.getBody().getSubject();
+        return TokenClaim.builder()
+                .name(nickName)
+                .profileUrl(profileUrl)
+                .authId(authId)
+                .build();
     }
 
     // 토큰 유효성, 만료일자 확인

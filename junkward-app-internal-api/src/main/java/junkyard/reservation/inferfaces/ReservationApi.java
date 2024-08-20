@@ -1,8 +1,6 @@
 package junkyard.reservation.inferfaces;
 
-import junkyard.member.domain.MemberUser;
 import junkyard.reservation.application.ReservationFacade;
-import junkyard.reservation.domain.Reservation;
 import junkyard.response.CommonResponse;
 import junkyard.security.annotataion.AdminAuthorize;
 import junkyard.security.annotataion.UserAuthorize;
@@ -10,12 +8,10 @@ import junkyard.security.userdetails.MyUserDetails;
 import junkyard.utils.IdempotencyCreator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.server.ResponseStatusException;
 
 @RequiredArgsConstructor
 @RestController

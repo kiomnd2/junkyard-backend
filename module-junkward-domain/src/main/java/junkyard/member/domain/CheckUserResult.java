@@ -2,7 +2,7 @@ package junkyard.member.domain;
 
 import lombok.Builder;
 
-public record CheckUserResult(Boolean isJoined, Long authId, String accessToken, String refreshToken, String nickname) {
+public record CheckUserResult(Boolean isJoined, Long authId, String accessToken, String refreshToken, String nickname, String profileUrl) {
 
     @Builder
     public CheckUserResult {

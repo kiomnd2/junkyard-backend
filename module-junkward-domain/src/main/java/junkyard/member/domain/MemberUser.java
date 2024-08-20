@@ -24,6 +24,9 @@ public class MemberUser extends BaseEntity {
     @Column(name = "name", nullable = false, length = 100)
     private String name;
 
+    @Column(name = "profile_url", length = 200)
+    private String profileUrl;
+
     @Column(name = "phone_no", nullable = false, length = 20)
     private String phoneNo;
 
@@ -58,5 +61,15 @@ public class MemberUser extends BaseEntity {
         this.phoneNo = phoneNo;
         this.email = email;
         this.joinMethod = joinMethod;
+    }
+
+    public MemberInfo toInfo() {
+        return MemberInfo.builder()
+                .authId(authId)
+                .name(name)
+                .profileUrl(profileUrl)
+                .phoneNo(phoneNo)
+                .email(email)
+                .build();
     }
 }

@@ -12,6 +12,7 @@ CREATE TABLE member_users (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
     auth_id BIGINT NOT NULL UNIQUE,
     name VARCHAR(100) NOT NULL,
+    profile_url VARCHAR(200),
     phone_no VARCHAR(20) NOT NULL,
     email VARCHAR(100),
     join_method VARCHAR(20) NOT NULL,

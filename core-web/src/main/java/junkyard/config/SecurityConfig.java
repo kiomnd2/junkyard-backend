@@ -36,6 +36,7 @@ public class SecurityConfig {
                         ,"/kakao/callback"
                         ,"/docs/**"
                         ,"/v1/api/member/join"
+                        ,"/v1/api/member/refresh-token"
                         ,"/h2-console/**").permitAll()
                         .anyRequest().authenticated()
                 )
@@ -45,6 +46,5 @@ public class SecurityConfig {
                 .addFilterBefore(new JwtFilter(jwtTokenProvider, userDetailsService), UsernamePasswordAuthenticationFilter.class)
                 .addFilterBefore(new ErrorHandlerFilter(), JwtFilter.class);
         return security.build();
-
     }
 }

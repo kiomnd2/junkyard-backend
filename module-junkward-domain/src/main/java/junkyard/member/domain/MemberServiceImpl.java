@@ -1,5 +1,7 @@
 package junkyard.member.domain;
 
+import junkyard.common.response.codes.Codes;
+import junkyard.common.response.exception.member.InvalidUserException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -12,13 +14,19 @@ public class MemberServiceImpl implements MemberService {
 
     @Transactional
     @Override
-    public Long registerMember(MemberRegisterCommand registerCommand) {
+    public MemberInfo registerMember(MemberRegisterCommand registerCommand) {
         MemberUser memberUser = memberStore.storeMember(registerCommand.toEntity());
-        return memberUser.getAuthId();
+        return memberUser.toInfo();
     }
 
     @Override
     public boolean checkMember(Long authId) {
         return memberReader.readByAuthId(authId).isPresent();
+    }
+
+    @Override
+    public MemberInfo findMember(Long authId) {
+        return memberReader.readByAuthId(authId)
+                .orElseThrow(() -> new InvalidUserException(Codes.COMMON_INVALID_MEMBER, authId)).toInfo();
     }
 }

@@ -34,5 +34,6 @@ public class KakaoMemberDto {
         private Long kakaoId;
         private TokenInfo token;
         private String nickname;
+        private String profileUrl;
     }
 }

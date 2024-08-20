@@ -4,7 +4,7 @@ package junkyard.member.domain;
 import lombok.Builder;
 
 @Builder
-public record MemberRegisterCommand(Long id, String method, String name, String phoneNo, String email) {
+public record MemberRegisterCommand(Long id, String method, String name, String profileUrl, String phoneNo, String email) {
 
     public MemberUser toEntity() {
         return MemberUser.builder()

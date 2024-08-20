@@ -39,6 +39,7 @@ public class KakaoUserInfoCaller implements UserInfoCaller {
 
         return UserInfoResponse.builder()
                 .id(response.getId())
+                .profileUrl(response.getKakaoAccount().getProfile().getProfileImageUrl())
                 .nickname(response.getKakaoAccount().getName())
                 .build();
     }

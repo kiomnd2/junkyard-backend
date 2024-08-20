@@ -40,6 +40,7 @@ public class KakaoMemberApi {
                         .build())
                 .isJoined(checkMember.isJoined())
                 .nickname(checkMember.nickname())
+                .profileUrl(checkMember.profileUrl())
                 .build());
     }
 }

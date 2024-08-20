@@ -26,6 +26,8 @@ public class MemberDto {
         @Size(max = 100, message = "Name은 최대 100자까지 허용됩니다.")
         private String name;
 
+        private String profileUrl;
+
         @NotBlank(message = "Phone number는 필수 값입니다.")
         @Pattern(regexp = "^\\+?[0-9. ()-]{7,25}$", message = "유효한 전화번호를 입력해주세요.")
         private String phoneNo;
