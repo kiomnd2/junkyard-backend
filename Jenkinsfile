@@ -36,7 +36,7 @@ pipeline {
                     def modules = ['junkward-app-internal-api']
                     for (module in modules) {
                         dir(module) {
-                            sh "docker build --platform linux/amd64 -t ${env.REGISTRY}/${module}:latest ."
+                            sh "docker buildx build --push =linux/amd64,linux/arm64 -t ${env.REGISTRY}/${module}:latest ."
                             sh "docker push ${env.REGISTRY}/${module}:latest"
                         }
                     }
