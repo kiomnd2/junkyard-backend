@@ -10,7 +10,11 @@ endif::[]
 :toclevels: 1
 :toc-title: 그룹
 
+
+[[사용자]]
+
 = 사용자
+
 == 로그인 checkout
 === REQUEST
 
@@ -59,3 +63,21 @@ include::{snippets}/authCheck/http-response.adoc[]
 === RESPONSE FIELD
 
 include::{snippets}/authCheck/response-fields.adoc[]
+
+
+== 리프레시 토큰
+=== REQUEST
+include::{snippets}/refresh-token/http-request.adoc[]
+
+=== REQUEST HEADER
+
+include::{snippets}/refresh-token/request-headers.adoc[]
+
+=== RESPONSE
+
+include::{snippets}/refresh-token/http-response.adoc[]
+
+=== RESPONSE FIELD
+
+include::{snippets}/refresh-token/response-fields.adoc[]
+
