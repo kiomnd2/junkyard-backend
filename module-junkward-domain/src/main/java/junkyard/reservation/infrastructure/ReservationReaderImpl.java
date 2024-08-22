@@ -8,6 +8,8 @@ import junkyard.common.response.exception.reservation.InvalidReservationExceptio
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 @RequiredArgsConstructor
 @Component
 public class ReservationReaderImpl implements ReservationReader {
@@ -17,5 +19,10 @@ public class ReservationReaderImpl implements ReservationReader {
     public Reservation read(MemberUser memberUser, String reservationId) {
         return reservationRepository.findByReservationIdAndMemberUser(reservationId, memberUser)
                 .orElseThrow(() -> new InvalidReservationException(Codes.INVALID_RESERVATION, reservationId, memberUser.getName())) ;
+    }
+
+    @Override
+    public List<Reservation> readByUser(MemberUser memberUser) {
+        return reservationRepository.findAllByMemberUser(memberUser);
     }
 }

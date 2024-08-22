@@ -41,4 +41,13 @@ public class Estimate extends BaseEntity {
         this.description = description;
         this.isFinal = isFinal;
     }
+
+    public EstimateInfo toInfo() {
+        return EstimateInfo.builder()
+                .amount(amount)
+                .issuedDate(issuedDate)
+                .isFinal(isFinal)
+                .description(description)
+                .build();
+    }
 }

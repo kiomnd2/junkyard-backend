@@ -1,6 +1,7 @@
 package junkyard.reservation.inferfaces;
 
 import junkyard.reservation.application.ReservationFacade;
+import junkyard.reservation.domain.ReservationInfo;
 import junkyard.response.CommonResponse;
 import junkyard.security.annotataion.AdminAuthorize;
 import junkyard.security.annotataion.UserAuthorize;
@@ -8,17 +9,16 @@ import junkyard.security.userdetails.MyUserDetails;
 import junkyard.utils.IdempotencyCreator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/v1/api/reservation")
 public class ReservationApi {
     private final ReservationFacade reservationFacade;
-
 
     @UserAuthorize
     @PostMapping("/checkout")
@@ -47,16 +47,19 @@ public class ReservationApi {
         return CommonResponse.success(null);
     }
 
-    public CommonResponse<ReservationDto.ResponseInquireReservationList> inquireReservationList(@AuthenticationPrincipal MyUserDetails userDetails) {
-        reservationFacade.inquireList(userDetails.getUsername());
-        return CommonResponse.success(ReservationDto.ResponseInquireReservationList.builder().build());
+    @UserAuthorize
+    @GetMapping
+    public CommonResponse<List<ReservationDto.ResponseInquireReservation>> inquireReservationList(@AuthenticationPrincipal MyUserDetails userDetails) {
+        List<ReservationInfo> reservationInfos = reservationFacade.inquireList(Long.parseLong(userDetails.getUsername()));
+        return CommonResponse.success(reservationInfos.stream().map(ReservationDto.ResponseInquireReservation::by)
+                .collect(Collectors.toList()));
     }
 
     @AdminAuthorize
     @PostMapping("/confirm")
     public CommonResponse<Void> confirmReservation(@AuthenticationPrincipal MyUserDetails userDetails,
                                                    @RequestBody ReservationDto.RequestConfirmReservation confirmReservation) {
-        reservationFacade.confirm(userDetails.getUsername(), confirmReservation.getIdempotencyKey());
+        reservationFacade.confirm(Long.parseLong(userDetails.getUsername()), confirmReservation.getIdempotencyKey());
         return CommonResponse.success(null);
     }
 }

@@ -1,9 +1,12 @@
 package junkyard.reservation.application;
 
+import junkyard.reservation.domain.ReservationInfo;
 import junkyard.reservation.domain.ReservationService;
 import junkyard.reservation.inferfaces.ReservationDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @RequiredArgsConstructor
 @Service
@@ -18,11 +21,11 @@ public class ReservationFacade {
         reservationService.cancelReservation(username, idempotencyKey, cancelReason);
     }
 
-    public void confirm(String username, String idempotencyKey) {
+    public void confirm(Long username, String idempotencyKey) {
         reservationService.confirm(username, idempotencyKey);
     }
 
-    public void inquireList(String username) {
-        reservationService.inquireList(username);
+    public List<ReservationInfo> inquireList(Long authId) {
+        return reservationService.inquireList(authId);
     }
 }

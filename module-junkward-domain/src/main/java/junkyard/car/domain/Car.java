@@ -29,4 +29,12 @@ public class Car extends BaseEntity {
         this.model = model;
         this.licensePlate = licensePlate;
     }
+
+    public CarInfo toInfo() {
+        return CarInfo.builder()
+                .make(this.make)
+                .licensePlate(this.licensePlate)
+                .model(this.model)
+                .build();
+    }
 }

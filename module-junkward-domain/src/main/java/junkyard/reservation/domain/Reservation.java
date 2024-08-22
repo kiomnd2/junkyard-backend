@@ -12,8 +12,11 @@ import lombok.Builder;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @NoArgsConstructor
 @Entity
@@ -52,7 +55,7 @@ public class Reservation extends BaseEntity {
     private String cancellationReason;
 
     @OneToMany(mappedBy = "reservation", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<Estimate> estimates = new HashSet<>();
+    private List<Estimate> estimates = new ArrayList<>();
 
     @Builder
     public Reservation(String reservationId, MemberUser memberUser, Car car, String content) {
@@ -80,6 +83,23 @@ public class Reservation extends BaseEntity {
         throw new InvalidCancelRequestException(Codes.INVALID_RESERVATION_CANCEL,
                 "현재상태는 확인할 수 없는 상태"
                 , this.status.name());
+    }
+
+    public ReservationInfo toInfo() {
+        return ReservationInfo.builder()
+                .reservationId(reservationId)
+                .userId(memberUser.getAuthId().toString())
+                .startTime(startTime)
+                .endTime(endTime)
+                .cancellationReason(cancellationReason)
+                .content(content)
+                .status(status.name())
+                .carInfo(car.toInfo())
+                .estimateInfos(estimates.stream()
+                        .map(Estimate::toInfo)
+                        .collect(Collectors.toList())
+                )
+                .build();
     }
 
     public enum State {
