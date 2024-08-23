@@ -33,10 +33,6 @@ public class KakaoUserInfoCaller implements UserInfoCaller {
                 .onStatus(HttpStatusCode::is4xxClientError, clientResponse -> Mono.error(new RuntimeException("4xx error")))
                 .bodyToMono(KakaoUserResponse.class).block();
 
-        if (response == null) {
-            // TODO throw Exception
-        }
-
         return UserInfoResponse.builder()
                 .id(response.getId())
                 .profileUrl(response.getKakaoAccount().getProfile().getProfileImageUrl())

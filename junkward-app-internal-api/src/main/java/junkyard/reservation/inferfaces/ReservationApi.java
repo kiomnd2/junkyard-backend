@@ -32,7 +32,7 @@ public class ReservationApi {
     @PostMapping
     public CommonResponse<Void> reservation(@AuthenticationPrincipal MyUserDetails userDetails,
                                                                           @RequestBody ReservationDto.RequestReservation requestReservation) {
-        reservationFacade.reserve(userDetails.getUsername(), requestReservation);
+        reservationFacade.reserve(Long.parseLong(userDetails.getUsername()), requestReservation);
         return CommonResponse.success(null);
     }
 

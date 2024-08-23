@@ -32,6 +32,7 @@ CREATE TABLE cars (
 
 CREATE TABLE reservations (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    reservation_id VARCHAR(40) NOT NULL,
     member_id BIGINT NOT NULL,
     car_id BIGINT NOT NULL,
     start_time TIMESTAMP NOT NULL,

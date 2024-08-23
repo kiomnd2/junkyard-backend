@@ -34,7 +34,7 @@ public class Reservation extends BaseEntity {
     @JoinColumn(name = "member_id", nullable = false)
     private MemberUser memberUser;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     @JoinColumn(name = "car_id", nullable = false)
     private Car car;
 
@@ -58,10 +58,11 @@ public class Reservation extends BaseEntity {
     private List<Estimate> estimates = new ArrayList<>();
 
     @Builder
-    public Reservation(String reservationId, MemberUser memberUser, Car car, String content) {
+    public Reservation(String reservationId, MemberUser memberUser, LocalDateTime startTime, Car car, String content) {
         this.reservationId = reservationId;
         this.memberUser = memberUser;
         this.car = car;
+        this.startTime = startTime;
         this.status = State.PENDING;
         this.content = content;
     }

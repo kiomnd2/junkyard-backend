@@ -13,8 +13,8 @@ import java.util.List;
 public class ReservationFacade {
     private final ReservationService reservationService;
 
-    public void reserve(String userName, ReservationDto.RequestReservation requestReservation) {
-        reservationService.reserve(userName, requestReservation.toCommand());
+    public void reserve(Long authId, ReservationDto.RequestReservation requestReservation) {
+        reservationService.reserve(authId, requestReservation.toCommand());
     }
 
     public void cancelReservation(String username, String idempotencyKey, String cancelReason) {

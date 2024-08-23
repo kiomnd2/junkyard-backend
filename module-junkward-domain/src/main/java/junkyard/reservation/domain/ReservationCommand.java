@@ -6,6 +6,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+
 @Builder
 public class ReservationCommand {
     private String idempotencyKey;
@@ -17,6 +19,7 @@ public class ReservationCommand {
                 .reservationId(idempotencyKey)
                 .memberUser(member)
                 .car(car.toEntity())
+                .startTime(LocalDateTime.now())
                 .content(content)
                 .build();
     }

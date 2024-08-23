@@ -21,9 +21,8 @@ public class ReservationServiceImpl implements ReservationService {
 
     @Transactional
     @Override
-    public void reserve(String authId, ReservationCommand reservationCommand) {
-        MemberUser memberUser = memberReader.checkMember(Long.parseLong(authId));
-
+    public void reserve(Long authId, ReservationCommand reservationCommand) {
+        MemberUser memberUser = memberReader.checkMember(authId);
         Reservation reservation = reservationCommand.toEntity(memberUser);
         reservationStore.storeReservation(reservation);
     }

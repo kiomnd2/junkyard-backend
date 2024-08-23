@@ -2,6 +2,7 @@ package junkyard.car.domain;
 
 import jakarta.persistence.*;
 import junkyard.BaseEntity;
+import junkyard.reservation.domain.Reservation;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
 
@@ -13,6 +14,9 @@ public class Car extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST, mappedBy = "car")
+    private Reservation reservation;
 
     @Column(name = "make", nullable = false, length = 50)
     private String make;
