@@ -49,7 +49,8 @@ public class ReservationApi {
 
     @UserAuthorize
     @GetMapping
-    public CommonResponse<List<ReservationDto.ResponseInquireReservation>> inquireReservationList(@AuthenticationPrincipal MyUserDetails userDetails) {
+    public CommonResponse<List<ReservationDto.ResponseInquireReservation>> inquireReservationList(@AuthenticationPrincipal MyUserDetails userDetails
+    ) {
         List<ReservationInfo> reservationInfos = reservationFacade.inquireList(Long.parseLong(userDetails.getUsername()));
         return CommonResponse.success(reservationInfos.stream().map(ReservationDto.ResponseInquireReservation::by)
                 .collect(Collectors.toList()));

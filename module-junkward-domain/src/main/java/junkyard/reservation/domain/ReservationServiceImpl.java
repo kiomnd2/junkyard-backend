@@ -49,4 +49,5 @@ public class ReservationServiceImpl implements ReservationService {
                 .orElseThrow(() -> new InvalidUserException(Codes.COMMON_INVALID_MEMBER, authId));
         return reservationReader.readByUser(memberUser).stream().map(Reservation::toInfo).toList();
     }
+
 }
