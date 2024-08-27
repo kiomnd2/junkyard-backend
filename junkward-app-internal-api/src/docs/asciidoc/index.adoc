@@ -7,11 +7,9 @@ endif::[]
 :icons: font
 :source-highlighter: highlightjs
 :toc: left
-:toclevels: 1
+:toclevels: 2
 :toc-title: 그룹
 
-
-[[사용자]]
 
 = 사용자
 
@@ -24,7 +22,7 @@ include::{snippets}/checkout/http-request.adoc[]
 
 include::{snippets}/checkout/http-response.adoc[]
 
-=== RESPONSE FIELD
+==== RESPONSE FIELD
 
 include::{snippets}/checkout/response-fields.adoc[]
 
@@ -34,7 +32,7 @@ include::{snippets}/checkout/response-fields.adoc[]
 
 include::{snippets}/join/http-request.adoc[]
 
-=== REQUEST FIELD
+==== REQUEST FIELD
 
 include::{snippets}/join/request-fields.adoc[]
 
@@ -42,7 +40,7 @@ include::{snippets}/join/request-fields.adoc[]
 
 include::{snippets}/join/http-response.adoc[]
 
-=== RESPONSE FIELD
+==== RESPONSE FIELD
 
 include::{snippets}/join/response-fields.adoc[]
 
@@ -52,7 +50,7 @@ include::{snippets}/join/response-fields.adoc[]
 
 include::{snippets}/authCheck/http-request.adoc[]
 
-=== REQUEST HEADER
+==== REQUEST HEADER
 
 include::{snippets}/authCheck/request-headers.adoc[]
 
@@ -60,7 +58,7 @@ include::{snippets}/authCheck/request-headers.adoc[]
 
 include::{snippets}/authCheck/http-response.adoc[]
 
-=== RESPONSE FIELD
+==== RESPONSE FIELD
 
 include::{snippets}/authCheck/response-fields.adoc[]
 
@@ -69,7 +67,7 @@ include::{snippets}/authCheck/response-fields.adoc[]
 === REQUEST
 include::{snippets}/refresh-token/http-request.adoc[]
 
-=== REQUEST HEADER
+==== REQUEST HEADER
 
 include::{snippets}/refresh-token/request-headers.adoc[]
 
@@ -77,7 +75,73 @@ include::{snippets}/refresh-token/request-headers.adoc[]
 
 include::{snippets}/refresh-token/http-response.adoc[]
 
-=== RESPONSE FIELD
+==== RESPONSE FIELD
 
 include::{snippets}/refresh-token/response-fields.adoc[]
+
+
+= 예약
+
+== 예약 멱등성 키 생성
+
+=== REQUEST
+include::{snippets}/reservation-checkout/http-request.adoc[]
+
+==== REQUEST HEADER
+include::{snippets}/reservation-checkout/request-headers.adoc[]
+
+=== RESPONSE
+include::{snippets}/reservation-checkout/http-response.adoc[]
+
+==== RESPONSE FIELD
+include::{snippets}/reservation-checkout/response-fields.adoc[]
+
+
+== 예약하기
+=== REQUEST
+include::{snippets}/reservation/http-request.adoc[]
+
+==== REQUEST HEADER
+include::{snippets}/reservation/request-headers.adoc[]
+
+==== REQUEST FIELD
+include::{snippets}/reservation/request-fields.adoc[]
+
+=== RESPONSE
+include::{snippets}/reservation/http-response.adoc[]
+
+==== RESPONSE FIELD
+include::{snippets}/reservation/response-fields.adoc[]
+
+
+== 예약 취소
+=== REQUEST
+include::{snippets}/reservation-cancel/http-request.adoc[]
+
+==== REQUEST HEADER
+include::{snippets}/reservation-cancel/request-headers.adoc[]
+
+==== REQUEST FIELD
+include::{snippets}/reservation-cancel/request-fields.adoc[]
+
+=== RESPONSE
+include::{snippets}/reservation-cancel/http-response.adoc[]
+
+==== RESPONSE FIELD
+include::{snippets}/reservation-cancel/response-fields.adoc[]
+
+== 내 예약 내역
+
+=== REQUEST
+include::{snippets}/inquire-reservation-list/http-request.adoc[]
+
+==== REQUEST HEADER
+include::{snippets}/inquire-reservation-list/request-headers.adoc[]
+
+=== RESPONSE
+include::{snippets}/inquire-reservation-list/http-response.adoc[]
+
+==== RESPONSE FIELD
+include::{snippets}/inquire-reservation-list/response-fields.adoc[]
+
 

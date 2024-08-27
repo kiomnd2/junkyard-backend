@@ -107,6 +107,9 @@ class ReservationApiTest {
                     .andExpect(jsonPath("message").value(Codes.NORMAL.getDescription()))
                     .andExpect(jsonPath("data.idempotencyKey").value(idempotencyKey))
                     .andDo(MockMvcRestDocumentation.document("reservation-checkout",
+                            preprocessRequest(prettyPrint()), // 요청 본문을 예쁘게 출력
+                            preprocessResponse(prettyPrint()), // 응답 본문을 예쁘게 출력
+
                             requestHeaders( // 요청 헤더 문서화
                                     headerWithName(HttpHeaders.AUTHORIZATION).description("Bearer token 형식의 인증 토큰")
                             ),
@@ -149,6 +152,9 @@ class ReservationApiTest {
                 .andExpect(jsonPath("code").value(Codes.NORMAL.name()))
                 .andExpect(jsonPath("message").value(Codes.NORMAL.getDescription()))
                 .andDo(MockMvcRestDocumentation.document("reservation",
+                        preprocessRequest(prettyPrint()), // 요청 본문을 예쁘게 출력
+                        preprocessResponse(prettyPrint()), // 응답 본문을 예쁘게 출력
+
                         requestHeaders( // 요청 헤더 문서화
                                 headerWithName(HttpHeaders.AUTHORIZATION).description("Bearer token 형식의 인증 토큰")
                         ),
@@ -187,7 +193,10 @@ class ReservationApiTest {
                 .andDo(print())
                 .andExpect(jsonPath("code").value(Codes.NORMAL.name()))
                 .andExpect(jsonPath("message").value(Codes.NORMAL.getDescription()))
-                .andDo(MockMvcRestDocumentation.document("reservation",
+                .andDo(MockMvcRestDocumentation.document("reservation-cancel",
+                        preprocessRequest(prettyPrint()), // 요청 본문을 예쁘게 출력
+                        preprocessResponse(prettyPrint()), // 응답 본문을 예쁘게 출력
+
                         requestHeaders( // 요청 헤더 문서화
                                 headerWithName(HttpHeaders.AUTHORIZATION).description("Bearer token 형식의 인증 토큰")
                         ),
