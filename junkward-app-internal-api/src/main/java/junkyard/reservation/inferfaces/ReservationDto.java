@@ -38,6 +38,7 @@ public class ReservationDto {
     @Getter
     public static class RequestReservation {
         private String idempotencyKey;
+        private String clientName;
         private String contents;
         private RequestCars car;
 
@@ -45,6 +46,7 @@ public class ReservationDto {
             return ReservationCommand.builder()
                     .idempotencyKey(idempotencyKey)
                     .content(contents)
+                    .clientName(clientName)
                     .car(car.toCommand())
                     .build();
         }
@@ -99,6 +101,7 @@ public class ReservationDto {
     public static class ResponseInquireReservation {
         private String reservationId;
         private String userId;
+        private String clientName;
         private LocalDateTime startTime;
         private LocalDateTime endTime;
         private String status;

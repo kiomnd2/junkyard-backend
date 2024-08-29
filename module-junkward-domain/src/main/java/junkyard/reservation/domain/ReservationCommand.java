@@ -10,6 +10,7 @@ import java.time.LocalDateTime;
 
 @Builder
 public class ReservationCommand {
+    private String clientName;
     private String idempotencyKey;
     private String content;
     private CarCommand car;
@@ -18,6 +19,7 @@ public class ReservationCommand {
         return Reservation.builder()
                 .reservationId(idempotencyKey)
                 .memberUser(member)
+                .clientName(clientName)
                 .car(car.toEntity())
                 .startTime(LocalDateTime.now())
                 .content(content)
