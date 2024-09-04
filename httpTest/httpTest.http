@@ -1,3 +1,13 @@
+POST http://localhost:38080/v1/api/reservation/confirm
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE3MjU0NTU3ODAsInN1YiI6IjM2NDM4NTczNzgiLCJuaWNrbmFtZSI6Iuq5gOuUlOyaqSIsImV4cCI6MTcyNTQ1NzU4MH0.h8sz1TOSETN8-KnPQZ-329imp15-MhkFrQmwuCTQui6dmdffQPMgtnE5U3b9pjMJH9oEQFgUBPKN7u5N48_6Ug
+
+{
+  "idempotencyKey": "6e65c7a2-a9b8-3aca-87af-a8df193f0d8d"
+}
+
+
+###
 POST http://localhost:38080/v1/api/reservation/checkout
 Content-Type: application/json
 
@@ -30,6 +40,7 @@ Content-Type: application/json
 
 POST http://localhost:38080/v1/api/reservation/checkout
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE3MjMwMTY3NzEsInN1YiI6IjM2NDM4NTczNzgiLCJleHAiOjE3MjMwMTg1NzF9.H8ER4zwczv6FFsuFxL3-hdfynamvb4AmGeoe5oOMUdjImwXRI8h7yewz1-AgGWs4tSsJriDXETfnmdfb3yxD3g
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE3MjU0NTU3ODAsInN1YiI6IjM2NDM4NTczNzgiLCJuaWNrbmFtZSI6Iuq5gOuUlOyaqSIsImV4cCI6MTcyNTQ1NzU4MH0.h8sz1TOSETN8-KnPQZ-329imp15-MhkFrQmwuCTQui6dmdffQPMgtnE5U3b9pjMJH9oEQFgUBPKN7u5N48_6Ug
 
 
+###
