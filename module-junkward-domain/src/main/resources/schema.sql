@@ -35,6 +35,7 @@ CREATE TABLE reservations (
     reservation_id VARCHAR(40) NOT NULL,
     member_id BIGINT NOT NULL,
     car_id BIGINT NOT NULL,
+    client_name BIGINT NOT NULL,
     start_time TIMESTAMP NOT NULL,
     end_time TIMESTAMP NOT NULL,
     status VARCHAR(20) NOT NULL,

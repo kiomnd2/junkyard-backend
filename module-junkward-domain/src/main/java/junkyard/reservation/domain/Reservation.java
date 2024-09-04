@@ -38,6 +38,9 @@ public class Reservation extends BaseEntity {
     @JoinColumn(name = "car_id", nullable = false)
     private Car car;
 
+    @Column(name = "client_name", nullable = false)
+    private String clientName;
+
     @Column(name = "start_time", nullable = false)
     private LocalDateTime startTime;
 
@@ -58,12 +61,13 @@ public class Reservation extends BaseEntity {
     private List<Estimate> estimates = new ArrayList<>();
 
     @Builder
-    public Reservation(String reservationId, MemberUser memberUser, LocalDateTime startTime, Car car, String content) {
+    public Reservation(String reservationId, MemberUser memberUser, String clientName, LocalDateTime startTime, Car car, String content) {
         this.reservationId = reservationId;
         this.memberUser = memberUser;
         this.car = car;
         this.startTime = startTime;
         this.status = State.PENDING;
+        this.clientName = clientName;
         this.content = content;
     }
 
@@ -88,6 +92,7 @@ public class Reservation extends BaseEntity {
 
     public ReservationInfo toInfo() {
         return ReservationInfo.builder()
+                .clientName(clientName)
                 .reservationId(reservationId)
                 .userId(memberUser.getAuthId().toString())
                 .startTime(startTime)
