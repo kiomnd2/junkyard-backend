@@ -25,4 +25,9 @@ public class ReservationReaderImpl implements ReservationReader {
     public List<Reservation> readByUser(MemberUser memberUser) {
         return reservationRepository.findAllByMemberUser(memberUser);
     }
+
+    @Override
+    public Reservation read(String idempotencyKey) {
+        return reservationRepository.findByReservationId(idempotencyKey);
+    }
 }

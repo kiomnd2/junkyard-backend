@@ -114,6 +114,7 @@ public class ReservationDto {
             return ResponseInquireReservation.builder()
                     .reservationId(info.reservationId())
                     .userId(info.userId())
+                    .clientName(info.clientName())
                     .startTime(info.startTime())
                     .endTime(info.endTime())
                     .status(info.status())

@@ -145,3 +145,20 @@ include::{snippets}/inquire-reservation-list/http-response.adoc[]
 include::{snippets}/inquire-reservation-list/response-fields.adoc[]
 
 
+== 예약 견적 추가
+
+=== REQUEST
+include::{snippets}/estimate/http-request.adoc[]
+
+==== REQUEST HEADER
+include::{snippets}/estimate/request-headers.adoc[]
+
+==== REQUEST HEADER
+include::{snippets}/estimate/request-fields.adoc[]
+
+=== RESPONSE
+include::{snippets}/estimate/http-response.adoc[]
+
+==== RESPONSE FIELD
+include::{snippets}/estimate/response-fields.adoc[]
+

@@ -128,6 +128,7 @@ class ReservationApiTest {
         Authentication atc = new TestingAuthenticationToken(myUserDetails, null, "USER");
         String idempotencyKey = "idempotency_key";
         String contents = "contents";
+        String clientName ="김띠용";
 
         ReservationDto.RequestCars cars  = ReservationDto.RequestCars.builder()
                 .make("hyundai")
@@ -138,6 +139,7 @@ class ReservationApiTest {
         ReservationDto.RequestReservation reservation = ReservationDto.RequestReservation.builder()
                 .idempotencyKey(idempotencyKey)
                 .contents(contents)
+                .clientName(clientName)
                 .car(cars)
                 .build();
 
@@ -161,6 +163,7 @@ class ReservationApiTest {
                         requestFields(
                                 fieldWithPath("idempotencyKey").type("String").description("예약 키"),
                                 fieldWithPath("contents").type("String").description("예약 내용"),
+                                fieldWithPath("clientName").type("String").description("예약자 명"),
                                 fieldWithPath("car.make").type("String").description("차량 제조사"),
                                 fieldWithPath("car.model").type("String").description("차량 모델"),
                                 fieldWithPath("car.licensePlate").type("String").description("차량 번호")),
@@ -215,11 +218,13 @@ class ReservationApiTest {
     public void inquireReservation_shouldReturnSuccess() throws Exception {
         Authentication atc = new TestingAuthenticationToken(myUserDetails, null, "USER");
         String username = myUserDetails.getUsername();
+        String clientName = "김띠용";
         String reservationId = "idempotency-key";
 
         ReservationInfo reservationInfo = ReservationInfo.builder()
                 .reservationId(reservationId)
                 .userId("userId")
+                .clientName(clientName)
                 .startTime(LocalDateTime.now())
                 .endTime(LocalDateTime.now().plusDays(1))
                 .status("PENDING")
@@ -251,6 +256,7 @@ class ReservationApiTest {
                 .andExpect(jsonPath("message").value(Codes.NORMAL.getDescription()))
                 .andExpect(jsonPath("data[0].reservationId").value(reservationId))
                 .andExpect(jsonPath("data[0].userId").value(reservationInfo.userId()))
+                .andExpect(jsonPath("data[0].clientName").value(reservationInfo.clientName()))
                 .andExpect(jsonPath("data[0].startTime").value(reservationInfo.startTime().format(DateTimeFormatter.ISO_DATE_TIME)))
                 .andExpect(jsonPath("data[0].endTime").value(reservationInfo.endTime().format(DateTimeFormatter.ISO_DATE_TIME)))
                 .andExpect(jsonPath("data[0].status").value("PENDING"))
@@ -274,6 +280,7 @@ class ReservationApiTest {
                                 fieldWithPath("message").type("String").description("응답 메시지"),
                                 fieldWithPath("data[0].reservationId").type("String").description("예약키"),
                                 fieldWithPath("data[0].userId").type("String").description("사용자 ID"),
+                                fieldWithPath("data[0].clientName").type("String").description("사용자 명"),
                                 fieldWithPath("data[0].startTime").type("String").description("예약 시작 시간"),
                                 fieldWithPath("data[0].endTime").type("String").description("예약 종료 시간"),
                                 fieldWithPath("data[0].status").type("String").description("예약 상태"),
@@ -290,6 +297,46 @@ class ReservationApiTest {
                 ));
         ;
 
+    }
+
+    @WithMockUser
+    @Test
+    public void reservationEstimate_shouldReturnSuccess() throws Exception {
+        Authentication atc = new TestingAuthenticationToken(myUserDetails, null, "USER");
+        String idempotencyKey = "idempotency_key";
+
+        ReservationDto.RequestEstimate requestEstimate = ReservationDto.RequestEstimate.builder()
+                .amount(1000.0)
+                .idempotencyKey(idempotencyKey)
+                .description("이래저래")
+                .build();
+
+        mockMvc.perform(post("/v1/api/reservation/estimate")
+                        .header(HttpHeaders.AUTHORIZATION, "Bearer token")
+                        .contentType(MediaType.APPLICATION_JSON_VALUE)
+                        .content(objectMapper.writeValueAsString(requestEstimate))
+                        .with(authentication(atc))
+                        .with(csrf()))
+                .andExpect(status().isOk())
+                .andDo(print())
+                .andExpect(jsonPath("code").value(Codes.NORMAL.name()))
+                .andExpect(jsonPath("message").value(Codes.NORMAL.getDescription()))
+                .andDo(MockMvcRestDocumentation.document("estimate",
+                        preprocessRequest(prettyPrint()), // 요청 본문을 예쁘게 출력
+                        preprocessResponse(prettyPrint()), // 응답 본문을 예쁘게 출력
+
+                        requestHeaders( // 요청 헤더 문서화
+                                headerWithName(HttpHeaders.AUTHORIZATION).description("Bearer token 형식의 인증 토큰")
+                        ),
+                        requestFields(
+                                fieldWithPath("idempotencyKey").type("String").description("예약 키"),
+                                fieldWithPath("description").type("String").description("견적 사유"),
+                                fieldWithPath("amount").type("Number").description("견적가")),
+                        responseFields(
+                                fieldWithPath("code").type("String").description("응답 결과 코드"),
+                                fieldWithPath("message").type("String").description("응답 메시지")
+                        )
+                ));
     }
 
 }
