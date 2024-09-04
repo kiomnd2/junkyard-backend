@@ -149,6 +149,16 @@ public class ReservationDto {
     @NoArgsConstructor
     @Builder
     @Getter
+    public static class RequestEstimate {
+        private String idempotencyKey;
+        private String description;
+        private Double amount;
+    }
+
+    @AllArgsConstructor
+    @NoArgsConstructor
+    @Builder
+    @Getter
     public static class ResponseEstimate {
         private Double amount;
         private LocalDateTime issuedDate;
@@ -164,5 +174,6 @@ public class ReservationDto {
                     .build();
         }
     }
+
 
 }

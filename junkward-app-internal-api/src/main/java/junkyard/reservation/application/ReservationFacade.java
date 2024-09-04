@@ -21,11 +21,15 @@ public class ReservationFacade {
         reservationService.cancelReservation(username, idempotencyKey, cancelReason);
     }
 
-    public void confirm(Long username, String idempotencyKey) {
-        reservationService.confirm(username, idempotencyKey);
+    public void confirm(String idempotencyKey) {
+        reservationService.confirm(idempotencyKey);
     }
 
     public List<ReservationInfo> inquireList(Long authId) {
         return reservationService.inquireList(authId);
+    }
+
+    public void estimate(String idempotencyKey, Double amount, String description) {
+        reservationService.addEstimate(idempotencyKey, amount, description);
     }
 }

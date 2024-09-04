@@ -108,6 +108,18 @@ public class Reservation extends BaseEntity {
                 .build();
     }
 
+    public void addEstimate(Double amount, String description) {
+        this.estimates.forEach(Estimate::notFinal);
+
+        this.estimates.add(Estimate.builder()
+                        .reservation(this)
+                        .isFinal(true)
+                        .amount(amount)
+                        .description(description)
+                        .issuedDate(LocalDateTime.now())
+                .build());
+    }
+
     public enum State {
         PENDING, CONFIRMED, CANCELED, REJECTED, COMPLETED, EXPIRED, ON_HOLD
     }

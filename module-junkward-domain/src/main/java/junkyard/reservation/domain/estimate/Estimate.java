@@ -50,4 +50,8 @@ public class Estimate extends BaseEntity {
                 .description(description)
                 .build();
     }
+
+    public void notFinal() {
+        this.isFinal = false;
+    }
 }

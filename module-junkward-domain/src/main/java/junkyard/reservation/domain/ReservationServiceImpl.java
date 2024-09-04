@@ -37,9 +37,8 @@ public class ReservationServiceImpl implements ReservationService {
 
     @Transactional
     @Override
-    public void confirm(Long username, String idempotencyKey) {
-        MemberUser memberUser = memberReader.checkMember(username);
-        Reservation reservation = reservationReader.read(memberUser, idempotencyKey);
+    public void confirm(String idempotencyKey) {
+        Reservation reservation = reservationReader.read(idempotencyKey);
         reservation.confirm();
     }
 
@@ -48,6 +47,13 @@ public class ReservationServiceImpl implements ReservationService {
         MemberUser memberUser = memberReader.readByAuthId(authId)
                 .orElseThrow(() -> new InvalidUserException(Codes.COMMON_INVALID_MEMBER, authId));
         return reservationReader.readByUser(memberUser).stream().map(Reservation::toInfo).toList();
+    }
+
+    @Transactional
+    @Override
+    public void addEstimate(String idempotencyKey, Double amount, String description) {
+        Reservation reservation = reservationReader.read(idempotencyKey);
+        reservation.addEstimate(amount, description);
     }
 
 }

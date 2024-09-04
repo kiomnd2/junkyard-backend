@@ -8,6 +8,7 @@ import junkyard.security.annotataion.UserAuthorize;
 import junkyard.security.userdetails.MyUserDetails;
 import junkyard.utils.IdempotencyCreator;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
@@ -60,7 +61,14 @@ public class ReservationApi {
     @PostMapping("/confirm")
     public CommonResponse<Void> confirmReservation(@AuthenticationPrincipal MyUserDetails userDetails,
                                                    @RequestBody ReservationDto.RequestConfirmReservation confirmReservation) {
-        reservationFacade.confirm(Long.parseLong(userDetails.getUsername()), confirmReservation.getIdempotencyKey());
+        reservationFacade.confirm(confirmReservation.getIdempotencyKey());
+        return CommonResponse.success(null);
+    }
+
+    @AdminAuthorize
+    @PostMapping("/estimate")
+    public CommonResponse<Void> estimateReservation(@RequestBody ReservationDto.RequestEstimate requestEstimate) {
+        reservationFacade.estimate(requestEstimate.getIdempotencyKey(), requestEstimate.getAmount(), requestEstimate.getDescription());
         return CommonResponse.success(null);
     }
 }
