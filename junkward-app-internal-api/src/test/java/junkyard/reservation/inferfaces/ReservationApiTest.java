@@ -163,6 +163,7 @@ class ReservationApiTest {
                         requestFields(
                                 fieldWithPath("idempotencyKey").type("String").description("예약 키"),
                                 fieldWithPath("contents").type("String").description("예약 내용"),
+                                fieldWithPath("phoneNo").type("String").description("핸드폰 번호"),
                                 fieldWithPath("clientName").type("String").description("예약자 명"),
                                 fieldWithPath("car.make").type("String").description("차량 제조사"),
                                 fieldWithPath("car.model").type("String").description("차량 모델"),
@@ -224,6 +225,7 @@ class ReservationApiTest {
         ReservationInfo reservationInfo = ReservationInfo.builder()
                 .reservationId(reservationId)
                 .userId("userId")
+                .phoneNo("01000010001")
                 .clientName(clientName)
                 .startTime(LocalDateTime.now())
                 .endTime(LocalDateTime.now().plusDays(1))
@@ -257,6 +259,7 @@ class ReservationApiTest {
                 .andExpect(jsonPath("data[0].reservationId").value(reservationId))
                 .andExpect(jsonPath("data[0].userId").value(reservationInfo.userId()))
                 .andExpect(jsonPath("data[0].clientName").value(reservationInfo.clientName()))
+                .andExpect(jsonPath("data[0].phoneNo").value(reservationInfo.phoneNo()))
                 .andExpect(jsonPath("data[0].startTime").value(reservationInfo.startTime().format(DateTimeFormatter.ISO_DATE_TIME)))
                 .andExpect(jsonPath("data[0].endTime").value(reservationInfo.endTime().format(DateTimeFormatter.ISO_DATE_TIME)))
                 .andExpect(jsonPath("data[0].status").value("PENDING"))
@@ -281,6 +284,7 @@ class ReservationApiTest {
                                 fieldWithPath("data[0].reservationId").type("String").description("예약키"),
                                 fieldWithPath("data[0].userId").type("String").description("사용자 ID"),
                                 fieldWithPath("data[0].clientName").type("String").description("사용자 명"),
+                                fieldWithPath("data[0].phoneNo").type("String").description("핸드폰번호"),
                                 fieldWithPath("data[0].startTime").type("String").description("예약 시작 시간"),
                                 fieldWithPath("data[0].endTime").type("String").description("예약 종료 시간"),
                                 fieldWithPath("data[0].status").type("String").description("예약 상태"),
