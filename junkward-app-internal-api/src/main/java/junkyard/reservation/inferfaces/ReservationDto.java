@@ -1,5 +1,6 @@
 package junkyard.reservation.inferfaces;
 
+import jakarta.validation.constraints.*;
 import junkyard.car.domain.CarInfo;
 import junkyard.reservation.domain.ReservationCommand;
 import junkyard.reservation.domain.ReservationInfo;
@@ -29,6 +30,7 @@ public class ReservationDto {
     @Builder
     @Getter
     public static class ResponseReservationCheckout {
+        @NotNull(message = "idempotencyKey는 필수 값입니다.")
         private String idempotencyKey;
     }
 
@@ -37,8 +39,17 @@ public class ReservationDto {
     @Builder
     @Getter
     public static class RequestReservation {
+
+        @NotNull(message = "idempotencyKey 는 필수 값입니다.")
         private String idempotencyKey;
+
+        @NotBlank(message = "clientName 필수 값입니다.")
+        @Size(max = 100, message = "Name은 최대 100자까지 허용됩니다.")
         private String clientName;
+
+        @NotBlank(message = "Phone number 는 필수 값입니다.")
+        @Pattern(regexp = "^\\+?[0-9. ()-]{7,25}$", message = "유효한 전화번호를 입력해주세요.")
+        private String phoneNo;
         private String contents;
         private RequestCars car;
 
@@ -57,7 +68,11 @@ public class ReservationDto {
     @Builder
     @Getter
     public static class RequestCancelReservation {
+
+        @NotNull(message = "idempotencyKey 는 필수 값입니다.")
         private String idempotencyKey;
+
+        @NotNull(message = "cancelReason 는 필수 값입니다.")
         private String cancelReason;
     }
 
@@ -66,6 +81,8 @@ public class ReservationDto {
     @Builder
     @Getter
     public static class RequestConfirmReservation {
+
+        @NotNull(message = "idempotencyKey 는 필수 값입니다.")
         private String idempotencyKey;
     }
 
@@ -74,8 +91,14 @@ public class ReservationDto {
     @Builder
     @Getter
     public static class RequestCars {
+
+        @NotNull(message = "제조사는 필수 값입니다.")
         private String make;
+
+        @NotNull(message = "모델명은 필수 값입니다.")
         private String model;
+
+        @NotNull(message = "번호키 는 필수 값입니다.")
         private String licensePlate;
 
         public ReservationCommand.CarCommand toCommand() {
@@ -151,9 +174,14 @@ public class ReservationDto {
     @Builder
     @Getter
     public static class RequestEstimate {
+
+        @NotNull(message = "idempotencyKey 는 필수 값입니다.")
         private String idempotencyKey;
-        private String description;
+
+        @Min(value = 0, message = "0 이하의 금액을 입력받을 수 없습니다")
+        @NotNull(message = "amount 는 필수 값입니다.")
         private Double amount;
+        private String description;
     }
 
     @AllArgsConstructor
