@@ -57,6 +57,7 @@ public class ReservationDto {
             return ReservationCommand.builder()
                     .idempotencyKey(idempotencyKey)
                     .content(contents)
+                    .phoneNo(phoneNo)
                     .clientName(clientName)
                     .car(car.toCommand())
                     .build();
@@ -125,6 +126,7 @@ public class ReservationDto {
         private String reservationId;
         private String userId;
         private String clientName;
+        private String phoneNo;
         private LocalDateTime startTime;
         private LocalDateTime endTime;
         private String status;
@@ -137,6 +139,7 @@ public class ReservationDto {
             return ResponseInquireReservation.builder()
                     .reservationId(info.reservationId())
                     .userId(info.userId())
+                    .phoneNo(info.phoneNo())
                     .clientName(info.clientName())
                     .startTime(info.startTime())
                     .endTime(info.endTime())

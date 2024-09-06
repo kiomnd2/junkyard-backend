@@ -11,6 +11,7 @@ import java.time.LocalDateTime;
 @Builder
 public class ReservationCommand {
     private String clientName;
+    private String phoneNo;
     private String idempotencyKey;
     private String content;
     private CarCommand car;

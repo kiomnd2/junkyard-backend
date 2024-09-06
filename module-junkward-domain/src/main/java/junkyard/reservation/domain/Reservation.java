@@ -41,6 +41,9 @@ public class Reservation extends BaseEntity {
     @Column(name = "client_name", nullable = false)
     private String clientName;
 
+    @Column(name = "phone_no")
+    private String phoneNo;
+
     @Column(name = "start_time", nullable = false)
     private LocalDateTime startTime;
 
@@ -93,6 +96,7 @@ public class Reservation extends BaseEntity {
     public ReservationInfo toInfo() {
         return ReservationInfo.builder()
                 .clientName(clientName)
+                .phoneNo(phoneNo)
                 .reservationId(reservationId)
                 .userId(memberUser.getAuthId().toString())
                 .startTime(startTime)
