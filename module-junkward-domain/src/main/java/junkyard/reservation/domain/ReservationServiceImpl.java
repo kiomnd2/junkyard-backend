@@ -5,6 +5,7 @@ import junkyard.common.response.exception.member.InvalidUserException;
 import junkyard.member.domain.MemberReader;
 import junkyard.member.domain.MemberUser;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -12,6 +13,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+@Slf4j
 @RequiredArgsConstructor
 @Service
 public class ReservationServiceImpl implements ReservationService {
@@ -22,6 +24,7 @@ public class ReservationServiceImpl implements ReservationService {
     @Transactional
     @Override
     public void reserve(Long authId, ReservationCommand reservationCommand) {
+        log.info("reserveInfo (authId: {}, reservationCommand: {}", authId, reservationCommand);
         MemberUser memberUser = memberReader.checkMember(authId);
         Reservation reservation = reservationCommand.toEntity(memberUser);
         reservationStore.storeReservation(reservation);

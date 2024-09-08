@@ -15,7 +15,7 @@ import lombok.RequiredArgsConstructor;
 public class MemberUser extends BaseEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue
     private Long id;
 
     @Column(name = "auth_id", nullable = false, unique = true)

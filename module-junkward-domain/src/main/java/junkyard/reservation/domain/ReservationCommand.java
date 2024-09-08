@@ -1,13 +1,11 @@
 package junkyard.reservation.domain;
 
 import junkyard.member.domain.MemberUser;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
+@ToString
 @Builder
 public class ReservationCommand {
     private String clientName;
