@@ -1,0 +1,14 @@
+bootJar {
+    enabled = false
+}
+
+jar {
+    enabled = true
+}
+
+dependencies {
+    implementation project(":core-api")
+    implementation project(":module-junkward-domain")
+    implementation 'org.springframework.kafka:spring-kafka'
+}
+
