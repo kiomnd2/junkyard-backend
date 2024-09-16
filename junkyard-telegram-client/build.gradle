@@ -8,6 +8,7 @@ jar {
 
 dependencies {
     implementation project(":core-api")
+    implementation project(":core-web")
     implementation project(":module-junkward-domain")
     implementation 'org.springframework.kafka:spring-kafka'
 }

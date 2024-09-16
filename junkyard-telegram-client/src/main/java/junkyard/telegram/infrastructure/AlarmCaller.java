@@ -1,6 +1,8 @@
 package junkyard.telegram.infrastructure;
 
+import junkyard.telegram.domain.AlarmCommand;
+
 public interface AlarmCaller {
     boolean supports(AlarmType type);
-    void sendMessage(String message);
+    void sendMessage(AlarmCommand.RequestAlarm message);
 }
