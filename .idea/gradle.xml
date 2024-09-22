@@ -13,6 +13,7 @@
             <option value="$PROJECT_DIR$/core-web" />
             <option value="$PROJECT_DIR$/junkward-app-internal-api" />
             <option value="$PROJECT_DIR$/junkyard-kakao-client" />
+            <option value="$PROJECT_DIR$/junkyard-telegram-client" />
             <option value="$PROJECT_DIR$/junkyard-telegram-server" />
             <option value="$PROJECT_DIR$/module-junkward-domain" />
           </set>
