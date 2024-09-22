@@ -4,5 +4,5 @@ include 'junkward-app-internal-api'
 include 'core-web'
 include 'core-api'
 include 'junkyard-kakao-client'
-include 'junkyard-telegram-client'
+include 'junkyard-telegram-server'
 
