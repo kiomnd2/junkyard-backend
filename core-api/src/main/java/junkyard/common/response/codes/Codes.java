@@ -13,8 +13,8 @@ public enum Codes {
     COMMON_INVALID_TOKEN_ERROR("유효하지 않은 토큰입니다, 확인 후 다시 시도해주세요."),
     COMMON_INVALID_MEMBER("찾을 수 없는 사용자 입니다. 확인 후 다시 시도해주세요. (userId : %d)"),
     INVALID_RESERVATION("찾을 수 없는 예약입니다. 확인해주세요 (reservationId: %s, username: %s)"),
-    INVALID_RESERVATION_CANCEL("올바르지 않은 취소요청입니다. [%s] (state : %s)")
-
+    INVALID_RESERVATION_CANCEL("올바르지 않은 취소요청입니다. [%s] (state : %s)"),
+    TELEGRAM_ERROR("텔레그램 전송 중 오류가 발생했습니다. (chatId = %s, errorMessage: %s)")
     ;
 
     private final String description;
