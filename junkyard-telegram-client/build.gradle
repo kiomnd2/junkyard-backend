@@ -11,5 +11,6 @@ dependencies {
     implementation project(":core-web")
     implementation project(":module-junkward-domain")
     implementation 'org.springframework.kafka:spring-kafka'
+    implementation 'org.telegram:telegrambots:5.7.1'
 }
 

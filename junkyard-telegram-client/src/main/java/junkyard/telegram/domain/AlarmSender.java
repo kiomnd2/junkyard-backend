@@ -1,5 +1,5 @@
 package junkyard.telegram.domain;
 
 public interface AlarmSender {
-    void sendMessage(AlarmCommand.RequestAlarm alarm);
+    void sendMessage(String method, AlarmCommand.RequestAlarm alarm);
 }

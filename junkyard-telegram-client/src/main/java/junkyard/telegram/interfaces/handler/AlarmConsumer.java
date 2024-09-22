@@ -22,7 +22,7 @@ public class AlarmConsumer {
                 .sendAt(LocalDateTime.now())
                 .writer("junkyard-alarm")
                 .build();
-        alarmSender.sendMessage(message);
+        alarmSender.sendMessage("KAKAO", message);
         return "ok";
     }
 }
