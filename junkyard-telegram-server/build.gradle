@@ -1,3 +1,10 @@
+String jarname ='junkyard-telegram-server.jar'
+
+tasks.named("bootJar") {
+    bootJar.getArchiveFileName().set(jarname)
+}
+
+
 dependencies {
     implementation project(":core-api")
     implementation 'org.springframework.kafka:spring-kafka'
