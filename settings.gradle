@@ -1,6 +1,6 @@
 rootProject.name = 'junkyard'
-include 'module-junkward-domain'
-include 'junkward-app-internal-api'
+include 'module-junkyard-domain'
+include 'junkyard-app-internal-api'
 include 'core-web'
 include 'core-api'
 include 'junkyard-kakao-client'

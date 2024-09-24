@@ -3,7 +3,7 @@ plugins {
     id 'org.asciidoctor.jvm.convert' version '3.3.2'
 }
 
-String jarname ='junkward-app-internal-api.jar'
+String jarname ='junkyard-app-internal-api.jar'
 
 tasks.named("bootJar") {
     bootJar.getArchiveFileName().set(jarname)
@@ -64,7 +64,7 @@ dependencies {
     implementation project(":core-web")
     implementation project(":core-api")
     implementation project(":junkyard-kakao-client")
-    implementation project(":module-junkward-domain")
+    implementation project(":module-junkyard-domain")
     asciidoctorExt 'org.springframework.restdocs:spring-restdocs-asciidoctor'
     implementation 'org.springframework.boot:spring-boot-starter-validation'
     testImplementation 'org.springframework.security:spring-security-test'

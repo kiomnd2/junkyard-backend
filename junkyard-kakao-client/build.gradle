@@ -8,6 +8,6 @@ jar {
 
 dependencies {
     implementation project(":core-api")
-    implementation project(":module-junkward-domain")
+    implementation project(":module-junkyard-domain")
     implementation 'org.springframework.boot:spring-boot-starter-webflux'
 }
