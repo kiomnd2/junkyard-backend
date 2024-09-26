@@ -47,7 +47,7 @@ public class Reservation extends BaseEntity {
     @Column(name = "start_time", nullable = false)
     private LocalDateTime startTime;
 
-    @Column(name = "end_time")
+    @Column(name = "end_time", nullable = true)
     private LocalDateTime endTime;
 
     @Enumerated(EnumType.STRING)
