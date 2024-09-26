@@ -47,7 +47,7 @@ public class Reservation extends BaseEntity {
     @Column(name = "start_time", nullable = false)
     private LocalDateTime startTime;
 
-    @Column(name = "end_time", nullable = true)
+    @Column(name = "end_time")
     private LocalDateTime endTime;
 
     @Enumerated(EnumType.STRING)
@@ -69,6 +69,7 @@ public class Reservation extends BaseEntity {
         this.memberUser = memberUser;
         this.car = car;
         this.startTime = startTime;
+        this.endTime = LocalDateTime.now();
         this.status = State.PENDING;
         this.clientName = clientName;
         this.content = content;
