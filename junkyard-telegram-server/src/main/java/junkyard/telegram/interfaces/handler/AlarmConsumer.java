@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 public class AlarmConsumer {
     private final AlarmSender alarmSender;
 
-    @KafkaListener(id = "alarm-listener", topics = "${kafka.consumer.topic}")
+    @KafkaListener(topics = "${kafka.consumer.topic}", groupId = "junkyard-group", containerFactory = "kafkaListenerContainerFactory")
     public String listenAlarm(ConsumerRecord<?,?> record) {
         AlarmCommand.RequestAlarm message = AlarmCommand.RequestAlarm.builder()
                 .title("익차장 Alarm")
