@@ -1,7 +1,9 @@
 package junkyard.member.application;
 
 import io.jsonwebtoken.security.InvalidKeyException;
+import junkyard.common.response.codes.Codes;
 import junkyard.common.response.exception.InvalidTypeException;
+import junkyard.common.response.exception.member.InvalidUserException;
 import junkyard.member.domain.CheckUserResult;
 import junkyard.member.domain.MemberInfo;
 import junkyard.member.domain.MemberService;
@@ -73,6 +75,12 @@ public class MemberFacade {
             TokenClaim refreshSubject = jwtTokenProvider.getRefreshSubject(refreshToken);
             String accessToken = jwtTokenProvider.createToken(Long.parseLong(refreshSubject.authId()),
                     refreshSubject.name(), refreshSubject.profileUrl());
+            CheckUserResult checkUserResult = checkMember(accessToken, "KAKAO");
+
+            if (!checkUserResult.isJoined()) {
+                throw new InvalidUserException(Codes.COMMON_INVALID_MEMBER, null);
+            }
+
             return TokenInfo.builder()
                     .accessToken(accessToken)
                     .refreshToken(refreshToken)
