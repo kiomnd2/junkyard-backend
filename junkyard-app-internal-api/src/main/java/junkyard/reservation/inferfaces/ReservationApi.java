@@ -25,7 +25,7 @@ public class ReservationApi {
     @PostMapping("/checkout")
     public CommonResponse<ReservationDto.ResponseReservationCheckout> issueIdempotencyKey(@AuthenticationPrincipal MyUserDetails userDetails) {
         return CommonResponse.success(ReservationDto.ResponseReservationCheckout.builder()
-                .idempotencyKey(IdempotencyCreator.create(userDetails.getUsername()))
+                .idempotencyKey(IdempotencyCreator.create())
                 .build());
     }
 
