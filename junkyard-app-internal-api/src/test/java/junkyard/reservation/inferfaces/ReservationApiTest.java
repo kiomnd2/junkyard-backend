@@ -260,7 +260,7 @@ class ReservationApiTest {
                 .andExpect(jsonPath("data[0].userId").value(reservationInfo.userId()))
                 .andExpect(jsonPath("data[0].clientName").value(reservationInfo.clientName()))
                 .andExpect(jsonPath("data[0].phoneNo").value(reservationInfo.phoneNo()))
-                .andExpect(jsonPath("data[0].contents").value(reservationInfo.content()))
+                .andExpect(jsonPath("data[0].contents").value(reservationInfo.contents()))
                 .andExpect(jsonPath("data[0].startTime").value(reservationInfo.startTime().format(DateTimeFormatter.ISO_DATE_TIME)))
                 .andExpect(jsonPath("data[0].endTime").value(reservationInfo.endTime().format(DateTimeFormatter.ISO_DATE_TIME)))
                 .andExpect(jsonPath("data[0].status").value("PENDING"))
