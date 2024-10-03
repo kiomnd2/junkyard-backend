@@ -30,6 +30,8 @@ public class MemberFacade {
         MemberInfo memberInfo = memberService.registerMember(requestJoin.toCommand());
         String token = jwtTokenProvider.createToken(memberInfo.authId(), memberInfo.name(), memberInfo.profileUrl());
         String refreshToken = jwtTokenProvider.createRefreshToken(memberInfo.authId(), memberInfo.name(), memberInfo.profileUrl());
+
+
         return TokenInfo.builder()
                 .accessToken(token)
                 .refreshToken(refreshToken)
@@ -75,7 +77,7 @@ public class MemberFacade {
             TokenClaim refreshSubject = jwtTokenProvider.getRefreshSubject(refreshToken);
             String accessToken = jwtTokenProvider.createToken(Long.parseLong(refreshSubject.authId()),
                     refreshSubject.name(), refreshSubject.profileUrl());
-            CheckUserResult checkUserResult = checkMember(accessToken, "KAKAO");
+            CheckUserResult checkUserResult = checkMember(accessToken, "kakao");
 
             if (!checkUserResult.isJoined()) {
                 throw new InvalidUserException(Codes.COMMON_INVALID_MEMBER, null);
