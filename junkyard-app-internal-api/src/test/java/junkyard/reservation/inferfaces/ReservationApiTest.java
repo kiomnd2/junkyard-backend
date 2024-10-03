@@ -95,7 +95,7 @@ class ReservationApiTest {
 
         try (MockedStatic<IdempotencyCreator> mockedStatic = mockStatic(IdempotencyCreator.class)) {
 
-            mockedStatic.when(() ->IdempotencyCreator.create(anyString())).thenReturn(idempotencyKey);
+            mockedStatic.when(IdempotencyCreator::create).thenReturn(idempotencyKey);
 
             mockMvc.perform(post("/v1/api/reservation/checkout")
                             .header(HttpHeaders.AUTHORIZATION, "Bearer token")
