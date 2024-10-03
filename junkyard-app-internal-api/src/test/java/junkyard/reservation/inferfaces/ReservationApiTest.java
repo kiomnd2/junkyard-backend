@@ -286,6 +286,7 @@ class ReservationApiTest {
                                 fieldWithPath("data[0].userId").type("String").description("사용자 ID"),
                                 fieldWithPath("data[0].clientName").type("String").description("사용자 명"),
                                 fieldWithPath("data[0].phoneNo").type("String").description("핸드폰번호"),
+                                fieldWithPath("data[0].contents").type("String").description("예약내용"),
                                 fieldWithPath("data[0].startTime").type("String").description("예약 시작 시간"),
                                 fieldWithPath("data[0].endTime").type("String").description("예약 종료 시간"),
                                 fieldWithPath("data[0].status").type("String").description("예약 상태"),
