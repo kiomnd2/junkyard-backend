@@ -55,7 +55,7 @@ public class Reservation extends BaseEntity {
     private State status;
 
     @Column(name = "content", nullable = false, length = 500)
-    private String content;
+    private String contents;
 
     @Column(name = "cancellation_reason", length = 500)
     private String cancellationReason;
@@ -64,7 +64,7 @@ public class Reservation extends BaseEntity {
     private List<Estimate> estimates = new ArrayList<>();
 
     @Builder
-    public Reservation(String reservationId, MemberUser memberUser, String clientName, LocalDateTime startTime, Car car, String content) {
+    public Reservation(String reservationId, MemberUser memberUser, String clientName, String phoneNo, LocalDateTime startTime, Car car, String contents) {
         this.reservationId = reservationId;
         this.memberUser = memberUser;
         this.car = car;
@@ -72,7 +72,8 @@ public class Reservation extends BaseEntity {
         this.endTime = LocalDateTime.now();
         this.status = State.PENDING;
         this.clientName = clientName;
-        this.content = content;
+        this.contents = contents;
+        this.phoneNo = phoneNo;
     }
 
     public void cancel(String cancelReason) {
@@ -103,7 +104,7 @@ public class Reservation extends BaseEntity {
                 .startTime(startTime)
                 .endTime(endTime)
                 .cancellationReason(cancellationReason)
-                .content(content)
+                .contents(contents)
                 .status(status.name())
                 .carInfo(car.toInfo())
                 .estimateInfos(estimates.stream()

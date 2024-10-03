@@ -11,7 +11,7 @@ public class ReservationCommand {
     private String clientName;
     private String phoneNo;
     private String idempotencyKey;
-    private String content;
+    private String contents;
     private CarCommand car;
 
     public Reservation toEntity(MemberUser member) {
@@ -20,8 +20,9 @@ public class ReservationCommand {
                 .memberUser(member)
                 .clientName(clientName)
                 .car(car.toEntity())
+                .phoneNo(member.getPhoneNo())
                 .startTime(LocalDateTime.now())
-                .content(content)
+                .contents(contents)
                 .build();
     }
 

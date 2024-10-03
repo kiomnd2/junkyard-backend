@@ -10,7 +10,7 @@ import java.util.Set;
 
 @Builder
 public record ReservationInfo(String clientName, String phoneNo, String reservationId, String userId, CarInfo carInfo, LocalDateTime startTime
-        , LocalDateTime endTime, String status, String content, String cancellationReason, List<EstimateInfo> estimateInfos,
+        , LocalDateTime endTime, String status, String contents, String cancellationReason, List<EstimateInfo> estimateInfos,
                               LocalDateTime createdAt, LocalDateTime updatedAt
 ) {
 

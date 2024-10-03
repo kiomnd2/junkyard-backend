@@ -56,7 +56,7 @@ public class ReservationDto {
         public ReservationCommand toCommand() {
             return ReservationCommand.builder()
                     .idempotencyKey(idempotencyKey)
-                    .content(contents)
+                    .contents(contents)
                     .phoneNo(phoneNo)
                     .clientName(clientName)
                     .car(car.toCommand())
@@ -130,6 +130,7 @@ public class ReservationDto {
         private LocalDateTime startTime;
         private LocalDateTime endTime;
         private String status;
+        private String contents;
         private ResponseCar car;
         private List<ResponseEstimate> estimate;
         private LocalDateTime createdAt;
@@ -144,6 +145,7 @@ public class ReservationDto {
                     .startTime(info.startTime())
                     .endTime(info.endTime())
                     .status(info.status())
+                    .contents(info.contents())
                     .car(ResponseCar.by(info.carInfo()))
                     .estimate(info.estimateInfos().stream()
                             .map(ResponseEstimate::by)

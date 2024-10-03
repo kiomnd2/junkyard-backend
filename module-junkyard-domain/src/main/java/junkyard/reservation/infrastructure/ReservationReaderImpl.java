@@ -23,7 +23,9 @@ public class ReservationReaderImpl implements ReservationReader {
 
     @Override
     public List<Reservation> readByUser(MemberUser memberUser) {
-        return reservationRepository.findAllByMemberUser(memberUser);
+        List<Reservation> allByMemberUser = reservationRepository.findAllByMemberUser(memberUser);
+        System.out.println(allByMemberUser);
+        return allByMemberUser;
     }
 
     @Override

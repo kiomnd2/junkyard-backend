@@ -40,7 +40,34 @@ Content-Type: application/json
 
 POST http://localhost:38080/v1/api/reservation/checkout
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE3MjU0NTU3ODAsInN1YiI6IjM2NDM4NTczNzgiLCJuaWNrbmFtZSI6Iuq5gOuUlOyaqSIsImV4cCI6MTcyNTQ1NzU4MH0.h8sz1TOSETN8-KnPQZ-329imp15-MhkFrQmwuCTQui6dmdffQPMgtnE5U3b9pjMJH9oEQFgUBPKN7u5N48_6Ug
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE3Mjc5NjQyMzgsInN1YiI6IjM2NDM4NTczNzgiLCJuaWNrbmFtZSI6Iuq5gOuUlOyaqSIsImV4cCI6MTcyNzk2NjAzOH0.q3C3JuKLNLpS_KN9g99Ez9AynmoCYcAPqW2TbzQOBHnG9KfDUbww8Y4xDds4qdLtBzNxLszj6X7-WrsOl7Dw-Q
 
 
+###
+
+POST http://localhost:38080/v1/api/reservation
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE3Mjc5NjMyOTEsInN1YiI6IjM2NDM4NTczNzgiLCJuaWNrbmFtZSI6Iuq5gOuUlOyaqSIsImV4cCI6MTcyNzk2NTA5MX0.Y4NPcReMBGoCKFFPEAWENUErlUI2lQSIZT5mMaS2u9rJItSAWlS0-NJWFTaPO98TYUwfyIP907pqh6GCTRlSnQ
+
+{
+  "idempotencyKey": "231319d8-510a-4327-90c9-13d972c3b0f5",
+  "clientName": "김형",
+  "phoneNo": "01020135431",
+  "contents": "테스트",
+  "car": {
+    "make": "123",
+    "model": "123",
+    "licensePlate": "123"
+  }
+}
+###
+
+
+GET http://localhost:38080/v1/api/reservation
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE3Mjc5NjMyOTEsInN1YiI6IjM2NDM4NTczNzgiLCJuaWNrbmFtZSI6Iuq5gOuUlOyaqSIsImV4cCI6MTcyNzk2NTA5MX0.Y4NPcReMBGoCKFFPEAWENUErlUI2lQSIZT5mMaS2u9rJItSAWlS0-NJWFTaPO98TYUwfyIP907pqh6GCTRlSnQ
+
+{
+
+}
 ###
