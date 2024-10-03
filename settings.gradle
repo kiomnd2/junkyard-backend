@@ -6,4 +6,5 @@ include 'core-api'
 include 'junkyard-kakao-client'
 include 'junkyard-telegram-server'
 include 'junkyard-telegram-client'
+include 'junkyard-telegram-client'
 

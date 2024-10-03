@@ -24,6 +24,7 @@ public class ResponseControllerAdvice {
     @ResponseStatus(HttpStatus.OK)
     @ExceptionHandler(BaseException.class)
     public CommonResponse<Void> onBaseException(BaseException e) {
+        e.printStackTrace();
         log.error(e.getMessage());
         return CommonResponse.failed(e.getCode().name(), e.getCode().getDescription(e.getArgs()));
     }
@@ -36,6 +37,7 @@ public class ResponseControllerAdvice {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public CommonResponse<String> onArgumentNotValidException(MethodArgumentNotValidException e) {
+        e.printStackTrace();
         log.error(e.getMessage());
         BindingResult bindingResult = e.getBindingResult();
         FieldError fieldError = bindingResult.getFieldError();
@@ -51,6 +53,7 @@ public class ResponseControllerAdvice {
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
     @ExceptionHandler(InvalidKeyException.class)
     public CommonResponse<String> onInvalidKeyException(InvalidKeyException e) {
+        e.printStackTrace();
         log.error(e.getMessage());
         return CommonResponse.failed(Codes.COMMON_REQUIRED_VALUE.name(), Codes.COMMON_INVALID_TOKEN_ERROR.getDescription());
     }
@@ -64,6 +67,7 @@ public class ResponseControllerAdvice {
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler(value = Exception.class)
     public CommonResponse<String> onException(Exception e) {
+        e.printStackTrace();
         log.error(e.getMessage());
         return CommonResponse.failed(Codes.COMMON_SYSTEM_ERROR.name(), Codes.COMMON_SYSTEM_ERROR.getDescription());
     }

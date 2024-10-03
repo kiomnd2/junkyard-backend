@@ -45,6 +45,7 @@ public class ReservationServiceImpl implements ReservationService {
         reservation.confirm();
     }
 
+    @Transactional
     @Override
     public List<ReservationInfo> inquireList(Long authId) {
         MemberUser memberUser = memberReader.readByAuthId(authId)

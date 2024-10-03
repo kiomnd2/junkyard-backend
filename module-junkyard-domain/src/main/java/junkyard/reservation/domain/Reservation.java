@@ -30,7 +30,7 @@ public class Reservation extends BaseEntity {
     @Column(name = "reservation_id", nullable = false, unique = true)
     private String reservationId;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "member_id", nullable = false)
     private MemberUser memberUser;
 
