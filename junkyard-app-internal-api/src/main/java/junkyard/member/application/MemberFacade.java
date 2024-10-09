@@ -13,6 +13,7 @@ import junkyard.member.infrastructure.caller.UserInfoResponse;
 import junkyard.member.interfaces.MemberDto;
 import junkyard.security.JwtTokenProvider;
 import junkyard.security.TokenClaim;
+import junkyard.telegram.client.TelegramMessageSender;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -25,13 +26,13 @@ public class MemberFacade {
     private final JwtTokenProvider jwtTokenProvider;
     private final Set<AccessTokenCaller> accessTokenCaller;
     private final Set<UserInfoCaller> userInfoCallers;
+    private final TelegramMessageSender messageSender;
 
     public TokenInfo joinMember(MemberDto.RequestJoin requestJoin) {
         MemberInfo memberInfo = memberService.registerMember(requestJoin.toCommand());
         String token = jwtTokenProvider.createToken(memberInfo.authId(), memberInfo.name(), memberInfo.profileUrl());
         String refreshToken = jwtTokenProvider.createRefreshToken(memberInfo.authId(), memberInfo.name(), memberInfo.profileUrl());
-
-
+        messageSender.sendMessage("[%s] 님이 가입했습니다.", memberInfo.name());
         return TokenInfo.builder()
                 .accessToken(token)
                 .refreshToken(refreshToken)
