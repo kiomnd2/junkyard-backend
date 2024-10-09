@@ -1,6 +1,7 @@
 package junkyard.member.domain;
 
 import junkyard.common.response.codes.Codes;
+import junkyard.common.response.exception.AlreadyExistUserException;
 import junkyard.common.response.exception.member.InvalidUserException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -15,6 +16,10 @@ public class MemberServiceImpl implements MemberService {
     @Transactional
     @Override
     public MemberInfo registerMember(MemberRegisterCommand registerCommand) {
+        if (memberReader.readByAuthId(registerCommand.id()).isPresent()) {
+            throw new AlreadyExistUserException();
+        }
+
         MemberUser memberUser = memberStore.storeMember(registerCommand.toEntity());
         return memberUser.toInfo();
     }

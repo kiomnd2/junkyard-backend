@@ -33,7 +33,7 @@ pipeline {
             agent { label 'docker' }
             steps {
                 script {
-                    def modules = ['junkyard-app-internal-api']
+                    def modules = ['junkyard-app-internal-api', 'junkyard-telegram-server']
                     for (module in modules) {
                         dir(module) {
                             sh "docker buildx build --push --platform=linux/amd64,linux/arm64 -t ${env.REGISTRY}/${module}:latest ."
