@@ -61,7 +61,6 @@ public class ReservationApi {
     }
 
 
-    @AdminAuthorize
     @UserAuthorize
     @GetMapping("/{reservationId}")
     public CommonResponse<ReservationDto.ResponseInquireReservation> inquireReservation(@AuthenticationPrincipal MyUserDetails userDetails
