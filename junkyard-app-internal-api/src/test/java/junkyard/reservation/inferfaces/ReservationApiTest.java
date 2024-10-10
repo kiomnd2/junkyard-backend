@@ -46,8 +46,7 @@ import static org.springframework.restdocs.payload.PayloadDocumentation.*;
 import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.authentication;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -168,6 +167,44 @@ class ReservationApiTest {
                                 fieldWithPath("car.make").type("String").description("차량 제조사"),
                                 fieldWithPath("car.model").type("String").description("차량 모델"),
                                 fieldWithPath("car.licensePlate").type("String").description("차량 번호")),
+                        responseFields(
+                                fieldWithPath("code").type("String").description("응답 결과 코드"),
+                                fieldWithPath("message").type("String").description("응답 메시지")
+                        )
+                ));
+    }
+
+    @WithMockUser
+    @Test
+    public void reservationUpdateContents_shouldReturnSuccess() throws Exception {
+        Authentication atc = new TestingAuthenticationToken(myUserDetails, null, "USER");
+        String idempotencyKey = "idempotency_key";
+        String contents = "예약내용변경";
+
+        ReservationDto.RequestUpdateReservation request = ReservationDto.RequestUpdateReservation.builder()
+                .contents(contents)
+                .idempotencyKey(idempotencyKey)
+                .build();
+
+        mockMvc.perform(put("/v1/api/reservation")
+                        .header(HttpHeaders.AUTHORIZATION, "Bearer token")
+                        .contentType(MediaType.APPLICATION_JSON_VALUE)
+                        .content(objectMapper.writeValueAsString(request))
+                        .with(authentication(atc))
+                        .with(csrf()))
+                .andExpect(status().isOk())
+                .andDo(print())
+                .andExpect(jsonPath("code").value(Codes.NORMAL.name()))
+                .andExpect(jsonPath("message").value(Codes.NORMAL.getDescription()))
+                .andDo(MockMvcRestDocumentation.document("reservation-cancel",
+                        preprocessRequest(prettyPrint()), // 요청 본문을 예쁘게 출력
+                        preprocessResponse(prettyPrint()), // 응답 본문을 예쁘게 출력
+                        requestHeaders( // 요청 헤더 문서화
+                                headerWithName(HttpHeaders.AUTHORIZATION).description("Bearer token 형식의 인증 토큰")
+                        ),
+                        requestFields(
+                                fieldWithPath("idempotencyKey").type("String").description("예약 키"),
+                                fieldWithPath("contents").type("String").description("변경 내용")),
                         responseFields(
                                 fieldWithPath("code").type("String").description("응답 결과 코드"),
                                 fieldWithPath("message").type("String").description("응답 메시지")
