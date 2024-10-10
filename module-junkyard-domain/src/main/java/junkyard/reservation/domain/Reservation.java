@@ -32,7 +32,7 @@ public class Reservation extends BaseEntity {
     @JoinColumn(name = "member_id", nullable = false)
     private MemberUser memberUser;
 
-    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     @JoinColumn(name = "car_id", nullable = false)
     private Car car;
 
@@ -58,7 +58,7 @@ public class Reservation extends BaseEntity {
     @Column(name = "cancellation_reason", length = 500)
     private String cancellationReason;
 
-    @OneToMany(mappedBy = "reservation", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "reservation", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<Estimate> estimates = new ArrayList<>();
 
     @Builder
