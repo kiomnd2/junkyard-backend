@@ -37,6 +37,17 @@ public class ReservationApi {
         return CommonResponse.success(null);
     }
 
+    @UserAuthorize
+    @PutMapping
+    public CommonResponse<Void> updateReservation(@AuthenticationPrincipal MyUserDetails userDetails,
+                                                  @RequestBody ReservationDto.RequestUpdateReservation reservation) {
+        reservationFacade.updateReservation(
+                userDetails.getUsername(),
+                reservation.getIdempotencyKey(),
+                reservation.getContents());
+        return CommonResponse.success(null);
+    }
+
     @AdminAuthorize
     @UserAuthorize
     @PostMapping("/cancel")

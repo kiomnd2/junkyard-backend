@@ -23,6 +23,13 @@ public class ReservationFacade {
                 , requestReservation.getClientName());
     }
 
+    public void updateReservation(String username, String idempotencyKey, String contents) {
+        reservationService.updateReservation(username, idempotencyKey, contents);
+        messageSender.sendMessage("[%s][%s][%s] 님이 내용을 업데이트 했습니다. 사유 : %s",
+                idempotencyKey, DateTimeUtils.toString(LocalDateTime.now())
+                , username, contents);
+    }
+
     public void cancelReservation(String username, String idempotencyKey, String cancelReason) {
         reservationService.cancelReservation(username, idempotencyKey, cancelReason);
         messageSender.sendMessage("[%s][%s] 님이 예약을 취소했습니다. 사유 : %s",
@@ -41,4 +48,5 @@ public class ReservationFacade {
     public void estimate(String idempotencyKey, Double amount, String description) {
         reservationService.addEstimate(idempotencyKey, amount, description);
     }
+
 }

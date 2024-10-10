@@ -111,13 +111,6 @@ public class ReservationDto {
         }
     }
 
-    @NoArgsConstructor
-    @Builder
-    @Getter
-    public static class ResponseReservation {
-
-    }
-
     @AllArgsConstructor
     @NoArgsConstructor
     @Builder
@@ -209,5 +202,15 @@ public class ReservationDto {
         }
     }
 
+    @AllArgsConstructor
+    @NoArgsConstructor
+    @Builder
+    @Getter
+    public static class RequestUpdateReservation {
+        @NotNull(message = "idempotencyKey 는 필수 값입니다.")
+        private String idempotencyKey;
 
+        @NotNull(message = "contents 는 필수 값입니다.")
+        private String contents;
+    }
 }

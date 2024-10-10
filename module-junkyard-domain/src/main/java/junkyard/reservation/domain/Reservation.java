@@ -126,6 +126,10 @@ public class Reservation extends BaseEntity {
                 .build());
     }
 
+    public void updateContents(String contents) {
+        this.contents = contents;
+    }
+
     public enum State {
         PENDING, CONFIRMED, CANCELED, REJECTED, COMPLETED, EXPIRED, ON_HOLD
     }

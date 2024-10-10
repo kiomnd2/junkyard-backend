@@ -32,6 +32,14 @@ public class ReservationServiceImpl implements ReservationService {
 
     @Transactional
     @Override
+    public void updateReservation(String username, String idempotencyKey, String contents) {
+        MemberUser memberUser = memberReader.checkMember(Long.parseLong(username));
+        Reservation reservation = reservationReader.read(memberUser, idempotencyKey);
+        reservation.updateContents(contents);
+    }
+
+    @Transactional
+    @Override
     public void cancelReservation(String username, String idempotencyKey, String cancelReason) {
         MemberUser memberUser = memberReader.checkMember(Long.parseLong(username));
         Reservation reservation = reservationReader.read(memberUser, idempotencyKey);
