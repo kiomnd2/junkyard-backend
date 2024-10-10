@@ -6,7 +6,6 @@ import junkyard.common.response.codes.Codes;
 import junkyard.member.domain.MemberUser;
 import junkyard.reservation.application.ReservationFacade;
 import junkyard.reservation.domain.ReservationInfo;
-import junkyard.reservation.domain.estimate.Estimate;
 import junkyard.reservation.domain.estimate.EstimateInfo;
 import junkyard.security.JwtTokenProvider;
 import junkyard.security.userdetails.MyUserDetails;
@@ -14,7 +13,6 @@ import junkyard.utils.IdempotencyCreator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mock;
 import org.mockito.MockedStatic;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,23 +25,21 @@ import org.springframework.http.MediaType;
 import org.springframework.restdocs.mockmvc.MockMvcRestDocumentation;
 import org.springframework.security.authentication.TestingAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContext;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.ResultActions;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.mockStatic;
+import static org.mockito.Mockito.when;
 import static org.springframework.restdocs.headers.HeaderDocumentation.headerWithName;
 import static org.springframework.restdocs.headers.HeaderDocumentation.requestHeaders;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.*;
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;
-import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
+import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
+import static org.springframework.restdocs.request.RequestDocumentation.pathParameters;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.authentication;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -196,7 +192,7 @@ class ReservationApiTest {
                 .andDo(print())
                 .andExpect(jsonPath("code").value(Codes.NORMAL.name()))
                 .andExpect(jsonPath("message").value(Codes.NORMAL.getDescription()))
-                .andDo(MockMvcRestDocumentation.document("reservation-cancel",
+                .andDo(MockMvcRestDocumentation.document("reservation-update",
                         preprocessRequest(prettyPrint()), // 요청 본문을 예쁘게 출력
                         preprocessResponse(prettyPrint()), // 응답 본문을 예쁘게 출력
                         requestHeaders( // 요청 헤더 문서화
@@ -253,7 +249,98 @@ class ReservationApiTest {
 
     @WithMockUser
     @Test
-    public void inquireReservation_shouldReturnSuccess() throws Exception {
+    public void inquireReservationInfo_shouldReturnSuccess() throws Exception {
+        Authentication atc = new TestingAuthenticationToken(myUserDetails, null, "USER");
+        String username = myUserDetails.getUsername();
+        String clientName = "김띠용";
+        String reservationId = "idempotency-key";
+
+        ReservationInfo reservationInfo = ReservationInfo.builder()
+                .reservationId(reservationId)
+                .userId("userId")
+                .phoneNo("01000010001")
+                .clientName(clientName)
+                .startTime(LocalDateTime.now())
+                .endTime(LocalDateTime.now().plusDays(1))
+                .status("PENDING")
+                .carInfo(CarInfo.builder()
+                        .make("hyundai")
+                        .model("model")
+                        .licensePlate("12345")
+                        .build())
+                .estimateInfos(List.of(EstimateInfo.builder()
+                        .amount(1000.0)
+                        .isFinal(true)
+                        .description("이래저래 가격이럼")
+                        .issuedDate(LocalDateTime.now())
+                        .build()))
+                .updatedAt(LocalDateTime.now())
+                .createdAt(LocalDateTime.now())
+                .build();
+
+        when(reservationFacade.inquireInfo(Long.parseLong(username), reservationId)).thenReturn(reservationInfo);
+
+        mockMvc.perform(get("/v1/api/reservation/{reservationId}", reservationId)
+                        .header(HttpHeaders.AUTHORIZATION, "Bearer token")
+                        .contentType(MediaType.APPLICATION_JSON_VALUE)
+                        .with(authentication(atc))
+                        .with(csrf()))
+                .andExpect(status().isOk())
+                .andDo(print())
+                .andExpect(jsonPath("code").value(Codes.NORMAL.name()))
+                .andExpect(jsonPath("message").value(Codes.NORMAL.getDescription()))
+                .andExpect(jsonPath("data.reservationId").value(reservationId))
+                .andExpect(jsonPath("data.userId").value(reservationInfo.userId()))
+                .andExpect(jsonPath("data.clientName").value(reservationInfo.clientName()))
+                .andExpect(jsonPath("data.phoneNo").value(reservationInfo.phoneNo()))
+                .andExpect(jsonPath("data.contents").value(reservationInfo.contents()))
+                .andExpect(jsonPath("data.startTime").value(reservationInfo.startTime().format(DateTimeFormatter.ISO_DATE_TIME)))
+                .andExpect(jsonPath("data.endTime").value(reservationInfo.endTime().format(DateTimeFormatter.ISO_DATE_TIME)))
+                .andExpect(jsonPath("data.status").value("PENDING"))
+                .andExpect(jsonPath("data.updatedAt").value(reservationInfo.updatedAt().format(DateTimeFormatter.ISO_DATE_TIME)))
+                .andExpect(jsonPath("data.createdAt").value(reservationInfo.createdAt().format(DateTimeFormatter.ISO_DATE_TIME)))
+                .andExpect(jsonPath("data.car.make").value(reservationInfo.carInfo().make()))
+                .andExpect(jsonPath("data.car.model").value(reservationInfo.carInfo().model()))
+                .andExpect(jsonPath("data.car.licensePlate").value(reservationInfo.carInfo().licensePlate()))
+                .andExpect(jsonPath("data.estimate[0].amount").value(reservationInfo.estimateInfos().get(0).amount()))
+                .andExpect(jsonPath("data.estimate[0].description").value(reservationInfo.estimateInfos().get(0).description()))
+                .andExpect(jsonPath("data.estimate[0].issuedDate").value(reservationInfo.estimateInfos().get(0).issuedDate().format(DateTimeFormatter.ISO_DATE_TIME)))
+                .andExpect(jsonPath("data.estimate[0].isFinal").value(reservationInfo.estimateInfos().get(0).isFinal()))
+                .andDo(MockMvcRestDocumentation.document("inquire-reservation-info", // 생성될 문서의 이름
+                        preprocessRequest(prettyPrint()), // 요청 본문을 예쁘게 출력
+                        preprocessResponse(prettyPrint()), // 응답 본문을 예쁘게 출력
+                        requestHeaders( // 요청 헤더 문서화
+                                headerWithName(HttpHeaders.AUTHORIZATION).description("Bearer token 형식의 인증 토큰")
+                        ),
+                        responseFields( // 응답 필드 문서화
+                                fieldWithPath("code").type("String").description("응답 결과 코드"),
+                                fieldWithPath("message").type("String").description("응답 메시지"),
+                                fieldWithPath("data.reservationId").type("String").description("예약키"),
+                                fieldWithPath("data.userId").type("String").description("사용자 ID"),
+                                fieldWithPath("data.clientName").type("String").description("사용자 명"),
+                                fieldWithPath("data.phoneNo").type("String").description("핸드폰번호"),
+                                fieldWithPath("data.contents").type("String").description("예약내용"),
+                                fieldWithPath("data.startTime").type("String").description("예약 시작 시간"),
+                                fieldWithPath("data.endTime").type("String").description("예약 종료 시간"),
+                                fieldWithPath("data.status").type("String").description("예약 상태"),
+                                fieldWithPath("data.updatedAt").type("String").description("최종수정시간"),
+                                fieldWithPath("data.createdAt").type("String").description("최종생성시간"),
+                                fieldWithPath("data.car.make").type("String").description("차량 제조사"),
+                                fieldWithPath("data.car.model").type("String").description("차량 모델"),
+                                fieldWithPath("data.car.licensePlate").type("String").description("차량 번호판"),
+                                fieldWithPath("data.estimate[0].amount").type("String").description("견적 금액"),
+                                fieldWithPath("data.estimate[0].description").type("String").description("견적 설명"),
+                                fieldWithPath("data.estimate[0].issuedDate").type("String").description("견적 발행일"),
+                                fieldWithPath("data.estimate[0].isFinal").type("String").description("최종 견적 여부")
+                        )
+                ));
+        ;
+
+    }
+
+    @WithMockUser
+    @Test
+    public void inquireReservationList_shouldReturnSuccess() throws Exception {
         Authentication atc = new TestingAuthenticationToken(myUserDetails, null, "USER");
         String username = myUserDetails.getUsername();
         String clientName = "김띠용";

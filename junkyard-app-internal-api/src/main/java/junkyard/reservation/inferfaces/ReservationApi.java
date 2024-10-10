@@ -7,6 +7,7 @@ import junkyard.security.annotataion.AdminAuthorize;
 import junkyard.security.annotataion.UserAuthorize;
 import junkyard.security.userdetails.MyUserDetails;
 import junkyard.utils.IdempotencyCreator;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -58,6 +59,18 @@ public class ReservationApi {
                 cancelReservation.getCancelReason());
         return CommonResponse.success(null);
     }
+
+
+    @AdminAuthorize
+    @UserAuthorize
+    @GetMapping("/{reservationId}")
+    public CommonResponse<ReservationDto.ResponseInquireReservation> inquireReservation(@AuthenticationPrincipal MyUserDetails userDetails
+                                                                                        ,@PathVariable String reservationId
+    ) {
+        ReservationInfo reservationInfo = reservationFacade.inquireInfo(Long.parseLong(userDetails.getUsername()), reservationId);
+        return CommonResponse.success(ReservationDto.ResponseInquireReservation.by(reservationInfo));
+    }
+
 
     @UserAuthorize
     @GetMapping

@@ -114,6 +114,23 @@ include::{snippets}/reservation/http-response.adoc[]
 include::{snippets}/reservation/response-fields.adoc[]
 
 
+== 예약 수정
+=== REQUEST
+include::{snippets}/reservation-update/http-request.adoc[]
+
+==== REQUEST HEADER
+include::{snippets}/reservation-update/request-headers.adoc[]
+
+==== REQUEST FIELD
+include::{snippets}/reservation-update/request-fields.adoc[]
+
+=== RESPONSE
+include::{snippets}/reservation-update/http-response.adoc[]
+
+==== RESPONSE FIELD
+include::{snippets}/reservation-update/response-fields.adoc[]
+
+
 == 예약 취소
 === REQUEST
 include::{snippets}/reservation-cancel/http-request.adoc[]
@@ -129,6 +146,22 @@ include::{snippets}/reservation-cancel/http-response.adoc[]
 
 ==== RESPONSE FIELD
 include::{snippets}/reservation-cancel/response-fields.adoc[]
+
+
+== 예약 상세
+
+=== REQUEST
+include::{snippets}/inquire-reservation-info/http-request.adoc[]
+
+==== REQUEST HEADER
+include::{snippets}/inquire-reservation-info/request-headers.adoc[]
+
+=== RESPONSE
+include::{snippets}/inquire-reservation-info/http-response.adoc[]
+
+==== RESPONSE FIELD
+include::{snippets}/inquire-reservation-info/response-fields.adoc[]
+
 
 == 내 예약 내역
 

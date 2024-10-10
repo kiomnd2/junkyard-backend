@@ -49,4 +49,7 @@ public class ReservationFacade {
         reservationService.addEstimate(idempotencyKey, amount, description);
     }
 
+    public ReservationInfo inquireInfo(long authId, String idempotencyKey) {
+        return reservationService.inquireInfo(authId, idempotencyKey);
+    }
 }
