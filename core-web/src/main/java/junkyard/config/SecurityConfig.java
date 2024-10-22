@@ -43,7 +43,8 @@ public class SecurityConfig {
                                             ,"/v1/api/member/kakao/checkout"
                                             ,"/kakao/callback"
                                             ,"/v1/api/member/join"
-                                            ,"/v1/api/member/refresh-token"
+                                            ,"/v1/api/member/refresh-token",
+                            "/payment"
                             ).permitAll()
                                     .anyRequest().permitAll();
                         }

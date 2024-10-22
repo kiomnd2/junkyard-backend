@@ -5,6 +5,7 @@ bootJar {
 jar {
     enabled = true
 }
+
 dependencies {
     implementation project(":core-api")
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'

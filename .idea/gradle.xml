@@ -13,9 +13,11 @@
             <option value="$PROJECT_DIR$/core-web" />
             <option value="$PROJECT_DIR$/junkyard-app-internal-api" />
             <option value="$PROJECT_DIR$/junkyard-kakao-client" />
+            <option value="$PROJECT_DIR$/junkyard-payment-controller" />
             <option value="$PROJECT_DIR$/junkyard-telegram-client" />
             <option value="$PROJECT_DIR$/junkyard-telegram-server" />
             <option value="$PROJECT_DIR$/module-junkyard-domain" />
+            <option value="$PROJECT_DIR$/module-junkyard-payment-domain" />
           </set>
         </option>
       </GradleProjectSettings>
