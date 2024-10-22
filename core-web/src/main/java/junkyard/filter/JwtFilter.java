@@ -27,7 +27,6 @@ import java.util.Optional;
 @Slf4j
 @RequiredArgsConstructor
 public class JwtFilter extends OncePerRequestFilter {
-
     public static final String AUTHORIZATION_HEADER = "Authorization";
     private final JwtTokenProvider tokenProvider;
     private final UserDetailsService userDetailsService;
@@ -35,7 +34,6 @@ public class JwtFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         String token = resolveToken(request);
-
 
         if (token != null && SecurityContextHolder.getContext().getAuthentication() == null) {
             String userId = tokenProvider.getUserId(token);
@@ -59,5 +57,4 @@ public class JwtFilter extends OncePerRequestFilter {
 
         return null;
     }
-
 }
