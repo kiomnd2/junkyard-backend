@@ -1,4 +1,4 @@
-package junkyard.infrastructure.payment.toss.config;
+package junkyard.payment.infrastructure.payment.toss.config;
 
 
 import org.springframework.beans.factory.annotation.Value;

@@ -1,4 +1,4 @@
-package junkyard.infrastructure.payment.toss;
+package junkyard.payment.infrastructure.payment.toss;
 
 import lombok.Getter;
 import lombok.Setter;

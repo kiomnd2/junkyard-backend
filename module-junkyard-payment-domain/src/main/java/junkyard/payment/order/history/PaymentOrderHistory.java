@@ -1,7 +1,7 @@
-package junkyard.domain.payment.order.history;
+package junkyard.payment.order.history;
 
 import jakarta.persistence.*;
-import junkyard.domain.payment.order.PaymentOrder;
+import junkyard.payment.order.PaymentOrder;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;

@@ -1,4 +1,4 @@
-package junkyard.domain.payment;
+package junkyard.payment;
 
 import lombok.Builder;
 import lombok.Getter;

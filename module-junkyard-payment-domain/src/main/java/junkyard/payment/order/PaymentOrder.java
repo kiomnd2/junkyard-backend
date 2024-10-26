@@ -1,8 +1,8 @@
-package junkyard.domain.payment.order;
+package junkyard.payment.order;
 
 import jakarta.persistence.*;
-import junkyard.domain.payment.PaymentEvent;
-import junkyard.domain.payment.order.history.PaymentOrderHistory;
+import junkyard.payment.PaymentEvent;
+import junkyard.payment.order.history.PaymentOrderHistory;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
