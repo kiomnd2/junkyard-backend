@@ -1,4 +1,4 @@
-package junkyard.payment.controller.view;
+package junkyard.payment.interfaces.controller.view;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,5 +11,15 @@ public class JunkyardPaymentController {
     @GetMapping("/checkout")
     public String checkout() {
         return "checkout";
+    }
+
+    @GetMapping("/success")
+    public String success() {
+        return "success";
+    }
+
+    @GetMapping("/fail")
+    public String failed() {
+        return "fail";
     }
 }

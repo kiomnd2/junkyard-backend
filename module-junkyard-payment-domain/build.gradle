@@ -8,9 +8,8 @@ jar {
 
 dependencies {
     implementation project(":core-api")
+    implementation project(":module-junkyard-domain")
     implementation 'org.springframework.boot:spring-boot-starter-webflux'
-    implementation 'org.springframework.cloud:spring-cloud-stream'
-    implementation 'org.springframework.cloud:spring-cloud-stream-binder-kafka-reactive'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     runtimeOnly 'com.h2database:h2'
 }

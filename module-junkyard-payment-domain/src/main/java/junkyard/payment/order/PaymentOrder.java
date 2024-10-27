@@ -31,7 +31,7 @@ public class PaymentOrder {
     private Long sellerId;
 
     @Column(name = "product_id")
-    private Long productId;
+    private String productId;
 
     @Column(name = "order_id", unique = true)
     private String orderId;
@@ -89,7 +89,7 @@ public class PaymentOrder {
     }
 
     @Builder
-    public PaymentOrder(PaymentEvent paymentEvent, Long sellerId, Long productId,
+    public PaymentOrder(PaymentEvent paymentEvent, Long sellerId, String productId,
                         String orderId, BigDecimal amount, PaymentOrderStatus paymentOrderStatus,
                         LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.paymentEvent = paymentEvent;
