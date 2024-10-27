@@ -103,7 +103,7 @@ public class Reservation extends BaseEntity {
                 .endTime(endTime)
                 .cancellationReason(cancellationReason)
                 .contents(contents)
-                .status(status.name())
+                .status(status)
                 .carInfo(car.toInfo())
                 .estimateInfos(estimates.stream()
                         .map(Estimate::toInfo)

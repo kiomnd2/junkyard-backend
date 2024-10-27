@@ -137,7 +137,7 @@ public class ReservationDto {
                     .clientName(info.clientName())
                     .startTime(info.startTime())
                     .endTime(info.endTime())
-                    .status(info.status())
+                    .status(info.status().name())
                     .contents(info.contents())
                     .car(ResponseCar.by(info.carInfo()))
                     .estimate(info.estimateInfos().stream()
