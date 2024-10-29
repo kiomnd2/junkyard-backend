@@ -5,6 +5,7 @@ import junkyard.car.domain.CarInfo;
 import junkyard.common.response.codes.Codes;
 import junkyard.member.domain.MemberUser;
 import junkyard.reservation.application.ReservationFacade;
+import junkyard.reservation.domain.Reservation;
 import junkyard.reservation.domain.ReservationInfo;
 import junkyard.reservation.domain.estimate.EstimateInfo;
 import junkyard.security.JwtTokenProvider;
@@ -262,7 +263,7 @@ class ReservationApiTest {
                 .clientName(clientName)
                 .startTime(LocalDateTime.now())
                 .endTime(LocalDateTime.now().plusDays(1))
-                .status("PENDING")
+                .status(Reservation.State.PENDING)
                 .carInfo(CarInfo.builder()
                         .make("hyundai")
                         .model("model")
@@ -353,7 +354,7 @@ class ReservationApiTest {
                 .clientName(clientName)
                 .startTime(LocalDateTime.now())
                 .endTime(LocalDateTime.now().plusDays(1))
-                .status("PENDING")
+                .status(Reservation.State.PENDING)
                 .carInfo(CarInfo.builder()
                         .make("hyundai")
                         .model("model")
