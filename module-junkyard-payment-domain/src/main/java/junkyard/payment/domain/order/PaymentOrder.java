@@ -90,8 +90,7 @@ public class PaymentOrder {
 
     @Builder
     public PaymentOrder(PaymentEvent paymentEvent, Long sellerId, String productId,
-                        String orderId, BigDecimal amount, PaymentOrderStatus paymentOrderStatus,
-                        LocalDateTime createdAt, LocalDateTime updatedAt) {
+                        String orderId, BigDecimal amount, PaymentOrderStatus paymentOrderStatus) {
         this.paymentEvent = paymentEvent;
         this.sellerId = sellerId;
         this.productId = productId;
@@ -102,8 +101,8 @@ public class PaymentOrder {
         this.walletUpdated = false;
         this.failedCount = 0L;
         this.threshold = 5L;
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
+        this.createdAt = LocalDateTime.now();
+        this.updatedAt = LocalDateTime.now();
         this.paymentOrderHistories = new ArrayList<>();
     }
 

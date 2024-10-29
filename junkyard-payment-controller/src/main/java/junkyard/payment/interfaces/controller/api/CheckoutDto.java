@@ -1,8 +1,8 @@
 package junkyard.payment.interfaces.controller.api;
 
 import jakarta.validation.constraints.NotNull;
-import junkyard.checkout.CheckoutCommand;
-import junkyard.checkout.CheckoutResult;
+import junkyard.payment.domain.checkout.CheckoutCommand;
+import junkyard.payment.domain.checkout.CheckoutResult;
 import junkyard.utils.IdempotencyCreator;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,7 +11,6 @@ import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.List;
 
 public class CheckoutDto {
     @Getter

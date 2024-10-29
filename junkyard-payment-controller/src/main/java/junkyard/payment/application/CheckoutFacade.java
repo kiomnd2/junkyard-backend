@@ -1,7 +1,7 @@
 package junkyard.payment.application;
 
-import junkyard.checkout.CheckoutResult;
-import junkyard.checkout.CheckoutService;
+import junkyard.payment.domain.checkout.CheckoutResult;
+import junkyard.payment.domain.checkout.CheckoutService;
 import junkyard.payment.interfaces.controller.api.CheckoutDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

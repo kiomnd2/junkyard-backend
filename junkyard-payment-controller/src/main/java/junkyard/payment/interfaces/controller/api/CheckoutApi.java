@@ -1,6 +1,6 @@
 package junkyard.payment.interfaces.controller.api;
 
-import junkyard.checkout.CheckoutResult;
+import junkyard.payment.domain.checkout.CheckoutResult;
 import junkyard.payment.application.CheckoutFacade;
 import junkyard.response.CommonResponse;
 import junkyard.security.userdetails.MyUserDetails;
