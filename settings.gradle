@@ -8,5 +8,5 @@ include 'junkyard-telegram-server'
 include 'junkyard-telegram-client'
 include 'junkyard-telegram-client'
 include 'module-junkyard-payment-domain'
-include 'junkyard-payment-controller'
+include 'junkyard-payment-internal-api'
 
