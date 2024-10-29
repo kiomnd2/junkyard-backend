@@ -1,27 +1,36 @@
-package junkyard.checkout;
+package junkyard.payment.domain.checkout;
 
-import junkyard.payment.PaymentEvent;
-import junkyard.payment.order.PaymentOrder;
+import junkyard.payment.domain.PaymentEvent;
+import junkyard.payment.domain.PaymentStore;
+import junkyard.payment.domain.order.PaymentOrder;
 import junkyard.reservation.domain.ReservationInfo;
 import junkyard.reservation.domain.ReservationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
+
 @RequiredArgsConstructor
 @Service
 public class CheckoutServiceImpl implements CheckoutService {
     private final ReservationService reservationService;
+    private final PaymentStore paymentStore;
+
 
     @Transactional
     @Override
     public CheckoutResult checkout(Long authId, CheckoutCommand command) {
         ReservationInfo reservationInfo = reservationService.inquireInfo(authId, command.getIdempotencyKey());
         reservationInfo.checkPayment();
+        PaymentEvent paymentEvent = createPaymentEvent(reservationInfo, authId, command);
+        PaymentEvent event = paymentStore.store(paymentEvent);
 
-
-
-        return null;
+        return CheckoutResult.builder()
+                .orderId(event.getOrderId())
+                .orderName(event.getOrderName())
+                .amount(BigDecimal.valueOf(event.totalAmount()))
+                .build();
     }
 
     @Transactional

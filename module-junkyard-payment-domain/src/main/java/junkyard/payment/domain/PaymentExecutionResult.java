@@ -1,7 +1,7 @@
-package junkyard.payment;
+package junkyard.payment.domain;
 
 
-import junkyard.payment.order.PaymentOrder;
+import junkyard.payment.domain.order.PaymentOrder;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

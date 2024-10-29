@@ -1,4 +1,4 @@
-package junkyard.checkout;
+package junkyard.payment.domain.checkout;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

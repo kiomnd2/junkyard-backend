@@ -1,6 +1,6 @@
 package junkyard.payment.infrastructure.payment.toss;
 
-import junkyard.payment.*;
+import junkyard.payment.domain.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
