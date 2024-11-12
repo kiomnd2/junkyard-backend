@@ -14,6 +14,8 @@ public enum Codes {
     COMMON_INVALID_TOKEN_ERROR("유효하지 않은 토큰입니다, 확인 후 다시 시도해주세요."),
     COMMON_INVALID_MEMBER("찾을 수 없는 사용자 입니다. 확인 후 다시 시도해주세요. (userId : %d)"),
     PAYMENT_STATUS_ERROR("결제할 수 있는 상태가 아닙니다. (status : %s)"),
+    PAYMENT_STATUS_SUCCESS_ERROR("이미 처리 성공한 결제 입니다. (status : %s)"),
+    PAYMENT_STATUS_FAILED_ERROR("이미 처리 실패한 결제 입니다. (status : %s)"),
     ESTIMATE_INVALID_ERROR("잘못된 견적 내역입니다"),
     INVALID_RESERVATION("찾을 수 없는 예약입니다. 확인해주세요 (reservationId: %s, username: %s)"),
     INVALID_RESERVATION_CANCEL("올바르지 않은 취소요청입니다. [%s] (state : %s)"),

@@ -10,6 +10,7 @@ dependencies {
     implementation project(":core-api")
     implementation project(":junkyard-telegram-client")
     implementation project(":module-junkyard-payment-domain")
+    implementation project(":module-junkyard-domain")
     implementation 'org.springframework.boot:spring-boot-starter-validation'
     testImplementation 'org.springframework.security:spring-security-test'
     testImplementation 'org.mockito:mockito-inline:5.2.0'
