@@ -65,6 +65,10 @@ public class PaymentEvent {
         paymentOrder.setPaymentEvent(this);
     }
 
+    public void updatePaymentKey(String paymentKey) {
+        this.paymentKey = paymentKey;
+    }
+
 
     @RequiredArgsConstructor
     public enum PaymentType {

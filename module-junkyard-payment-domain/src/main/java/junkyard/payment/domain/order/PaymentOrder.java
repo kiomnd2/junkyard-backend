@@ -1,6 +1,8 @@
 package junkyard.payment.domain.order;
 
 import jakarta.persistence.*;
+import junkyard.common.response.codes.Codes;
+import junkyard.common.response.exception.payment.PaymentAlreadyProcessedException;
 import junkyard.payment.domain.PaymentEvent;
 import junkyard.payment.domain.order.history.PaymentOrderHistory;
 import lombok.Builder;
@@ -104,6 +106,14 @@ public class PaymentOrder {
         this.createdAt = LocalDateTime.now();
         this.updatedAt = LocalDateTime.now();
         this.paymentOrderHistories = new ArrayList<>();
+    }
+
+    public void changeOrderStatusToExecuting() {
+        switch (this.paymentOrderStatus) {
+            case SUCCESS -> throw new PaymentAlreadyProcessedException(Codes.PAYMENT_STATUS_SUCCESS_ERROR, paymentOrderStatus.name());
+            case FAILURE -> throw new PaymentAlreadyProcessedException(Codes.PAYMENT_STATUS_FAILED_ERROR, paymentOrderStatus.name());
+        }
+        this.paymentOrderStatus = PaymentOrderStatus.EXECUTING;
     }
 
 }

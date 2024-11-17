@@ -6,6 +6,6 @@ import junkyard.common.response.exception.BaseException;
 public class PaymentAlreadyProcessedException extends BaseException {
 
     public PaymentAlreadyProcessedException(Codes codes, String status) {
-        super(codes);
+        super(codes, status);
     }
 }
