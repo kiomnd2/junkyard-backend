@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import junkyard.common.response.codes.Codes;
 import junkyard.common.response.exception.payment.PaymentAlreadyProcessedException;
 import junkyard.payment.domain.PaymentEvent;
-import junkyard.payment.domain.order.history.PaymentOrderHistory;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,8 +13,6 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 @Getter
 @NoArgsConstructor
@@ -35,7 +32,7 @@ public class PaymentOrder {
     @Column(name = "product_id")
     private String productId;
 
-    @Column(name = "order_id", unique = true)
+    @Column(name = "order_id")
     private String orderId;
 
     @Column(name = "amount")
@@ -65,17 +62,10 @@ public class PaymentOrder {
     @UpdateTimestamp
     private LocalDateTime updatedAt;
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "paymentOrder", cascade = CascadeType.PERSIST)
-    private List<PaymentOrderHistory> paymentOrderHistories;
-
     public void setPaymentEvent(PaymentEvent paymentEvent) {
         this.paymentEvent = paymentEvent;
     }
 
-    public void addHistory(PaymentOrderHistory history) {
-        this.paymentOrderHistories.add(history);
-        history.setPaymentOrder(this);
-    }
 
 
     @Getter
@@ -105,7 +95,6 @@ public class PaymentOrder {
         this.threshold = 5L;
         this.createdAt = LocalDateTime.now();
         this.updatedAt = LocalDateTime.now();
-        this.paymentOrderHistories = new ArrayList<>();
     }
 
     public void changeOrderStatusToExecuting() {

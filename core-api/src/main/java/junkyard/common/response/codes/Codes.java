@@ -20,8 +20,8 @@ public enum Codes {
     ESTIMATE_INVALID_ERROR("잘못된 견적 내역입니다"),
     INVALID_RESERVATION("찾을 수 없는 예약입니다. 확인해주세요 (reservationId: %s, username: %s)"),
     INVALID_RESERVATION_CANCEL("올바르지 않은 취소요청입니다. [%s] (state : %s)"),
-    TELEGRAM_ERROR("텔레그램 전송 중 오류가 발생했습니다. (chatId = %s, errorMessage: %s)")
-    ;
+    TELEGRAM_ERROR("텔레그램 전송 중 오류가 발생했습니다. (chatId = %s, errorMessage: %s)"),
+    PAYMENT_VALID_ERROR("결제 금액이 올바르지 않습니다 (orderId = %s, amount =%d");
 
     private final String description;
 

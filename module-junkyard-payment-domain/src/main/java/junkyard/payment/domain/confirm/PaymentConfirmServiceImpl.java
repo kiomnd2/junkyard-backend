@@ -1,5 +1,6 @@
 package junkyard.payment.domain.confirm;
 
+import junkyard.common.response.exception.PaymentValidatorException;
 import junkyard.common.response.exception.payment.NotFoundPaymentEventException;
 import junkyard.common.response.exception.payment.NotFoundPaymentOrderException;
 import junkyard.payment.domain.PaymentEvent;
@@ -17,21 +18,22 @@ import java.util.Optional;
 public class PaymentConfirmServiceImpl implements PaymentConfirmService {
     private final PaymentOrderReader paymentOrderReader;
     private final PaymentEventReader paymentEventReader;
+    private final PaymentValidator validator;
 
     @Transactional
     @Override
     public PaymentConfirmationResult confirm(PaymentConfirmCommand paymentConfirmCommand) {
-        Optional<PaymentOrder> optionalPaymentOrder = paymentOrderReader.read(paymentConfirmCommand.getOrderId());
-        PaymentOrder paymentOrder = optionalPaymentOrder
-                .orElseThrow(() -> new NotFoundPaymentOrderException(paymentConfirmCommand.getOrderId()));
-        paymentOrder.changeOrderStatusToExecuting();
+        if (validator.isValid(paymentConfirmCommand.getOrderId(), paymentConfirmCommand.getAmount())) {
+            paymentOrderReader.read(paymentConfirmCommand.getOrderId())
+                    .forEach(PaymentOrder::changeOrderStatusToExecuting);
 
-        Optional<PaymentEvent> optionalPaymentEvent = paymentEventReader.readByOrderId(paymentConfirmCommand.getOrderId());
-        PaymentEvent event = optionalPaymentEvent
-                .orElseThrow(() -> new NotFoundPaymentEventException(paymentConfirmCommand.getOrderId()));
+            Optional<PaymentEvent> optionalPaymentEvent = paymentEventReader.readByOrderId(paymentConfirmCommand.getOrderId());
+            PaymentEvent event = optionalPaymentEvent
+                    .orElseThrow(() -> new NotFoundPaymentEventException(paymentConfirmCommand.getOrderId()));
 
-        event.updatePaymentKey(paymentConfirmCommand.getPaymentKey());
-
-        return null;
+            event.updatePaymentKey(paymentConfirmCommand.getPaymentKey());
+            return null;
+        }
+        throw new PaymentValidatorException(paymentConfirmCommand.getOrderId(), paymentConfirmCommand.getAmount());
     }
 }
