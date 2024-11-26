@@ -3,6 +3,7 @@ package junkyard.payment.domain.order;
 import jakarta.persistence.*;
 import junkyard.common.response.codes.Codes;
 import junkyard.common.response.exception.payment.PaymentAlreadyProcessedException;
+import junkyard.payment.domain.PSPConfirmationStatus;
 import junkyard.payment.domain.PaymentEvent;
 import lombok.Builder;
 import lombok.Getter;
@@ -78,6 +79,16 @@ public class PaymentOrder {
         UNKNOWN("결제 승인 할 수 없는 상태");
 
         private final String description;
+
+        public static PaymentOrderStatus get(final String type) {
+            PaymentOrderStatus[] values = values();
+            for (PaymentOrderStatus value : values) {
+                if (type.equals(value.name())) {
+                    return value;
+                }
+            }
+            throw new IllegalArgumentException("해당 type 은 잘못된 타입입니다 " + type);
+        }
     }
 
     @Builder
@@ -103,6 +114,11 @@ public class PaymentOrder {
             case FAILURE -> throw new PaymentAlreadyProcessedException(Codes.PAYMENT_STATUS_FAILED_ERROR, paymentOrderStatus.name());
         }
         this.paymentOrderStatus = PaymentOrderStatus.EXECUTING;
+    }
+
+    public void changeUpdateStatus(PaymentOrderStatus status) {
+        if (status == PaymentOrderStatus.UNKNOWN) this.failedCount++;
+        this.paymentOrderStatus = status;
     }
 
 }

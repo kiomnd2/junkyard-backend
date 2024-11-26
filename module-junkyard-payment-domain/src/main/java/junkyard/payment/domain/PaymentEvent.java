@@ -1,6 +1,7 @@
 package junkyard.payment.domain;
 
 import jakarta.persistence.*;
+import junkyard.payment.domain.confirm.PaymentStatusUpdateCommand;
 import junkyard.payment.domain.order.PaymentOrder;
 import lombok.Builder;
 import lombok.Getter;
@@ -146,4 +147,13 @@ public class PaymentEvent {
         return paymentOrders.stream().allMatch(paymentOrder ->
                 paymentOrder.getPaymentOrderStatus() == PaymentOrder.PaymentOrderStatus.UNKNOWN);
     }
+
+    public void updateExtraDetail(PaymentStatusUpdateCommand command) {
+        this.orderName = command.getPaymentExtraDetails().getOrderName();
+        this.method = command.getPaymentExtraDetails().getPaymentMethod();;
+        this.approvedAt = command.getPaymentExtraDetails().getApprovedAt();
+        this.type = command.getPaymentExtraDetails().getPaymentType();
+        this.orderId = command.getOrderId();
+    }
+
 }
