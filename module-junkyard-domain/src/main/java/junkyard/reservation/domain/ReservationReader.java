@@ -7,7 +7,7 @@ import java.util.List;
 public interface ReservationReader {
     Reservation read(MemberUser memberUser, String reservationId);
 
-    Reservation read(String idempotencyKey);
+    Reservation read(String reservationId);
     List<Reservation> readByUser(MemberUser memberUser);
 
 }

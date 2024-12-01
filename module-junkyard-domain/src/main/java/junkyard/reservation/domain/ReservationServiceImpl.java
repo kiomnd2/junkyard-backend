@@ -55,8 +55,8 @@ public class ReservationServiceImpl implements ReservationService {
 
     @Transactional
     @Override
-    public ReservationInfo inquireInfo(Long authId, String idempotencyKey) {
-        return reservationReader.read(idempotencyKey).toInfo();
+    public ReservationInfo inquireInfo(Long authId, String reservationId) {
+        return reservationReader.read(reservationId).toInfo();
     }
 
     @Transactional

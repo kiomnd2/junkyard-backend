@@ -23,7 +23,6 @@ public class PaymentEvent {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-
     @Column(name = "buyer_id", nullable = false)
     private Long buyerId;
 

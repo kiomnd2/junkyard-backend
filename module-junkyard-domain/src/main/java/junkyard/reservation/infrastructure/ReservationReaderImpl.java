@@ -29,7 +29,7 @@ public class ReservationReaderImpl implements ReservationReader {
     }
 
     @Override
-    public Reservation read(String idempotencyKey) {
-        return reservationRepository.findByReservationId(idempotencyKey);
+    public Reservation read(String reservationId) {
+        return reservationRepository.findByReservationId(reservationId);
     }
 }

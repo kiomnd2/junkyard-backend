@@ -21,7 +21,7 @@ public class CheckoutServiceImpl implements CheckoutService {
     @Transactional
     @Override
     public CheckoutResult checkout(Long authId, CheckoutCommand command) {
-        ReservationInfo reservationInfo = reservationService.inquireInfo(authId, command.getIdempotencyKey());
+        ReservationInfo reservationInfo = reservationService.inquireInfo(authId, command.getReservationId());
         reservationInfo.checkPayment();
         PaymentEvent paymentEvent = createPaymentEvent(reservationInfo, authId, command);
         PaymentEvent event = paymentStore.store(paymentEvent);

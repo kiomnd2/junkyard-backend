@@ -5,6 +5,7 @@ import junkyard.JunkyardPaymentApplication;
 import junkyard.car.domain.CarInfo;
 import junkyard.member.domain.MemberUser;
 import junkyard.payment.domain.PaymentEvent;
+import junkyard.payment.domain.order.PaymentOrder;
 import junkyard.payment.interfaces.controller.api.CheckoutDto;
 import junkyard.reservation.domain.Reservation;
 import junkyard.reservation.domain.ReservationInfo;
@@ -137,7 +138,8 @@ class CheckoutApiTest {
 
         assertThat(paymentEvent.getOrderId()).isEqualTo(orderId);
         assertThat(paymentEvent.getIsPaymentDone()).isFalse();
-
+        assertThat(paymentEvent.getPaymentOrders().stream().allMatch(PaymentOrder::getLedgerUpdated)).isFalse();
+        assertThat(paymentEvent.getPaymentOrders().stream().allMatch(PaymentOrder::getWalletUpdated)).isFalse();
     }
 
 }
