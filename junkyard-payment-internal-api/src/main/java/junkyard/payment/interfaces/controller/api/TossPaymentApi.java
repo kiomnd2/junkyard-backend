@@ -5,7 +5,6 @@ import junkyard.payment.domain.confirm.PaymentConfirmCommand;
 import junkyard.payment.domain.confirm.PaymentConfirmationResult;
 import junkyard.response.CommonResponse;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -13,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @RequiredArgsConstructor
 @RequestMapping("/v1/payment/toss")
-public class TossPaymentController {
+public class TossPaymentApi {
     private final ConfirmFacade confirmFacade;
 
     @PostMapping("/confirm")

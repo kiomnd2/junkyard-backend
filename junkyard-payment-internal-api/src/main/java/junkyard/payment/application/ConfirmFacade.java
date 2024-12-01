@@ -2,15 +2,11 @@ package junkyard.payment.application;
 
 import junkyard.common.response.exception.PaymentValidatorException;
 import junkyard.payment.domain.PaymentCommand;
-import junkyard.payment.domain.PaymentEvent;
 import junkyard.payment.domain.PaymentExecutionResult;
 import junkyard.payment.domain.PaymentExecutor;
 import junkyard.payment.domain.confirm.*;
-import junkyard.payment.domain.order.PaymentOrder;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @RequiredArgsConstructor
 @Service

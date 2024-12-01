@@ -4,15 +4,15 @@ import jakarta.validation.constraints.NotNull;
 import junkyard.payment.domain.checkout.CheckoutCommand;
 import junkyard.payment.domain.checkout.CheckoutResult;
 import junkyard.utils.IdempotencyCreator;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 public class CheckoutDto {
+
+    @Setter
+    @Builder
     @Getter
     @NoArgsConstructor
     @AllArgsConstructor
@@ -23,8 +23,6 @@ public class CheckoutDto {
 
         @NotNull(message = "구매자 ID 는 필수 값입니다.")
         private Long buyerId;
-
-        private String seed = LocalDateTime.now().toString(); // 물건에 대한 요청을 구분
 
         public CheckoutCommand toCommand() {
             return CheckoutCommand.builder()

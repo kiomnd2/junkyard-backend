@@ -9,6 +9,7 @@ import org.springframework.context.annotation.PropertySource;
 @ConfigurationPropertiesScan
 @PropertySource(encoding = "UTF-8", ignoreResourceNotFound = true,
         value = {
+                "classpath:application-alarm.properties",
                 "classpath:application-alarm-${spring.profiles.active}.properties"
         })
 public class JunkyardCallerApplication {
