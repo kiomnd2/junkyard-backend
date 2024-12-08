@@ -49,7 +49,6 @@ public class ReservationApi {
         return CommonResponse.success(null);
     }
 
-    @AdminAuthorize
     @UserAuthorize
     @PostMapping("/cancel")
     public CommonResponse<Void> cancelReservation(@AuthenticationPrincipal MyUserDetails userDetails,
