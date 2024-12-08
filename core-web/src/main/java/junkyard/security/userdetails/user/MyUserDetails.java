@@ -1,6 +1,7 @@
-package junkyard.security.userdetails;
+package junkyard.security.userdetails.user;
 
 import junkyard.member.domain.MemberUser;
+import junkyard.security.userdetails.UserRoles;
 import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

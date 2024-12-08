@@ -2,7 +2,7 @@ package junkyard.member.interfaces;
 
 import jakarta.validation.constraints.*;
 import junkyard.member.application.TokenInfo;
-import junkyard.member.domain.MemberRegisterCommand;
+import junkyard.member.domain.MemberCommand;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -36,8 +36,8 @@ public class MemberDto {
         @Email(message = "유효한 이메일 주소를 입력해주세요.")
         private String email;
 
-        public MemberRegisterCommand toCommand() {
-            return MemberRegisterCommand.builder()
+        public MemberCommand.MemberRegisterCommand toCommand() {
+            return MemberCommand.MemberRegisterCommand.builder()
                     .id(id)
                     .method(method)
                     .name(name)
@@ -63,5 +63,21 @@ public class MemberDto {
     @AllArgsConstructor
     public static class ResponseRefresh {
         private TokenInfo token;
+    }
+
+    @Builder
+    @Getter
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class RequestAdminLogin {
+        private String loginId;
+        private String password;
+
+        public MemberCommand.AdminLoginCommand toCommand() {
+            return MemberCommand.AdminLoginCommand.builder()
+                    .loginId(loginId)
+                    .password(password)
+                    .build();
+        }
     }
 }

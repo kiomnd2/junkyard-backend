@@ -3,7 +3,7 @@ package junkyard.payment.interfaces.controller.api;
 import junkyard.payment.domain.checkout.CheckoutResult;
 import junkyard.payment.application.CheckoutFacade;
 import junkyard.response.CommonResponse;
-import junkyard.security.userdetails.MyUserDetails;
+import junkyard.security.userdetails.user.MyUserDetails;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;

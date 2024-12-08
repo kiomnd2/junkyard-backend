@@ -5,6 +5,7 @@ import junkyard.common.response.codes.Codes;
 import junkyard.common.response.exception.InvalidTypeException;
 import junkyard.common.response.exception.member.InvalidUserException;
 import junkyard.member.domain.CheckUserResult;
+import junkyard.member.domain.MemberCommand;
 import junkyard.member.domain.MemberInfo;
 import junkyard.member.domain.MemberService;
 import junkyard.member.infrastructure.caller.AccessTokenCaller;
@@ -13,6 +14,7 @@ import junkyard.member.infrastructure.caller.UserInfoResponse;
 import junkyard.member.interfaces.MemberDto;
 import junkyard.security.JwtTokenProvider;
 import junkyard.security.TokenClaim;
+import junkyard.security.userdetails.UserRoles;
 import junkyard.telegram.client.TelegramMessageSender;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -30,8 +32,8 @@ public class MemberFacade {
 
     public TokenInfo joinMember(MemberDto.RequestJoin requestJoin) {
         MemberInfo memberInfo = memberService.registerMember(requestJoin.toCommand());
-        String token = jwtTokenProvider.createToken(memberInfo.authId(), memberInfo.name(), memberInfo.profileUrl());
-        String refreshToken = jwtTokenProvider.createRefreshToken(memberInfo.authId(), memberInfo.name(), memberInfo.profileUrl());
+        String token = jwtTokenProvider.createToken(memberInfo.authId(), memberInfo.name(), memberInfo.profileUrl(), UserRoles.USER);
+        String refreshToken = jwtTokenProvider.createRefreshToken(memberInfo.authId(), memberInfo.name(), memberInfo.profileUrl(), UserRoles.USER);
         messageSender.sendMessage("[%s] 님이 가입했습니다.", memberInfo.name());
         return TokenInfo.builder()
                 .accessToken(token)
@@ -57,8 +59,8 @@ public class MemberFacade {
                     return CheckUserResult.builder()
                             .isJoined(true)
                             .authId(call.id())
-                            .accessToken(jwtTokenProvider.createToken(call.id(), member.name(), member.profileUrl()))
-                            .refreshToken(jwtTokenProvider.createRefreshToken(call.id(), member.name(), member.profileUrl()))
+                            .accessToken(jwtTokenProvider.createToken(call.id(), member.name(), member.profileUrl(), UserRoles.USER))
+                            .refreshToken(jwtTokenProvider.createRefreshToken(call.id(), member.name(), member.profileUrl(), UserRoles.USER))
                             .nickname(call.nickname())
                             .build();
                 }
@@ -77,7 +79,7 @@ public class MemberFacade {
         if (jwtTokenProvider.validateRefreshToken(refreshToken)) {
             TokenClaim refreshSubject = jwtTokenProvider.getRefreshSubject(refreshToken);
             String accessToken = jwtTokenProvider.createToken(Long.parseLong(refreshSubject.authId()),
-                    refreshSubject.name(), refreshSubject.profileUrl());
+                    refreshSubject.name(), refreshSubject.profileUrl(), UserRoles.USER);
             CheckUserResult checkUserResult = checkMember(accessToken, "kakao");
 
             if (!checkUserResult.isJoined()) {
@@ -90,5 +92,16 @@ public class MemberFacade {
                     .build();
         }
         throw new InvalidKeyException("유효하지 않은 refresh Token 입니다. " + refreshToken);
+    }
+
+    public TokenInfo loginAdmin(MemberCommand.AdminLoginCommand command) {
+        memberService.checkAdmin(command);
+        String accessToken = jwtTokenProvider.createToken(1L, "Admin", "", UserRoles.ADMIN);
+        String refreshToken = jwtTokenProvider.createRefreshToken(1L, "Admin", "", UserRoles.ADMIN);
+
+        return TokenInfo.builder()
+                .accessToken(accessToken)
+                .refreshToken(refreshToken)
+                .build();
     }
 }

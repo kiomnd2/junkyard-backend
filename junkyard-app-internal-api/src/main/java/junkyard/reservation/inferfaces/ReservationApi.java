@@ -5,11 +5,9 @@ import junkyard.reservation.domain.ReservationInfo;
 import junkyard.response.CommonResponse;
 import junkyard.security.annotataion.AdminAuthorize;
 import junkyard.security.annotataion.UserAuthorize;
-import junkyard.security.userdetails.MyUserDetails;
+import junkyard.security.userdetails.user.MyUserDetails;
 import junkyard.utils.IdempotencyCreator;
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 

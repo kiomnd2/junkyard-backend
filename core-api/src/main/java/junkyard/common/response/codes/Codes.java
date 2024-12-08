@@ -13,6 +13,8 @@ public enum Codes {
     COMMON_ALREADY_JOIN_USER_ERROR("이미 가입된 사용자 입니다."),
     COMMON_INVALID_TOKEN_ERROR("유효하지 않은 토큰입니다, 확인 후 다시 시도해주세요."),
     COMMON_INVALID_MEMBER("찾을 수 없는 사용자 입니다. 확인 후 다시 시도해주세요. (userId : %d)"),
+    COMMON_INVALID_ADMIN("찾을 수 없는 관리자 입니다. 확인 후 다시 시도해주세요. (userId : %s)"),
+    COMMON_INVALID_PASSWORD_ADMIN("일치하지 않는 패스워드입니다. 확인 후 다시 시도해주세요. (userId : %s, password: %s)"),
     COMMON_INVALID_ERROR("잘못된 요청입니다. 확인 후 다시 시도해주세요. (type : %s)"),
     PAYMENT_STATUS_ERROR("결제할 수 있는 상태가 아닙니다. (status : %s, key: %s)"),
     PAYMENT_STATUS_SUCCESS_ERROR("이미 처리 성공한 결제 입니다. (status : %s)"),

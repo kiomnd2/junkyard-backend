@@ -7,6 +7,7 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
 import jakarta.annotation.PostConstruct;
+import junkyard.security.userdetails.UserRoles;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -21,8 +22,6 @@ import java.util.Date;
 @RequiredArgsConstructor
 @Component
 public class JwtTokenProvider {
-    private final UserDetailsService userDetailsService;
-
     @Value("${jwt.secret}")
     private String secretKey;
 
@@ -39,7 +38,7 @@ public class JwtTokenProvider {
     }
 
 
-    public String createToken(Long id, String nickname, String profileUrl) {
+    public String createToken(Long id, String nickname, String profileUrl, UserRoles userRoles) {
         Date now = new Date();
         return Jwts.builder()
                 .signWith(new SecretKeySpec(secretKey.getBytes(),
@@ -48,11 +47,12 @@ public class JwtTokenProvider {
                 .setSubject(String.valueOf(id))
                 .claim("nickname", nickname)
                 .claim("profileUrl", profileUrl)
+                .claim("roles", userRoles.getDescription())
                 .setExpiration(new Date(now.getTime() + 30 * 60 * 1000L))
                 .compact();
     }
 
-    public String createRefreshToken(Long id, String nickname, String profileUrl) {
+    public String createRefreshToken(Long id, String nickname, String profileUrl, UserRoles userRoles) {
         Date now = new Date();
         return Jwts.builder()
                 .signWith(new SecretKeySpec(refreshSecretKey.getBytes(),
@@ -62,6 +62,7 @@ public class JwtTokenProvider {
                 .setSubject(String.valueOf(id))
                 .claim("name", nickname)
                 .claim("profileUrl", profileUrl)
+                .claim("roles", userRoles.getDescription())
                 .compact();
     }
 
@@ -81,15 +82,24 @@ public class JwtTokenProvider {
                 .getSubject();
     }
 
+    public String getRoles(String token) {
+        return Jwts.parserBuilder().setSigningKey(accessKey).build()
+                .parseClaimsJws(token)
+                .getBody()
+                .get("roles").toString();
+    }
+
     public TokenClaim getRefreshSubject(String refreshToken) {
         Jws<Claims> claims = Jwts.parserBuilder().setSigningKey(refreshKey).build().parseClaimsJws(refreshToken);
         String nickName = (String) claims.getBody().get("name");
         String profileUrl = (String) claims.getBody().get("profileUrl");
+        String userRoles = (String) claims.getBody().get("roles");
         String authId = claims.getBody().getSubject();
         return TokenClaim.builder()
                 .name(nickName)
                 .profileUrl(profileUrl)
                 .authId(authId)
+                .userRoles(userRoles)
                 .build();
     }
 

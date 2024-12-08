@@ -9,7 +9,7 @@ import junkyard.reservation.domain.Reservation;
 import junkyard.reservation.domain.ReservationInfo;
 import junkyard.reservation.domain.estimate.EstimateInfo;
 import junkyard.security.JwtTokenProvider;
-import junkyard.security.userdetails.MyUserDetails;
+import junkyard.security.userdetails.user.MyUserDetails;
 import junkyard.utils.IdempotencyCreator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -39,7 +39,6 @@ import static org.springframework.restdocs.headers.HeaderDocumentation.headerWit
 import static org.springframework.restdocs.headers.HeaderDocumentation.requestHeaders;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.*;
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;
-import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
 import static org.springframework.restdocs.request.RequestDocumentation.pathParameters;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.authentication;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;

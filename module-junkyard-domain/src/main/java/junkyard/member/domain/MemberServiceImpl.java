@@ -2,10 +2,13 @@ package junkyard.member.domain;
 
 import junkyard.common.response.codes.Codes;
 import junkyard.common.response.exception.AlreadyExistUserException;
+import junkyard.common.response.exception.member.InvalidAdminException;
 import junkyard.common.response.exception.member.InvalidUserException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
@@ -15,7 +18,7 @@ public class MemberServiceImpl implements MemberService {
 
     @Transactional
     @Override
-    public MemberInfo registerMember(MemberRegisterCommand registerCommand) {
+    public MemberInfo registerMember(MemberCommand.MemberRegisterCommand registerCommand) {
         if (memberReader.readByAuthId(registerCommand.id()).isPresent()) {
             throw new AlreadyExistUserException();
         }
@@ -33,5 +36,13 @@ public class MemberServiceImpl implements MemberService {
     public MemberInfo findMember(Long authId) {
         return memberReader.readByAuthId(authId)
                 .orElseThrow(() -> new InvalidUserException(Codes.COMMON_INVALID_MEMBER, authId)).toInfo();
+    }
+
+    @Override
+    public void checkAdmin(MemberCommand.AdminLoginCommand command) {
+        Optional<MemberAdmin> memberAdmin = memberReader.readAdminUser(command.loginId());
+        MemberAdmin admin =
+                memberAdmin.orElseThrow(() -> new InvalidAdminException(Codes.COMMON_INVALID_ADMIN, command.loginId()));
+        admin.checkPassword(command.password());
     }
 }

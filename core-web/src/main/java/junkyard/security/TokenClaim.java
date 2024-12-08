@@ -3,5 +3,5 @@ package junkyard.security;
 import lombok.Builder;
 
 @Builder
-public record TokenClaim(String authId, String name, String profileUrl) {
+public record TokenClaim(String authId, String name, String profileUrl, String userRoles) {
 }
