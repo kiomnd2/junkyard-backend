@@ -78,6 +78,7 @@ public class Reservation extends BaseEntity {
         if (status == State.PENDING) {
             this.status = State.CANCELED;
             this.cancellationReason = cancelReason;
+            return;
         }
         throw new InvalidCancelRequestException(Codes.INVALID_RESERVATION_CANCEL,
                 "현재상태는 취소할 수 없는 상태"
