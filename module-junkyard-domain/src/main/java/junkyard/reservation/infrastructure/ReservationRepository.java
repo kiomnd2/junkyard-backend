@@ -9,6 +9,6 @@ import java.util.Optional;
 
 public interface ReservationRepository extends JpaRepository<Reservation, Long> {
     Optional<Reservation> findByReservationIdAndMemberUser(String reservationId, MemberUser memberUser);
-    List<Reservation> findAllByMemberUser(MemberUser memberUser);
+    List<Reservation> findAllByMemberUserOrderByUpdatedAtDesc(MemberUser memberUser);
     Reservation findByReservationId(String idempotencyKey);
 }
