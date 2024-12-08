@@ -13,7 +13,7 @@ public enum UserRoles {
     public static UserRoles get(final String type) {
         UserRoles[] values = values();
         for (UserRoles value : values) {
-            if (type.equals(value.name())) {
+            if (type.equals(value.getDescription())) {
                 return value;
             }
         }
