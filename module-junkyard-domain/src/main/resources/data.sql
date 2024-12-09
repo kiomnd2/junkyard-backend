@@ -1,0 +1,1 @@
+insert into member_admins(login_id, password, created_at, updated_at) values ('admin', 'qwer1234', CURRENT_DATE , CURRENT_DATE )
