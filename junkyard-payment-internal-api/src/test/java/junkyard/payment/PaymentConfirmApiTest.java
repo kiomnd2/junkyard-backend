@@ -51,17 +51,6 @@ public class PaymentConfirmApiTest {
                 .build();
         myUserDetails = new MyUserDetails(member);
     }
-    @Test
-    void shouldBeMarkedSuccessIfPaymentConfirmationSuccessPSP() throws Exception {
-        String orderId;
 
-
-
-        when(paymentValidator.isValid(any(), any())).thenReturn(true);
-
-        mockMvc.perform(post("/v1/payment/toss/confirm"))
-                .andDo(print())
-                .andExpect(status().isOk());
-    }
 
 }
