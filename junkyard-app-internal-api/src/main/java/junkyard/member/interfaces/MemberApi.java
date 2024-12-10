@@ -20,6 +20,7 @@ public class MemberApi {
                 .build());
     }
 
+    // 어드민용 로그인
     @PostMapping("/login")
     public CommonResponse<MemberDto.ResponseJoin> login(@RequestBody MemberDto.RequestAdminLogin requestLogin) {
         TokenInfo tokenInfo = memberFacade.loginAdmin(requestLogin.toCommand());
@@ -27,8 +28,6 @@ public class MemberApi {
                         .token(tokenInfo)
                 .build());
     }
-
-    // 어드민용 로그인
 
     @PostMapping("/refresh-token")
     public CommonResponse<MemberDto.ResponseRefresh> refreshToken(@RequestHeader String refreshToken) {

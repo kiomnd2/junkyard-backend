@@ -50,7 +50,6 @@ public class TelegramAlarmCaller extends TelegramLongPollingBot implements Alarm
     @Override
     public void onUpdateReceived(Update update) {
         System.out.println(update);
-
     }
 
     @Override

@@ -2,6 +2,7 @@ package junkyard.telegram.interfaces.handler;
 
 import junkyard.telegram.domain.AlarmCommand;
 import junkyard.telegram.domain.AlarmSender;
+import junkyard.telegram.infrastructure.AlarmType;
 import lombok.RequiredArgsConstructor;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.springframework.kafka.annotation.KafkaListener;
@@ -22,7 +23,7 @@ public class AlarmConsumer {
                 .sendAt(LocalDateTime.now())
                 .writer("junkyard-alarm")
                 .build();
-        alarmSender.sendMessage("KAKAO", message);
+        alarmSender.sendMessage(AlarmType.TELEGRAM.name(), message);
         return "ok";
     }
 }
