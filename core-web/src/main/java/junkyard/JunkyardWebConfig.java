@@ -6,6 +6,7 @@ import org.springframework.stereotype.Controller;
 
 @PropertySource(encoding = "UTF-8", ignoreResourceNotFound = true,
         value = {
+                "classpath:core-web.properties",
                 "classpath:core-web-${spring.profiles.active}.properties"
         }
 )

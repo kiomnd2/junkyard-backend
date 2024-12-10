@@ -6,6 +6,7 @@ import org.springframework.context.annotation.PropertySource;
 
 @PropertySource(encoding = "UTF-8", ignoreResourceNotFound = true,
         value = {
+                "classpath:application-payment-domain.properties",
                 "classpath:application-payment-domain-${spring.profiles.active}.properties"
         }
 )
