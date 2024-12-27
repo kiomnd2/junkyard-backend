@@ -21,4 +21,3 @@ public class CheckoutApi {
         return CommonResponse.success(CheckoutDto.CheckoutResponse.by(checkout));
     }
 }
-

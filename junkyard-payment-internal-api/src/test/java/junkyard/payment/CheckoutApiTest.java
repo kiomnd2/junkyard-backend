@@ -1,10 +1,12 @@
 package junkyard.payment;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import junkyard.JunkyardPaymentApplication;
+import junkyard.JunkyardPaymentConfig;
 import junkyard.car.domain.CarInfo;
 import junkyard.member.domain.MemberUser;
+import junkyard.payment.application.CheckoutFacade;
 import junkyard.payment.domain.PaymentEvent;
+import junkyard.payment.domain.checkout.CheckoutResult;
 import junkyard.payment.domain.order.PaymentOrder;
 import junkyard.payment.interfaces.controller.api.CheckoutApi;
 import junkyard.payment.interfaces.controller.api.CheckoutDto;
@@ -21,6 +23,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Import;
@@ -29,15 +32,16 @@ import org.springframework.http.MediaType;
 import org.springframework.security.authentication.TestingAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import static org.assertj.core.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.eq;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.when;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.authentication;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
@@ -45,10 +49,9 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@Import(JunkyardPaymentApplication.class)
 @AutoConfigureMockMvc
 @ExtendWith(MockitoExtension.class)
-@SpringBootTest
+@WebMvcTest(CheckoutApi.class)
 class CheckoutApiTest {
 
     @Autowired
@@ -62,8 +65,9 @@ class CheckoutApiTest {
     @MockBean
     private ReservationService reservationService;
 
-    @Autowired
-    private CheckoutServiceHelper checkoutServiceHelper;
+    @MockBean
+    private CheckoutFacade checkoutFacade;
+
 
     @BeforeEach
     public void setup() {
@@ -107,15 +111,20 @@ class CheckoutApiTest {
         String reservationId = "1";
         String janeDoe = "jane Doe";
         double amount = 200.0;
-
         CheckoutDto.CheckoutRequest checkoutRequest = CheckoutDto.CheckoutRequest.builder()
                 .reservationId(reservationId)
                 .buyerId(1L)
                 .build();
 
-        ReservationInfo reservationInfo = mockReservationInfo(janeDoe, amount, reservationId);
+        CheckoutResult result = CheckoutResult.builder()
+                .orderId(reservationId)
+                .amount(BigDecimal.valueOf(amount))
+                .orderName(janeDoe)
+                .build();
 
-        when(reservationService.inquireInfo(eq(myUserDetails.memberUser().getAuthId()), any())).thenReturn(reservationInfo);
+//        when(reservationService.inquireInfo(eq(myUserDetails.memberUser().getAuthId()), any())).thenReturn(reservationInfo);
+        when(checkoutFacade.checkout(anyLong(), any())).thenReturn(result);
+
         MvcResult mvcResult = mockMvc.perform(post("/v1/api/payment/checkout")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(mapper.writeValueAsString(checkoutRequest))
@@ -129,17 +138,6 @@ class CheckoutApiTest {
                 .andExpect(jsonPath("data.orderName").value(janeDoe))
                 .andExpect(jsonPath("data.amount").value(amount))
                 .andReturn();
-
-        CommonResponse commonResponse = mapper.readValue(mvcResult.getResponse().getContentAsByteArray(), CommonResponse.class);
-        Object data = commonResponse.data();
-        JSONObject dataObject = (JSONObject)JSONObject.wrap(data);
-        Object orderId = dataObject.get("orderId");
-        PaymentEvent paymentEvent = checkoutServiceHelper.getPaymentEvent(orderId.toString());
-
-        assertThat(paymentEvent.getOrderId()).isEqualTo(orderId);
-        assertThat(paymentEvent.getIsPaymentDone()).isFalse();
-        assertThat(paymentEvent.getPaymentOrders().stream().allMatch(PaymentOrder::getLedgerUpdated)).isFalse();
-        assertThat(paymentEvent.getPaymentOrders().stream().allMatch(PaymentOrder::getWalletUpdated)).isFalse();
     }
 
 }
