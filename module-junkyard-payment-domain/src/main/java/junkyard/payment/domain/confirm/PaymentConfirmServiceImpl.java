@@ -1,9 +1,8 @@
 package junkyard.payment.domain.confirm;
 
-import junkyard.common.response.exception.PaymentValidatorException;
 import junkyard.common.response.exception.payment.NotFoundPaymentEventException;
-import junkyard.common.response.exception.payment.NotFoundPaymentOrderException;
-import junkyard.payment.domain.*;
+import junkyard.payment.domain.PaymentEvent;
+import junkyard.payment.domain.PaymentEventReader;
 import junkyard.payment.domain.order.PaymentOrder;
 import junkyard.payment.domain.order.PaymentOrderReader;
 import lombok.RequiredArgsConstructor;
