@@ -50,7 +50,15 @@ public class TossPaymentExecutor implements PaymentExecutor {
                 .retryWhen(Retry.backoff(2, Duration.ofSeconds(1)).jitter(0.1)
                         .filter(throwable -> (throwable instanceof PSPConfirmationException &&
                                 ((PSPConfirmationException)throwable).getIsRetryableError()))
-                        .onRetryExhaustedThrow((retryBackoffSpec, retrySignal) -> (PSPConfirmationException) retrySignal.failure())
+                        .onRetryExhaustedThrow((retryBackoffSpec, retrySignal) -> retrySignal.failure())
+                        .doBeforeRetry(retrySignal -> {
+                            System.out.printf("before retry hook: retryCount : [%d], errorCode : [%s],  is Unknown : %s, is Failure : %s  %n"
+                                    , retrySignal.totalRetries()
+                                    ,((PSPConfirmationException)retrySignal.failure()).getErrorCode()
+                                    ,((PSPConfirmationException)retrySignal.failure()).getIsUnknown()
+                                    ,((PSPConfirmationException)retrySignal.failure()).getIsFailure()
+                            );
+                        })
                 )
                 .map(response1 -> PaymentExecutionResult.builder()
                         .paymentKey(command.getPaymentKey())
