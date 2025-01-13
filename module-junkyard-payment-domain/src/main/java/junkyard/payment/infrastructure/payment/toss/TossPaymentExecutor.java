@@ -20,10 +20,15 @@ import java.util.function.Function;
 @Component
 public class TossPaymentExecutor implements PaymentExecutor {
     private final WebClient webClient;
+
     private String url = "/v1/payment/confirm";
 
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
     @Override
-    public PaymentExecutionResult execute(PaymentCommand.ConfirmCommand command) {
+    public Mono<PaymentExecutionResult> execute(PaymentCommand.ConfirmCommand command) throws PSPConfirmationException {
         String bodyValue = String.format("""
                 {
                     "paymentKey": "%s",
@@ -34,7 +39,7 @@ public class TossPaymentExecutor implements PaymentExecutor {
                         command.getOrderId(),
                         command.getAmount())
                 .trim();
-        TossPaymentConfirmationResponse response = webClient.post()
+        return webClient.post()
                 .uri(url)
                 .header("Idempotency-Key", command.getOrderId())
                 .bodyValue(bodyValue)
@@ -45,27 +50,25 @@ public class TossPaymentExecutor implements PaymentExecutor {
                 .retryWhen(Retry.backoff(2, Duration.ofSeconds(1)).jitter(0.1)
                         .filter(throwable -> (throwable instanceof PSPConfirmationException &&
                                 ((PSPConfirmationException)throwable).getIsRetryableError()))
-                        .onRetryExhaustedThrow((retryBackoffSpec, retrySignal) ->
-                                retrySignal.failure())
+                        .onRetryExhaustedThrow((retryBackoffSpec, retrySignal) -> (PSPConfirmationException) retrySignal.failure())
                 )
-                .block();
-        return PaymentExecutionResult.builder()
-                .paymentKey(command.getPaymentKey())
-                .orderId(command.getOrderId())
-                .paymentExtraDetails(PaymentExecutionResult.PaymentExtraDetails.builder()
-                        .paymentType(PaymentEvent.PaymentType.get(response.getType()))
-                        .paymentMethod(PaymentEvent.PaymentMethod.get(response.getMethod()))
-                        .approvedAt(LocalDateTime.parse(response.getApprovedAt(), DateTimeFormatter.ISO_DATE_TIME))
-                        .pspRawData(response.toString())
-                        .orderName(response.getOrderName())
-                        .pspConfirmationStatus(PSPConfirmationStatus.get(response.getStatus()))
-                        .totalAmount((response.getTotalAmount()))
-                        .build())
-                .isSuccess(true)
-                .isFailure(false)
-                .isUnknown(false)
-                .isRetryable(false)
-                .build();
+                .map(response1 -> PaymentExecutionResult.builder()
+                        .paymentKey(command.getPaymentKey())
+                        .orderId(command.getOrderId())
+                        .paymentExtraDetails(PaymentExecutionResult.PaymentExtraDetails.builder()
+                                .paymentType(PaymentEvent.PaymentType.get(response1.getType()))
+                                .paymentMethod(PaymentEvent.PaymentMethod.get(response1.getMethod()))
+                                .approvedAt(LocalDateTime.parse(response1.getApprovedAt(), DateTimeFormatter.ISO_DATE_TIME))
+                                .pspRawData(response1.toString())
+                                .orderName(response1.getOrderName())
+                                .pspConfirmationStatus(PSPConfirmationStatus.get(response1.getStatus()))
+                                .totalAmount((response1.getTotalAmount()))
+                                .build())
+                        .isSuccess(true)
+                        .isFailure(false)
+                        .isUnknown(false)
+                        .isRetryable(false)
+                        .build());
     }
 
     private static Function<ClientResponse, Mono<? extends Throwable>> getClientResponseError() {

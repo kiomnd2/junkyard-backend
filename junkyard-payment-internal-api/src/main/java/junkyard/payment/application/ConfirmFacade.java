@@ -24,7 +24,7 @@ public class ConfirmFacade {
                     .paymentKey(command.getPaymentKey())
                     .amount(command.getAmount())
                     .orderId(command.getOrderId())
-                    .build());
+                    .build()).block();
             PaymentStatusUpdateCommand updateCommand = PaymentStatusUpdateCommand.by(result);
             paymentConfirmService.updateOrderStatus(updateCommand);
 

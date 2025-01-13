@@ -7,7 +7,7 @@ import lombok.Getter;
 import java.util.stream.Stream;
 
 @Getter
-public class PSPConfirmationException extends Throwable{
+public class PSPConfirmationException extends RuntimeException {
     private final String errorCode;
     private final String errorMessage;
     private final Boolean isSuccess;

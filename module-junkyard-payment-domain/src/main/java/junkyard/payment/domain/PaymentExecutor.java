@@ -1,5 +1,7 @@
 package junkyard.payment.domain;
 
+import reactor.core.publisher.Mono;
+
 public interface PaymentExecutor {
-    PaymentExecutionResult execute(PaymentCommand.ConfirmCommand command);
+    Mono<PaymentExecutionResult> execute(PaymentCommand.ConfirmCommand command);
 }

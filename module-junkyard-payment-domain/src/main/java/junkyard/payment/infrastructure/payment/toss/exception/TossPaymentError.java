@@ -6,7 +6,6 @@ import lombok.RequiredArgsConstructor;
 @Getter
 @RequiredArgsConstructor
 public enum TossPaymentError {
-
     ALREADY_PROCESSED_PAYMENT("400", "이미 처리된 결제 입니다."),
     PROVIDER_ERROR("400", "일시적인 오류가 발생했습니다. 잠시 후 다시 시도해주세요."),
     EXCEED_MAX_CARD_INSTALLMENT_PLAN("400", "설정 가능한 최대 할부 개월 수를 초과했습니다."),
@@ -66,7 +65,7 @@ public enum TossPaymentError {
                 return value;
             }
         }
-        throw new IllegalArgumentException("해당 토스 에러 code 은 잘못된 코드입니다 " + code);
+        return UNKNOWN;
     }
 
     public Boolean isSuccess() {
