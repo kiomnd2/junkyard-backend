@@ -34,7 +34,7 @@ public class PaymentConfirmServiceImpl implements PaymentConfirmService {
     }
 
     @Transactional
-    public void updateOrderStatus(PaymentStatusUpdateCommand statusUpdateCommand) {
+    public PaymentEvent updateOrderStatus(PaymentStatusUpdateCommand statusUpdateCommand) {
         List<PaymentOrder> paymentOrders = paymentOrderReader.read(statusUpdateCommand.getOrderId());
         Optional<PaymentEvent> optionalPaymentEvent = paymentEventReader.readByOrderId(statusUpdateCommand.getOrderId());
         PaymentEvent event = optionalPaymentEvent
@@ -45,6 +45,7 @@ public class PaymentConfirmServiceImpl implements PaymentConfirmService {
         }
 
         event.updateExtraDetail(statusUpdateCommand);
+        return event;
     }
 
 
