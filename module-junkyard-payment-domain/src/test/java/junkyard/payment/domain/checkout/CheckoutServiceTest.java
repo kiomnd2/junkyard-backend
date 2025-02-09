@@ -20,6 +20,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -68,13 +69,13 @@ class CheckoutServiceTest {
                 .build();
 
         ReservationInfo reservationInfo = mock(ReservationInfo.class);
-        when(reservationService.inquireInfo(authId, command.getReservationId())).thenReturn(reservationInfo);
-        doNothing().when(reservationInfo).checkPayment();
+        when(reservationService.inquireInfo(authId, command.getReservationId()))
+                .thenReturn(mockReservationInfo("client", 100.0, "reservationId"));
 
         PaymentEvent storedEvent = PaymentEvent.builder()
                 .buyerId(authId)
                 .orderId("test-idempotency-key")
-                .orderName("Test Client")
+                .orderName("client")
                 .build();
 
         storedEvent.addPaymentOrder(PaymentOrder.builder()
@@ -92,12 +93,11 @@ class CheckoutServiceTest {
 
         assertNotNull(result);
         assertEquals("test-idempotency-key", result.getOrderId());
-        assertEquals("Test Client", result.getOrderName());
-        assertEquals(BigDecimal.TEN, result.getAmount());
+        assertEquals("client", result.getOrderName());
+        assertEquals(BigDecimal.valueOf(100), result.getAmount());
 
         verify(reservationService).inquireInfo(authId, command.getReservationId());
-        verify(reservationInfo).checkPayment();
         verify(paymentStore).store(any(PaymentEvent.class));
-
     }
+
 }

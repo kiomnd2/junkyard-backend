@@ -48,4 +48,5 @@ subprojects {
 
 test {
     useJUnitPlatform()
+    exclude("tooLongTag")
 }

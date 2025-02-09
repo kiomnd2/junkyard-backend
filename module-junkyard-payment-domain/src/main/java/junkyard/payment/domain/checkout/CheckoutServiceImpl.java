@@ -24,12 +24,12 @@ public class CheckoutServiceImpl implements CheckoutService {
         ReservationInfo reservationInfo = reservationService.inquireInfo(authId, command.getReservationId());
         reservationInfo.checkPayment();
         PaymentEvent paymentEvent = createPaymentEvent(reservationInfo, authId, command);
-        PaymentEvent event = paymentStore.store(paymentEvent);
+        paymentStore.store(paymentEvent);
 
         return CheckoutResult.builder()
-                .orderId(event.getOrderId())
-                .orderName(event.getOrderName())
-                .amount(BigDecimal.valueOf(event.totalAmount()))
+                .orderId(paymentEvent.getOrderId())
+                .orderName(paymentEvent.getOrderName())
+                .amount(BigDecimal.valueOf(paymentEvent.totalAmount()))
                 .build();
     }
 

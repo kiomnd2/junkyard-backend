@@ -1,5 +1,6 @@
 package junkyard.payment.application;
 
+import io.netty.handler.timeout.TimeoutException;
 import junkyard.common.response.exception.PaymentValidatorException;
 import junkyard.common.response.exception.payment.PaymentAlreadyProcessedException;
 import junkyard.payment.domain.PaymentCommand;
@@ -45,13 +46,13 @@ public class ConfirmFacade {
             } catch (PaymentAlreadyProcessedException ape) {
                 return processPaymentAlreadyProcess(ape);
             } catch (Exception e) {
-                return processEtc(command, e);
+                return processError(command, e);
             }
         }
         throw new PaymentValidatorException(command.getOrderId(), command.getAmount());
     }
 
-    private PaymentConfirmationResult processEtc(PaymentConfirmCommand command, Exception e) {
+    private PaymentConfirmationResult processError(PaymentConfirmCommand command, Exception e) {
         PaymentExecutionResult.PaymentExecutionFailure f =
                 PaymentExecutionResult.PaymentExecutionFailure.builder()
                         .errorCode(e.getClass().getSimpleName())
